@@ -6,22 +6,8 @@ public partial class MainPage : ContentPage
 
 	public MainPage()
 	{
-		InitializeComponent();
-	}
+        InitializeComponent();
+    }
 
-	private void onCounterClicked(object sender, EventArgs e)
-	{
-		count++;
-		if (count == 1)
-			counterBtn.Text = $"Clicked {count} time";
-		else
-			counterBtn.Text = $"Clicked {count} times";
-
-		SemanticScreenReader.Announce(counterBtn.Text);
-	}
-
-	private void onTextChanged(object sender, EventArgs e)
-	{
-		hiLabel.Text = myEditor.Text;
-	}
+    
 }

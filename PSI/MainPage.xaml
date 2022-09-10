@@ -1,34 +1,30 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:telerik="http://schemas.telerik.com/2022/xaml/maui"
              x:Class="PSI.MainPage">
 
-    <ScrollView>
-        <VerticalStackLayout
-            Spacing="25"
-            Padding="30,0"
-            VerticalOptions="Center">
+    <AbsoluteLayout Margin="20">
+        <Button
+            Text="x"
+            WidthRequest      ="60"
+            HeightRequest     ="60"
+            CornerRadius      ="30"
+            VerticalOptions   ="Center"
+            HorizontalOptions ="Center"
+            BackgroundColor   ="#F77DF9"
+            AbsoluteLayout.LayoutBounds="205, 435"
+            />
+        
+        <Button
+            Text="Some menu"
+            HeightRequest     ="60"
+            WidthRequest= "305"
+            HorizontalOptions ="Center"
+            BackgroundColor   ="#F77DF9"
+            AbsoluteLayout.LayoutBounds="-20, 520"
+            />
 
-            <Label
-                x:Name="hiLabel"
-                Text="Hi!"
-                SemanticProperties.HeadingLevel="Level1"
-                FontSize="32"
-                HorizontalOptions="Center" />
-
-
-            <Editor
-                x:Name="myEditor"
-                Text="Edit above text here."
-                TextChanged="onTextChanged" />
-
-            <Button
-                x:Name="counterBtn"
-                Text="Click me!!!"
-                Clicked="onCounterClicked"
-                HorizontalOptions="Center" />
-
-        </VerticalStackLayout>
-    </ScrollView>
-
+    </AbsoluteLayout>
+    
 </ContentPage>
