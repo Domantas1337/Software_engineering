@@ -4,7 +4,9 @@
              xmlns:telerik="http://schemas.telerik.com/2022/xaml/maui"
              x:Class="PSI.MainPage">
 
-    <AbsoluteLayout Margin="20">
+    <AbsoluteLayout Margin="20" x:Name="mainLayout">
+
+
         <Button
             Text="x"
             WidthRequest      ="60"
@@ -14,6 +16,7 @@
             HorizontalOptions ="Center"
             BackgroundColor   ="#F77DF9"
             AbsoluteLayout.LayoutBounds="205, 435"
+            Clicked="SelectButtonClicked" 
             />
         
         <Button
