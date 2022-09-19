@@ -7,9 +7,12 @@ public partial class MainPage : ContentPage
     public MainPage()
     {
         InitializeComponent();
-        Label label = new Label { Text = SelectionState.utilityState.ToString() };
+        changeStateLabel();
+    }
 
-        mainLayout.Children.Add(label);
+    public void changeStateLabel()
+    {
+        stateLabel.Text = SelectionState.utilityState.ToString();
     }
 
     private void SelectButtonClicked(object sender, EventArgs e)

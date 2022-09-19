@@ -10,7 +10,7 @@ public partial class SelectPage : ContentPage
 	// Pakeistiiiiiiiiiiiiiiiiiii
 	private void somethingClicked(object sender, EventArgs e)
 	{
-        SelectionState.utilityState = UtilityState.Something;
+        SelectionState.utilityState = UtilityState.Litter;
         App.Current.MainPage = new NavigationPage(new MainPage());
     }
     private void taromatClicked(object sender, EventArgs e)

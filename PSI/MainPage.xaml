@@ -4,10 +4,34 @@
              xmlns:telerik="http://schemas.telerik.com/2022/xaml/maui"
              x:Class="PSI.MainPage">
 
-    <AbsoluteLayout Margin="20" x:Name="mainLayout">
+
+    <Grid   x:Name="mainLayout" ZIndex="0">
+        <Grid.RowDefinitions>
+                <RowDefinition Height="5*" />
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="2*"/>
+
+        </Grid.ColumnDefinitions>
+
+        <Label x:Name="stateLabel"
+               Grid.Row="0"
+               Grid.ColumnSpan="2"
+               Text = "Trash cans"
+               VerticalOptions = "Start"
+               HorizontalOptions = "Center"
+               
+               />
+
 
 
         <Button
+            Grid.Row="1"
+            Grid.Column="2"
             Text="x"
             WidthRequest      ="60"
             HeightRequest     ="60"
@@ -18,16 +42,14 @@
             AbsoluteLayout.LayoutBounds="205, 435"
             Clicked="SelectButtonClicked" 
             />
-        
         <Button
+            Grid.Row="2"
+            Grid.ColumnSpan="3"
             Text="Some menu"
-            HeightRequest     ="60"
-            WidthRequest= "305"
-            HorizontalOptions ="Center"
             BackgroundColor   ="#F77DF9"
             AbsoluteLayout.LayoutBounds="-20, 520"
             />
+        </Grid>
 
-    </AbsoluteLayout>
-    
+
 </ContentPage>
