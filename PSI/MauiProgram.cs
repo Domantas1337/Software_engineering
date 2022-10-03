@@ -1,4 +1,8 @@
-﻿namespace PSI;
+﻿using CommunityToolkit.Maui;
+using Microsoft.Extensions.DependencyInjection;
+using PSI.Views;
+
+namespace PSI;
 
 public static class MauiProgram
 {
@@ -14,6 +18,9 @@ public static class MauiProgram
 			});
 
         builder.UseMauiCommunityToolkit();
+
+		builder.Services.AddSingleton<MainView>();
+		builder.Services.AddTransient<AddLocationView>();
 
         return builder.Build();
 	}
