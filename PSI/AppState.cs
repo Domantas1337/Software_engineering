@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace PSI
 {
-    enum UtilityState
+    public enum UtilityState
     {
         TrashCan,
         Taromat,
-        Something
+        Litter
     }
     internal class PageState
     {

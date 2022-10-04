@@ -12,7 +12,7 @@ public partial class SelectionView : ContentPage
     // Pakeistiiiiiiiiiiiiiiiiiii
     async private void somethingClicked(object sender, EventArgs e)
     {
-        PageState.utilityState = UtilityState.Something;
+        PageState.utilityState = UtilityState.Litter;
         await Shell.Current.GoToAsync("..");
     }
     async private void taromatClicked(object sender, EventArgs e)

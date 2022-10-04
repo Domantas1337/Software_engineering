@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PSI.Views.ReportView"
+             Title="Report">
+    
+    <ContentPage.Resources>
+        <Style TargetType="Label">
+            <Setter Property="Margin"
+                    Value="0,10,0,10" />
+            <Setter Property="FontAttributes"
+                    Value="Bold" />
+            <Setter Property="FontSize"
+                    Value="20" />
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Margin"
+                    Value="0,5,0,5" />
+        </Style>
+    </ContentPage.Resources>
+    
+    <VerticalStackLayout Margin="30" >
+        <Label Text="Report Name" />
+        <Entry Text="{Binding Name}" 
+            Placeholder="Name" />
+
+        <Label Text="Report" />
+        <Editor x:Name="editor"
+            Placeholder="Enter your report here"
+            HeightRequest="250"
+        />
+        
+        <HorizontalStackLayout>
+            <Button Text="Add Report" 
+                />
+            <Button Text="Cancek" 
+                Clicked="OnCancelButtonClicked" />
+        </HorizontalStackLayout>
+    </VerticalStackLayout>
+</ContentPage>

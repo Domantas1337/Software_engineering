@@ -13,10 +13,13 @@ public partial class MainView : ContentPage
     }
     async void OnAddItemClicked(object sender, EventArgs e)
     {
-
         await Shell.Current.GoToAsync(nameof(AddLocationView));
     }
-
+    
+    async void OnReportButtonClicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync(nameof(ReportView));
+    }
     async void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         await Shell.Current.GoToAsync(nameof(AddLocationView));
