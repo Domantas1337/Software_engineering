@@ -53,7 +53,6 @@ public partial class AddLocationView : ContentPage
 
     async void OnSaveButtonClicked(object sender, EventArgs e)
     {
-        Console.WriteLine("aaaaaaa");
         WriteJSON newWriter = new WriteJSON( new LocationItem() { 
             Street = this.Street, 
             City = this.City,
