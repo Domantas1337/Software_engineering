@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Reflection;
 
 namespace PSI
 {
     public class Constants
     {
-        public static string jsonFilePath = @"C:\Users\doman\OneDrive\Stalinis kompiuteris\locations.json";
+        // For testing
+        public static string currentAssemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        public static string locationsJsonName = "locations.json";
+        public static string locationsFilePath = $"{currentAssemblyPath}\\{locationsJsonName}";
     }
 }
