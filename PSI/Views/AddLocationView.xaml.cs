@@ -8,9 +8,9 @@ public partial class AddLocationView : ContentPage
 {
 
     public LocationItem locationItem;
-    bool _isNewItem;
     private string _street, _city;
     private double _longitude, _latitude;
+    private UtilityState _state;
 
     public string Street
     { 
@@ -50,9 +50,20 @@ public partial class AddLocationView : ContentPage
 	    BindingContext = this;
     }
 
+    void OnSelectedChanged(object sender, EventArgs e)
+    {
+        var picker = (Picker)sender;
+        int selectedIndex = picker.SelectedIndex;
+
+        if (selectedIndex != -1)
+        {
+            _state = (UtilityState) selectedIndex;
+        }
+    }
     async void OnSaveButtonClicked(object sender, EventArgs e)
     {
         WriteJSON newWriter = new WriteJSON( new LocationItem() { 
+            State = _state,
             Street = this.Street, 
             City = this.City,
             Longitude = this.Longitude,

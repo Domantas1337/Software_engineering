@@ -21,6 +21,8 @@ public static class MauiProgram
 
 		builder.Services.AddSingleton<MainView>();
 		builder.Services.AddTransient<AddLocationView>();
+        builder.Services.AddTransient<SelectionView>();
+        builder.Services.AddTransient<ReportView>();
 
         return builder.Build();
 	}

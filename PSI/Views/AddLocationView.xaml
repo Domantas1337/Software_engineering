@@ -5,7 +5,7 @@
 			 Title="Location">
     
     <ContentPage.Resources>
-        <Style TargetType="Label">
+        <Style TargetType="Label"  >
             <Setter Property="Margin"
                     Value="0,10,0,10" />
             <Setter Property="FontAttributes"
@@ -13,35 +13,60 @@
             <Setter Property="FontSize"
                     Value="20" />
         </Style>
+        <Style TargetType="Picker"  >
+            <Setter Property="FontAttributes"
+                    Value="Bold" />
+            <Setter Property="FontSize"
+                    Value="12" />
+        </Style>
         <Style TargetType="Button">
             <Setter Property="Margin"
                     Value="0,5,0,5" />
         </Style>
     </ContentPage.Resources>
-    
-    <VerticalStackLayout Margin="20">
-        
-        <Label Text="Street" />
-        <Entry Text="{Binding Street}" 
-               Placeholder="Enter street" />
-        <Label Text="City" />
-        <Entry Text="{Binding City}"
-               Placeholder="Enter city" />
-        <Label Text="Longitude" />
-        <Entry Text="{Binding Longitude}" 
-               Placeholder="Enter longitude" />
-        <Label Text="Latitude" />
-        <Entry Text="{Binding Latitude}"
-               Placeholder="Enter latitude" />
-        <Label Text="Done" />
 
-        <Switch IsToggled="{Binding Path=TodoItem.Done}" />
-  
-        <Button Text="Save" 
+    <VerticalStackLayout Margin="20">
+        <Label Text="Select utility" />
+
+        <Picker 
+                x:Name="picker"
+                SelectedIndexChanged="OnSelectedChanged"
+            >
+            <Picker.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>Trash can</x:String>
+                    <x:String>Taromat</x:String>
+                    <x:String>Litter</x:String>
+                </x:Array>
+            </Picker.ItemsSource>
+        </Picker>
+
+            <Label Text="Street" />
+            <Entry Text="{Binding Street}" 
+                   Placeholder="Enter street" />
+            <Label Text="City" />
+            <Entry Text="{Binding City}"
+                   Placeholder="Enter city" />
+
+        <HorizontalStackLayout>
+            <Label Text="Longitude" Margin="0,20,20,10"/>
+            <Entry Text="{Binding Longitude}"
+                   WidthRequest="175"
+                   Placeholder="Enter longitude" />
+            <Label Text="Latitude" Margin="10,20,20,10"/>
+            <Entry Text="{Binding Latitude}"
+                   WidthRequest="175"
+                   Placeholder="Enter latitude" />
+        </HorizontalStackLayout>
+
+        <HorizontalStackLayout Margin ="0,20,20,20">
+            <Button Text="Save" 
                 Clicked="OnSaveButtonClicked" />
-        <Button Text="Delete"
+            <Button Text="Delete"
                 Clicked="OnDeleteButtonClicked" />
-        <Button Text="Cancel" 
+            <Button Text="Cancel" 
                 Clicked="OnCancelButtonClicked" />
+        </HorizontalStackLayout>
+        
     </VerticalStackLayout>
 </ContentPage>

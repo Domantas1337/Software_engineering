@@ -11,6 +11,13 @@
                 </OnPlatform>
             </ToolbarItem.IconImageSource>
         </ToolbarItem>
+        <ToolbarItem Text="Anouncament" Clicked="OnReportButtonClicked">
+            <ToolbarItem.IconImageSource>
+                <OnPlatform x:TypeArguments="ImageSource">
+                    <On Platform="Android, WinUI" Value="bell.png" />
+                </OnPlatform>
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
     </ContentPage.ToolbarItems>
 
                 <Grid Padding="20,0,0,0"
