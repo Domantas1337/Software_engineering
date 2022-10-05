@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
+﻿using System.Text.Json;
 using PSI.Models;
-using PSI.FileManagers;
 
 namespace PSI.FileManagers
 {
@@ -21,7 +15,7 @@ namespace PSI.FileManagers
             List<LocationItem> locationItems = ReadJSON.readAllLocations();
             locationItems.Add(locationItem);
 
-            await using FileStream createStream = File.Create(Constants.jsonFilePath);
+            await using FileStream createStream = File.Create(Constants.locationsFilePath);
             await JsonSerializer.SerializeAsync(createStream, locationItems);
         }
     }

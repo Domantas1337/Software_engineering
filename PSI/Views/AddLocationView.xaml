@@ -29,9 +29,9 @@
         <Label Text="Select utility" />
 
         <Picker 
-                x:Name="picker"
-                SelectedIndexChanged="OnSelectedChanged"
-            >
+            x:Name="picker"
+            SelectedIndexChanged="OnSelectedChanged"
+        >
             <Picker.ItemsSource>
                 <x:Array Type="{x:Type x:String}">
                     <x:String>Trash can</x:String>
@@ -41,12 +41,12 @@
             </Picker.ItemsSource>
         </Picker>
 
-            <Label Text="Street" />
-            <Entry Text="{Binding Street}" 
-                   Placeholder="Enter street" />
-            <Label Text="City" />
-            <Entry Text="{Binding City}"
-                   Placeholder="Enter city" />
+        <Label Text="Street" />
+        <Entry Text="{Binding Street}" 
+                Placeholder="Enter street" />
+        <Label Text="City" />
+        <Entry Text="{Binding City}"
+                Placeholder="Enter city" />
 
         <HorizontalStackLayout>
             <Label Text="Longitude" Margin="0,20,20,10"/>

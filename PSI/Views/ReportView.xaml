@@ -35,7 +35,7 @@
         <HorizontalStackLayout>
             <Button Text="Add Report" 
                 />
-            <Button Text="Cancek" 
+            <Button Text="Cancel" 
                 Clicked="OnCancelButtonClicked" />
         </HorizontalStackLayout>
     </VerticalStackLayout>

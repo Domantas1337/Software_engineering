@@ -9,8 +9,6 @@ namespace PSI;
 
 public partial class App : Application
 {
-    const int WindowWidth = 400;
-    const int WindowHeight = 812;
 
     public App()
 	{
