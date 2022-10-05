@@ -25,10 +25,12 @@
             Placeholder="Name" />
 
         <Label Text="Report" />
-        <Editor x:Name="editor"
+        <Editor Text="{Binding Report}"
             Placeholder="Enter your report here"
             HeightRequest="250"
         />
+        
+        <Label x:Name="invalidInputMessage" Text=""/>
         
         <HorizontalStackLayout>
             <Button Text="Add Report" 
