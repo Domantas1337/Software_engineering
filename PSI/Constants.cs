@@ -2,7 +2,7 @@
 
 namespace PSI
 {
-    public class Constants
+    public static class Constants
     {
         // For testing
         public static string currentAssemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);

@@ -12,7 +12,7 @@ namespace PSI
         Taromat,
         Litter
     }
-    internal class PageState
+    internal class AppState
     {
         public static UtilityState utilityState = UtilityState.TrashCan;
     }

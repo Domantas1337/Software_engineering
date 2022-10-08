@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Maui;
 using Microsoft.Extensions.DependencyInjection;
 using PSI.Views;
+using PSI.UserAuthentication;
 
 namespace PSI;
 
@@ -23,6 +24,8 @@ public static class MauiProgram
 		builder.Services.AddTransient<AddLocationView>();
         builder.Services.AddTransient<SelectionView>();
         builder.Services.AddTransient<ReportView>();
+        builder.Services.AddTransient<SignInPage>();
+        builder.Services.AddTransient<SignUpPage>();
 
         return builder.Build();
 	}

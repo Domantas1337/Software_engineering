@@ -1,3 +1,5 @@
+using PSI.UserAuthentication;
+
 namespace PSI.Views;
 
 public partial class MainView : ContentPage
@@ -15,7 +17,11 @@ public partial class MainView : ContentPage
     {
         await Shell.Current.GoToAsync(nameof(AddLocationView));
     }
-    
+
+    async void OnAuthenticationClicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync(nameof(SignInPage));
+    }
     async void OnReportButtonClicked(object sender, EventArgs e)
     {
         await Shell.Current.GoToAsync(nameof(ReportView));

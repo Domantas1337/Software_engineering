@@ -3,8 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              x:Class="PSI.Views.MainView"
              Title="Main">
+
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Add Item" Clicked="OnAddItemClicked">
+        
+            <ToolbarItem Text="Add Item" Clicked="OnAddItemClicked">
             <ToolbarItem.IconImageSource>
                 <OnPlatform x:TypeArguments="ImageSource">
                     <On Platform="Android, WinUI" Value="plus.png" />
@@ -15,6 +17,13 @@
             <ToolbarItem.IconImageSource>
                 <OnPlatform x:TypeArguments="ImageSource">
                     <On Platform="Android, WinUI" Value="bell.png" />
+                </OnPlatform>
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+        <ToolbarItem Text="Anouncament" Clicked="OnAuthenticationClicked">
+            <ToolbarItem.IconImageSource>
+                <OnPlatform x:TypeArguments="ImageSource">
+                    <On Platform="Android, WinUI" Value="user.png"/>
                 </OnPlatform>
             </ToolbarItem.IconImageSource>
         </ToolbarItem>

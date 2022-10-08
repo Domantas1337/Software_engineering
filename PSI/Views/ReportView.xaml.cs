@@ -21,7 +21,7 @@ public partial class ReportView : ContentPage
         {
             _report = value;
 
-            if(Regex.IsMatch(_report, "(?i)(shit)|(fuc(k)?)|(nig(ga)?)"))
+            if(Regex.IsMatch(_report, "(?i)(shit)|(fuc(k)?)"))
             {
                 invalidInputMessage.Text = "Curse words are not allowed!";
             }
