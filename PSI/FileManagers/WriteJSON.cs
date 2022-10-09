@@ -3,14 +3,9 @@ using PSI.Models;
 
 namespace PSI.FileManagers
 {
-    internal class WriteJSON
+    static class WriteJSON
     {
-        public WriteJSON(LocationItem locationItem)
-        {
-            write(locationItem);
-        }
-
-        async void write(LocationItem locationItem)
+        public static async void write(this LocationItem locationItem)
         {
             List<LocationItem> locationItems = ReadJSON.readAllLocations();
             locationItems.Add(locationItem);

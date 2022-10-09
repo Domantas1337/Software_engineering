@@ -49,7 +49,6 @@ public partial class AddLocationView : ContentPage
 		InitializeComponent();
 	    BindingContext = this;
     }
-
     void OnSelectedChanged(object sender, EventArgs e)
     {
         var picker = (Picker)sender;
@@ -62,13 +61,15 @@ public partial class AddLocationView : ContentPage
     }
     async void OnSaveButtonClicked(object sender, EventArgs e)
     {
-        WriteJSON newWriter = new WriteJSON( new LocationItem() { 
-            State = _state,
+        LocationItem locatioItem = new LocationItem() {  
+            State = _state, 
             Street = this.Street, 
             City = this.City,
             Longitude = this.Longitude,
             Latitude = this.Latitude
-        } ) ;
+        };
+        locatioItem.write();
+
         await Shell.Current.GoToAsync("..");
     }
 

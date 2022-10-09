@@ -43,7 +43,7 @@
 
         <Label Text="Street" />
         <Entry Text="{Binding Street}" 
-                Placeholder="Enter street" />
+               Placeholder="Enter street" />
         <Label Text="City" />
         <Entry Text="{Binding City}"
                 Placeholder="Enter city" />
