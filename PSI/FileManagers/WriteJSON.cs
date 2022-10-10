@@ -1,17 +1,42 @@
-﻿using System.Text.Json;
+﻿using System.Runtime.CompilerServices;
+using System.Text.Json;
+using Newtonsoft.Json;
 using PSI.Models;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace PSI.FileManagers
 {
-    static class WriteJSON
+    internal static class WriteJSON<T> where T : struct
     {
-        public static async void write(this LocationItem locationItem)
+        public static List<T> readFile(string filePath)
         {
-            List<LocationItem> locationItems = ReadJSON.readAllLocations();
-            locationItems.Add(locationItem);
+            
+            List<T> items;
+            
+            if (File.Exists(filePath) == false)
+            {
+                File.Create(filePath);
+            }
+            StreamReader readStream = new(filePath);
+            string json = readStream.ReadToEnd();
+            Debug.WriteLine($"Read from {filePath}");
+            readStream.Close();
 
-            await using FileStream createStream = File.Create(Constants.locationsFilePath);
-            await JsonSerializer.SerializeAsync(createStream, locationItems);
+            items = JsonConvert.DeserializeObject<List<T>>(json)
+                        ?? new();
+
+            return items;
+        }
+        public static async void write(string filePath, T item = default, List<T> items = null)
+        {
+            if (items == null)
+            {
+                items = readFile(filePath);
+                items.Add(item);
+            }
+
+            await using FileStream createStream = File.Create(filePath);
+            await JsonSerializer.SerializeAsync(createStream, items);
         }
     }
 }
