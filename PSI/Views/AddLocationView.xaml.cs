@@ -68,13 +68,19 @@ public partial class AddLocationView : ContentPage
             Longitude = this.Longitude,
             Latitude = this.Latitude
         };
-        locatioItem.write();
+        WriteJSON<LocationItem>.write(Constants.locationsFilePath, locatioItem);
 
         await Shell.Current.GoToAsync("..");
     }
 
     async void OnDeleteButtonClicked(object sender, EventArgs e)
     {
+        List<LocationItem> list = WriteJSON<LocationItem>.readFile(Constants.locationsFilePath);
+
+        var newList = list.Where(l => l.Longitude != _longitude)
+                          .Select(l => l);
+
+        WriteJSON<LocationItem>.write(Constants.locationsFilePath, default, newList.ToList());
         await Shell.Current.GoToAsync("..");
     }
 
