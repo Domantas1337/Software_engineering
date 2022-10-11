@@ -1,12 +1,16 @@
 using PSI.Models;
 using PSI.Generators;
 using PSI.FileManagers;
+using PSI.Handlers;
+using Microsoft.Maui.Storage;
+using System.Drawing;
+using IImage = Microsoft.Maui.Graphics.IImage;
+using System.Reflection;
 
 namespace PSI.Views;
 
 public partial class ReportView : ContentPage
 {
-    private string _title;
 	private string _report;
 	public ReportView()
 	{
@@ -30,6 +34,10 @@ public partial class ReportView : ContentPage
         WriteJSON<ReportItem>.write(Constants.reportsFilePath, reportItem);
 
         await Shell.Current.GoToAsync("..");
+    }
+    void OnPickImageClicked(object sender, EventArgs e)
+    {
+        ImageHandler.PickImage();
     }
 
     public string Report
