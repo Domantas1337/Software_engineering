@@ -1,7 +1,12 @@
+using PSI.Models;
+using PSI.Generators;
+using PSI.FileManagers;
+
 namespace PSI.Views;
 
 public partial class ReportView : ContentPage
 {
+    private string _title;
 	private string _report;
 	public ReportView()
 	{
@@ -11,6 +16,19 @@ public partial class ReportView : ContentPage
 
 	async void OnCancelButtonClicked(object sender, EventArgs e)
 	{
+        await Shell.Current.GoToAsync("..");
+    }
+
+    async void OnAddReportButtonClicked(object sender, EventArgs e)
+    {
+        ReportItem reportItem = new ReportItem()
+        {
+            ID = IDGenerator.generateID(),
+            Title = this.Title,
+            Report = this.Report
+        };
+        WriteJSON<ReportItem>.write(Constants.reportsFilePath, reportItem);
+
         await Shell.Current.GoToAsync("..");
     }
 
@@ -32,4 +50,6 @@ public partial class ReportView : ContentPage
 
         }
     }
+    public string Title { get; set; }
+
 }

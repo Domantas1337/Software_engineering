@@ -20,8 +20,8 @@
     </ContentPage.Resources>
     
     <VerticalStackLayout Margin="30" >
-        <Label Text="Report Name" />
-        <Entry Text="{Binding Name}" 
+        <Label Text="Report Title" />
+        <Entry Text="{Binding Title}" 
             Placeholder="Name" />
 
         <Label Text="Report" />
@@ -34,9 +34,11 @@
         
         <HorizontalStackLayout>
             <Button Text="Add Report" 
-                />
+                Clicked="OnAddReportButtonClicked"    
+            />
             <Button Text="Cancel" 
-                Clicked="OnCancelButtonClicked" />
+                Clicked="OnCancelButtonClicked" 
+            />
         </HorizontalStackLayout>
     </VerticalStackLayout>
 </ContentPage>
