@@ -5,16 +5,18 @@
              xmlns:handless="clr-namespace:PSI.Handlers"
              Shell.NavBarIsVisible="False"
              Title="SignInPage">
+
+
     <Grid RowDefinitions="1*,8*,1*">
 
         <Frame CornerRadius="0" 
                BackgroundColor="{x:StaticResource DashboardBackground}"
                Grid.Row="1" 
                VerticalOptions="CenterAndExpand"
-               Margin="0,0,40,0"
+               Margin="40,0,40,0"
                >
             <VerticalStackLayout Spacing="25">
-                <Label Text="SIGN IN" FontSize="28" FontAttributes="Bold" />
+                <Label Text="SIGN IN" TextColor="Black"  FontSize="28" FontAttributes="Bold" />
                 <Label x:Name ="signInNotice"  FontAttributes="Bold" Text="" TextColor="Red" HorizontalTextAlignment="Center" />
                 
                 <Frame Padding="10" BorderColor="Transparent" CornerRadius="0">
@@ -31,10 +33,10 @@
                     </Grid>
                 </Frame>
 
-                <Button CornerRadius="0" HeightRequest="60" Text="SIGN IN" BackgroundColor="#50C878" FontSize="20" FontAttributes="Bold" />
-                <Label FontAttributes="Bold" Text="Forgot Password?" TextColor="Gray" HorizontalTextAlignment="Center" />
+                <Button CornerRadius="0" HeightRequest="60" Text="SIGN IN" TextColor="Black" BackgroundColor="#50C878" FontSize="20" FontAttributes="Bold" />
+                <Label FontAttributes="Bold" Text="Forgot Password?" TextColor="DarkGray" HorizontalTextAlignment="Center" />
                 <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
-                    <Label  FontAttributes="Bold" TextColor="Gray" Text="Don't have account?" VerticalTextAlignment="Center" />
+                    <Label  FontAttributes="Bold" TextColor="DarkGray" Text="Don't have account?" VerticalTextAlignment="Center" />
                     <Label Text="SIGN UP" FontSize="18" 
                            FontAttributes="Bold"
                            TextColor="#50C878" />

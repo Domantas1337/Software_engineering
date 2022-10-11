@@ -25,30 +25,36 @@
         </Style>
     </ContentPage.Resources>
 
-    <VerticalStackLayout Margin="20">
-        <Label Text="Select utility" />
+    <VerticalStackLayout Margin="40" Spacing="30">
 
-        <Picker 
-            x:Name="picker"
-            SelectedIndexChanged="OnSelectedChanged"
-        >
-            <Picker.ItemsSource>
-                <x:Array Type="{x:Type x:String}">
-                    <x:String>Trash can</x:String>
-                    <x:String>Taromat</x:String>
-                    <x:String>Litter</x:String>
-                </x:Array>
-            </Picker.ItemsSource>
-        </Picker>
+        <VerticalStackLayout>
+            <Label Text="Select utility" />
+            <Picker 
+                    x:Name="picker"
+                    SelectedIndexChanged="OnSelectedChanged">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Trash can</x:String>
+                        <x:String>Taromat</x:String>
+                        <x:String>Litter</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+        </VerticalStackLayout>
 
-        <Label Text="Street" />
-        <Entry Text="{Binding Street}" 
+        <VerticalStackLayout>
+            <Label Text="Street" />
+            <Entry Text="{Binding Street}" 
                Placeholder="Enter street" />
-        <Label Text="City" />
-        <Entry Text="{Binding City}"
-                Placeholder="Enter city" />
+        </VerticalStackLayout>
 
-        <HorizontalStackLayout>
+        <VerticalStackLayout>
+            <Label Text="City" />
+            <Entry Text="{Binding City}"
+                Placeholder="Enter city" />
+        </VerticalStackLayout>
+
+        <HorizontalStackLayout Margin="0,20,20,20" Spacing="10">
             <Label Text="Longitude" Margin="0,20,20,10"/>
             <Entry Text="{Binding Longitude}"
                    WidthRequest="175"
@@ -59,7 +65,7 @@
                    Placeholder="Enter latitude" />
         </HorizontalStackLayout>
 
-        <HorizontalStackLayout Margin ="0,20,20,20">
+        <HorizontalStackLayout Margin="0,20,20,20" Spacing="10">
             <Button Text="Save" 
                 Clicked="OnSaveButtonClicked" />
             <Button Text="Delete"
