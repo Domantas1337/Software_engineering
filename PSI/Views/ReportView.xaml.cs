@@ -34,7 +34,7 @@ public partial class ReportView : ContentPage
             Report = this.Report
         };
 
-        WriteJSON<ReportItem>.write(Constants.reportsFilePath, reportItem);
+        JSONFileManager<ReportItem>.write(Constants.reportsFilePath, reportItem);
 
         IDictionary<string, object> data = new Dictionary<string, object>()
         {
