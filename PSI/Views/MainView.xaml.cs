@@ -1,13 +1,22 @@
+using PSI.Models;
 using PSI.UserAuthentication;
 
 namespace PSI.Views;
 
-public partial class MainView : ContentPage
+public partial class MainView : ContentPage, IQueryAttributable
 {
-	public MainView()
-	{
-		InitializeComponent();
-	}
+    public MainView()
+    {
+        InitializeComponent();
+    }
+
+    public void ApplyQueryAttributes(IDictionary<string, object> query)
+    {
+        ReportItem report = (ReportItem)query["pav"];
+
+        ReportTitle.Text = report.Title;
+    }
+
 
     async void StateButtonClicked(object senderm, EventArgs e)
     {
@@ -26,8 +35,6 @@ public partial class MainView : ContentPage
     {
         await Shell.Current.GoToAsync(nameof(ReportView));
     }
-    async void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-        await Shell.Current.GoToAsync(nameof(AddLocationView));
-    }
+
+
 }

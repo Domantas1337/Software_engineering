@@ -6,13 +6,14 @@
 
     <ContentPage.ToolbarItems>
         
-            <ToolbarItem Text="Add Item" Clicked="OnAddItemClicked">
+        <ToolbarItem Text="Add Item" Clicked="OnAddItemClicked">
             <ToolbarItem.IconImageSource>
                 <OnPlatform x:TypeArguments="ImageSource">
                     <On Platform="Android, WinUI" Value="plus.png" />
                 </OnPlatform>
             </ToolbarItem.IconImageSource>
         </ToolbarItem>
+
         <ToolbarItem Text="Anouncament" Clicked="OnReportButtonClicked">
             <ToolbarItem.IconImageSource>
                 <OnPlatform x:TypeArguments="ImageSource">
@@ -20,6 +21,15 @@
                 </OnPlatform>
             </ToolbarItem.IconImageSource>
         </ToolbarItem>
+
+        <ToolbarItem Text="Anouncament" Clicked="StateButtonClicked">
+            <ToolbarItem.IconImageSource>
+                <OnPlatform x:TypeArguments="ImageSource">
+                    <On Platform="Android, WinUI" Value="utility.png"/>
+                </OnPlatform>
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+
         <ToolbarItem Text="Anouncament" Clicked="OnAuthenticationClicked">
             <ToolbarItem.IconImageSource>
                 <OnPlatform x:TypeArguments="ImageSource">
@@ -29,21 +39,23 @@
         </ToolbarItem>
     </ContentPage.ToolbarItems>
 
-                <Grid Padding="20,0,0,0"
-                      ColumnDefinitions="0.9*, 0.3*"
-                      RowDefinitions="0.3*, 0.3*, 0.3*">
-
-                    <Button
-                        Grid.Column="1"
-                        Grid.Row ="2"
-                        Text="x"
-                        WidthRequest      ="60"
-                        HeightRequest     ="60"
-                        CornerRadius      ="30"
-                        VerticalOptions   ="Center"
-                        HorizontalOptions ="Center"
-                        Clicked="StateButtonClicked"
-                        />
-                </Grid>
+    <ContentPage.Content>
+        <VerticalStackLayout x:Name="ReportLayout">
+            <HorizontalStackLayout
+                x:Name="Report"
+                HorizontalOptions="Center" 
+                Spacing="10" >
+                
+                <Label  x:Name="ReportTitle"
+                        Text="" FontSize="18" 
+                        FontAttributes="Bold"
+                        TextColor="#50C878" />
+                
+                <HorizontalStackLayout.GestureRecognizers>
+                </HorizontalStackLayout.GestureRecognizers>
+            
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </ContentPage.Content>
 
 </ContentPage>

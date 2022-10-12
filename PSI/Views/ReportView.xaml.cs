@@ -2,10 +2,12 @@ using PSI.Models;
 using PSI.Generators;
 using PSI.FileManagers;
 using PSI.Handlers;
+using PSI.Views;
 using Microsoft.Maui.Storage;
 using System.Drawing;
 using IImage = Microsoft.Maui.Graphics.IImage;
 using System.Reflection;
+
 
 namespace PSI.Views;
 
@@ -31,9 +33,15 @@ public partial class ReportView : ContentPage
             Title = this.Title,
             Report = this.Report
         };
-        WriteJSON<ReportItem>.write(Constants.reportsFilePath, reportItem);
 
-        await Shell.Current.GoToAsync("..");
+        JSONFileManager<ReportItem>.write(Constants.reportsFilePath, reportItem);
+
+        IDictionary<string, object> data = new Dictionary<string, object>()
+        {
+            {"pav", reportItem}
+        };
+
+        await Shell.Current.GoToAsync("..", data);
     }
     void OnPickImageClicked(object sender, EventArgs e)
     {
