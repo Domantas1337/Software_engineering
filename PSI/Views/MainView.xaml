@@ -64,6 +64,7 @@
     </ContentPage.Content>
 
     <CollectionView
+        SelectionMode="None"
         ItemsSource="{Binding Items}">
 
         <CollectionView.ItemTemplate>
@@ -75,8 +76,16 @@
                     <Grid>
                         <Frame
                             HeightRequest="100">
+
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer 
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ArticleViewModel}}, Path=DetailsCommand}"
+                                    CommandParameter="{Binding Report}"/>
+                            </Frame.GestureRecognizers>
+
                             <HorizontalStackLayout>
-                                <Image 
+                                
+                                    <Image 
                                     HeightRequest="100"
                                     Source="{Binding ImageName}" />
                                 <Label 

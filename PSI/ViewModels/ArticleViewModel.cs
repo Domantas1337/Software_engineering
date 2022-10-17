@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using PSI.FileManagers;
 using PSI.Generators;
 using PSI.Models;
+using PSI.Views;
 using System.Collections.ObjectModel;
 
 namespace PSI.ViewModels
@@ -100,6 +101,12 @@ namespace PSI.ViewModels
 
                 await sourceStream.CopyToAsync(localFileStream);
             }
+        }
+
+        [RelayCommand]
+        async Task Details(string s)
+        {
+            await Shell.Current.GoToAsync($"{nameof(ReportDetailPage)}?Text={s}");
         }
 
         public string FileName { get; set; }

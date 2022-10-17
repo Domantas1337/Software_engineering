@@ -26,8 +26,12 @@ public static class MauiProgram
         builder.Services.AddTransient<AddLocationView>();
         builder.Services.AddTransient<SelectionView>();
         builder.Services.AddTransient<ReportView>();
-        builder.Services.AddTransient<SignInPage>();
-        builder.Services.AddTransient<SignUpPage>();
+
+        builder.Services.AddSingleton<SignInPage>();
+        builder.Services.AddSingleton<SignUpPage>();
+
+        builder.Services.AddTransient<ReportDetailPage>();
+        builder.Services.AddTransient<DetailViewModel>();
 
         return builder.Build();
     }
