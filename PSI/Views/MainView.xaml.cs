@@ -6,7 +6,7 @@ namespace PSI.Views;
 
 public partial class MainView : ContentPage
 {
-    public MainView(ArticleViewModel vm)
+    public MainView(ReportViewModel vm)
     {
         InitializeComponent();
         BindingContext = vm;

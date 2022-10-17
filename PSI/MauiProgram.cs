@@ -22,7 +22,7 @@ public static class MauiProgram
         builder.UseMauiCommunityToolkit();
 
         builder.Services.AddSingleton<MainView>();
-        builder.Services.AddSingleton<ArticleViewModel>();
+        builder.Services.AddSingleton<ReportViewModel>();
         builder.Services.AddTransient<AddLocationView>();
         builder.Services.AddTransient<SelectionView>();
         builder.Services.AddTransient<ReportView>();

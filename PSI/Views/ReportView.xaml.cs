@@ -6,7 +6,7 @@ namespace PSI.Views;
 public partial class ReportView : ContentPage
 {
     private string _report;
-    public ReportView(ArticleViewModel vm)
+    public ReportView(ReportViewModel vm)
     {
         InitializeComponent();
         BindingContext = vm;

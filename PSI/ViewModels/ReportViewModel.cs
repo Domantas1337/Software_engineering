@@ -8,10 +8,10 @@ using System.Collections.ObjectModel;
 
 namespace PSI.ViewModels
 {
-    public partial class ArticleViewModel : ObservableObject
+    public partial class ReportViewModel : ObservableObject
     {
 
-        public ArticleViewModel()
+        public ReportViewModel()
         {
             Items = new ObservableCollection<ReportItem>();
 

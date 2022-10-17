@@ -5,7 +5,7 @@
              xmlns:handless="clr-namespace:PSI.Handlers"
              xmlns:viewmodel="clr-namespace:PSI.ViewModels"
              xmlns:local="clr-namespace:PSI.Models"
-             x:DataType="viewmodel:ArticleViewModel"
+             x:DataType="viewmodel:ReportViewModel"
              Title="Report">
 
     <ContentPage.Resources>

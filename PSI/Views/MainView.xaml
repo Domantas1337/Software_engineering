@@ -4,7 +4,7 @@
              x:Class="PSI.Views.MainView"
              xmlns:viewmodel="clr-namespace:PSI.ViewModels"
              xmlns:local="clr-namespace:PSI.Models"
-             x:DataType="viewmodel:ArticleViewModel"
+             x:DataType="viewmodel:ReportViewModel"
              Title="Main">
 
     <ContentPage.ToolbarItems>
@@ -79,7 +79,7 @@
 
                             <Frame.GestureRecognizers>
                                 <TapGestureRecognizer 
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ArticleViewModel}}, Path=DetailsCommand}"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ReportViewModel}}, Path=DetailsCommand}"
                                     CommandParameter="{Binding Report}"/>
                             </Frame.GestureRecognizers>
 
