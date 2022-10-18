@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PSI
+namespace PSI.State
 {
     public enum UtilityState
     {
@@ -12,9 +12,4 @@ namespace PSI
         Taromat,
         Litter
     }
-    internal class AppState
-    {
-        public static UtilityState utilityState = UtilityState.TrashCan;
-    }
-
 }

@@ -2,7 +2,8 @@ namespace PSI.UserAuthentication;
 
 public partial class SignInPage : ContentPage
 {
-    private string _email;
+    public String Password { set; get; }
+
     public SignInPage()
     {
         InitializeComponent();
@@ -26,8 +27,5 @@ public partial class SignInPage : ContentPage
             signInNotice.Text = "Invalid Email";
         }
     }
-
-
-    public String Password { set; get; }
 
 }

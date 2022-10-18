@@ -1,5 +1,6 @@
 using PSI.FileManagers;
 using PSI.Models;
+using PSI.State;
 
 namespace PSI.Views;
 
@@ -77,8 +78,13 @@ public partial class AddLocationView : ContentPage
     {
         List<LocationItem> list = WriteJSON<LocationItem>.readFile(Constants.locationsFilePath);
 
-        var newList = list.Where(l => l.Longitude != _longitude)
-                          .Select(l => l);
+        /*var newList = list.Where(l => l.Longitude != _longitude)
+                          .Select(l => l);*/
+
+        var newList = from item in list
+                      where item.Longitude != _longitude
+                            && item.Latitude != _latitude
+                      select item;
 
         WriteJSON<LocationItem>.write(Constants.locationsFilePath, default, newList.ToList());
         await Shell.Current.GoToAsync("..");

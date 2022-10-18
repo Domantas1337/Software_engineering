@@ -3,12 +3,12 @@ using PSI.Models;
 
 namespace PSI.FileManagers
 {
-    internal class ReadJSON
+    internal class ReadJSON<T>
     {
 
-        public static List<LocationItem> readAllLocations()
+        public static List<T> readAllLocations()
         {
-            List<LocationItem> items;
+            List<T> items;
             if (File.Exists(Constants.locationsFilePath) == false)
             {
                 File.Create(Constants.locationsFilePath);
@@ -17,7 +17,7 @@ namespace PSI.FileManagers
             string json = readStream.ReadToEnd();
             Debug.WriteLine($"Read from {Constants.locationsFilePath}");
             readStream.Close();
-            items = JsonConvert.DeserializeObject<List<LocationItem>>(json)
+            items = JsonConvert.DeserializeObject<List<T>>(json)
                         ?? new();
 
             return items;

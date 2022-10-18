@@ -41,8 +41,8 @@
 
                     <Button CornerRadius="0" HeightRequest="60" TextColor="black" Text="SIGN UP" BackgroundColor="#50C878" FontSize="20" FontAttributes="Bold" />
 
-                    <HorizontalStackLayout Spacing="10">
-                        <Label  FontAttributes="Bold" TextColor="DarkGray" Text="already have a account?" VerticalTextAlignment="Center" />
+                    <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                        <Label  FontAttributes="Bold" TextColor="DarkGray" Text="Already have a account?" VerticalTextAlignment="Center" />
                         <Label  Text="SIGN IN" FontSize="18" 
                            FontAttributes="Bold"
                            TextColor="#50C878" />
