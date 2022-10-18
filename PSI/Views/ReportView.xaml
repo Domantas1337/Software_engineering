@@ -3,8 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PSI.Views.ReportView"
              xmlns:handless="clr-namespace:PSI.Handlers"
+             xmlns:viewmodel="clr-namespace:PSI.ViewModels"
+             xmlns:local="clr-namespace:PSI.Models"
+             x:DataType="viewmodel:ReportViewModel"
              Title="Report">
-    
+
     <ContentPage.Resources>
         <Style TargetType="Label">
             <Setter Property="Margin"
@@ -19,10 +22,10 @@
                     Value="0,5,0,5" />
         </Style>
     </ContentPage.Resources>
-    
+
     <VerticalStackLayout Margin="30" >
         <Label Text="Report Title" />
-        <Entry Text="{Binding Title}" 
+        <Entry Text="{Binding ReportTitle}" 
             Placeholder="Name" />
 
         <Label Text="Report" />
@@ -30,28 +33,32 @@
             Placeholder="Enter your report here"
             HeightRequest="250"
         />
-        
-        
-        
+
+        <DatePicker MinimumDate="2022, 01, 01"
+                    MaximumDate="2025, 12, 31"
+                    Date="{Binding Date}"
+                    />
+
         <Label x:Name="invalidInputMessage" Text=""/>
-        
+
         <HorizontalStackLayout>
-
-
             <Button 
                 Text="Pick Image"
                 FontAttributes="Bold"
                 Grid.Row="1"
-                SemanticProperties.Hint="Allows you to pick a folder on the filesystem"
-                Clicked="OnPickImageClicked"
+                Command="{Binding PickCommand}"
                 HorizontalOptions="Center" />
-            
-            <Button Text="Add Report" 
-                Clicked="OnAddReportButtonClicked"    
-            />
+
+            <Button Text="Add" 
+                    Command="{Binding AddCommand}"
+                    />
             <Button Text="Cancel" 
                 Clicked="OnCancelButtonClicked" 
             />
         </HorizontalStackLayout>
+
+        
     </VerticalStackLayout>
+
+
 </ContentPage>
