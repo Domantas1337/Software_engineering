@@ -63,27 +63,18 @@
         
     </ContentPage.Content>
 
-    <CollectionView
-        SelectionMode="None"
-        ItemsSource="{Binding Items}">
 
-        <CollectionView.ItemTemplate>
-            <DataTemplate x:DataType="local:ReportItem">
-                <SwipeView>
-                    <SwipeView.RightItems>
+    <VerticalStackLayout>
+        <ListView
+            SelectionMode="None"
+            ItemsSource="{Binding Items}"
+        >
 
-                    </SwipeView.RightItems>
-                    <Grid>
-                        <Frame
-                            HeightRequest="100">
+        <ListView.ItemTemplate >
+                <DataTemplate x:DataType="local:ReportItem">
+                    <ViewCell>
 
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer 
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ReportViewModel}}, Path=DetailsCommand}"
-                                    CommandParameter="{Binding Report}"/>
-                            </Frame.GestureRecognizers>
-
-                            <HorizontalStackLayout>
+                        <HorizontalStackLayout>
                                 
                                     <Image 
                                     HeightRequest="100"
@@ -97,12 +88,10 @@
                                        Padding="20,0,0,20"
                                     />
                             </HorizontalStackLayout>
-                        </Frame>
-                    </Grid>
-                </SwipeView>
-
+                        </ViewCell>
+                  
             </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
-
+        </ListView.ItemTemplate>
+    </ListView>
+        </VerticalStackLayout>
 </ContentPage>

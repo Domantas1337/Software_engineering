@@ -34,6 +34,10 @@
             HeightRequest="250"
         />
 
+        <DatePicker MinimumDate="2022, 01, 01"
+                    MaximumDate="2025, 12, 31"
+                    Date="{Binding Date}"
+                    />
 
         <Label x:Name="invalidInputMessage" Text=""/>
 
