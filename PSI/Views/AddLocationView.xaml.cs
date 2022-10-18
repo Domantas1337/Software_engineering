@@ -62,21 +62,21 @@ public partial class AddLocationView : ContentPage
     }
     async void OnSaveButtonClicked(object sender, EventArgs e)
     {
-        LocationItem locatioItem = new LocationItem() {  
+        LocationItem locationItem = new LocationItem() {  
             State = _state, 
             Street = this.Street, 
             City = this.City,
             Longitude = this.Longitude,
             Latitude = this.Latitude
         };
-        WriteJSON<LocationItem>.write(Constants.locationsFilePath, locatioItem);
+        JSONFileManager<LocationItem>.write(Constants.locationsFilePath, locationItem);
 
         await Shell.Current.GoToAsync("..");
     }
 
     async void OnDeleteButtonClicked(object sender, EventArgs e)
     {
-        List<LocationItem> list = WriteJSON<LocationItem>.readFile(Constants.locationsFilePath);
+        List<LocationItem> list = JSONFileManager<LocationItem>.Read(Constants.locationsFilePath);
 
         /*var newList = list.Where(l => l.Longitude != _longitude)
                           .Select(l => l);*/
@@ -86,7 +86,7 @@ public partial class AddLocationView : ContentPage
                             && item.Latitude != _latitude
                       select item;
 
-        WriteJSON<LocationItem>.write(Constants.locationsFilePath, default, newList.ToList());
+        JSONFileManager<LocationItem>.write(Constants.locationsFilePath, default, newList.ToList());
         await Shell.Current.GoToAsync("..");
     }
 

@@ -2,31 +2,37 @@
 using Microsoft.Extensions.DependencyInjection;
 using PSI.Views;
 using PSI.UserAuthentication;
+using PSI.ViewModels;
 
 namespace PSI;
 
 public static class MauiProgram
 {
-	public static MauiApp CreateMauiApp()
-	{
-		var builder = MauiApp.CreateBuilder();
-		builder
-			.UseMauiApp<App>()
-			.ConfigureFonts(fonts =>
-			{
-				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-			});
+    public static MauiApp CreateMauiApp()
+    {
+        var builder = MauiApp.CreateBuilder();
+        builder
+            .UseMauiApp<App>()
+            .ConfigureFonts(fonts =>
+            {
+                fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+                fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+            });
 
         builder.UseMauiCommunityToolkit();
 
-		builder.Services.AddSingleton<MainView>();
-		builder.Services.AddTransient<AddLocationView>();
+        builder.Services.AddSingleton<MainView>();
+        builder.Services.AddSingleton<ReportViewModel>();
+        builder.Services.AddTransient<AddLocationView>();
         builder.Services.AddTransient<SelectionView>();
         builder.Services.AddTransient<ReportView>();
-        builder.Services.AddTransient<SignInPage>();
-        builder.Services.AddTransient<SignUpPage>();
+
+        builder.Services.AddSingleton<SignInPage>();
+        builder.Services.AddSingleton<SignUpPage>();
+
+        builder.Services.AddTransient<ReportDetailPage>();
+        builder.Services.AddTransient<DetailViewModel>();
 
         return builder.Build();
-	}
+    }
 }

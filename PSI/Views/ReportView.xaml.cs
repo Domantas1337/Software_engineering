@@ -1,35 +1,19 @@
+
+using PSI.ViewModels;
+
 namespace PSI.Views;
 
 public partial class ReportView : ContentPage
 {
-	private string _report;
-	public ReportView()
-	{
-		InitializeComponent();
-		BindingContext = this;
-	}
-
-	async void OnCancelButtonClicked(object sender, EventArgs e)
-	{
-        await Shell.Current.GoToAsync("..");
-    }
-
-    public string Report
+    private string _report;
+    public ReportView(ReportViewModel vm)
     {
-        get => _report;
-        set
-        {
-            _report = value;
-
-            if(Regex.IsMatch(_report, "(?i)(shit)|(fuc(k)?)"))
-            {
-                invalidInputMessage.Text = "Curse words are not allowed!";
-            }
-            else
-            {
-                invalidInputMessage.Text = "";
-            }
-
-        }
+        InitializeComponent();
+        BindingContext = vm;
     }
+
+    async void OnCancelButtonClicked(object sender, EventArgs e) => await Shell.Current.GoToAsync("..");
+
+
+
 }

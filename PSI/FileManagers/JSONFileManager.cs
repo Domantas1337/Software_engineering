@@ -6,9 +6,9 @@ using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace PSI.FileManagers
 {
-    internal static class WriteJSON<T>
+    internal static class JSONFileManager<T>
     {
-        public static List<T> readFile(string filePath)
+        public static List<T> Read(string filePath)
         {
             
             List<T> items;
@@ -31,7 +31,7 @@ namespace PSI.FileManagers
         {
             if (items == null)
             {
-                items = readFile(filePath);
+                items = Read(filePath);
                 items.Add(item);
             }
 
