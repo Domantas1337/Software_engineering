@@ -22,7 +22,7 @@ namespace PSI
             }
             return false;
         }
-        public static bool CensorText(this string text)
+        public static bool CensorTextExtension(this string text)
         {
             if (Regex.IsMatch(text, "(?i)(shit)|(fuc(k)?)"))
             {

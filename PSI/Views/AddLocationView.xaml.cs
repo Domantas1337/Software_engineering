@@ -125,5 +125,4 @@ public partial class AddLocationView : ContentPage
         await Shell.Current.GoToAsync("..");
     }
 
-
 }

@@ -5,7 +5,6 @@ namespace PSI.Views;
 
 public partial class ReportView : ContentPage
 {
-    private string _report;
     public ReportView(ReportViewModel vm)
     {
         InitializeComponent();
@@ -13,7 +12,5 @@ public partial class ReportView : ContentPage
     }
 
     async void OnCancelButtonClicked(object sender, EventArgs e) => await Shell.Current.GoToAsync("..");
-
-
 
 }

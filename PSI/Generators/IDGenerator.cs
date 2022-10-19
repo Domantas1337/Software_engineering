@@ -8,7 +8,7 @@ namespace PSI.Generators
 {
     public static class IDGenerator
     {   
-        public static string generateID()
+        public static string GenerateID()
         {
             return Guid.NewGuid().ToString("N");
         }

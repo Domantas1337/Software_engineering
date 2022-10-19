@@ -11,6 +11,7 @@ namespace PSI.ViewModels
 {
     public partial class ReportViewModel : ObservableObject
     {
+        string _report;
 
         public ReportViewModel()
         {
@@ -39,7 +40,7 @@ namespace PSI.ViewModels
         string reportTitle;
 
         [ObservableProperty]
-        string report;
+        string invalidInput;
 
         [RelayCommand]
         async void Add()
@@ -49,7 +50,7 @@ namespace PSI.ViewModels
                 Day = date.Day,
                 Month = date.Month,
                 Year = date.Year,
-                ID = IDGenerator.generateID(),
+                ID = IDGenerator.GenerateID(),
                 Title = this.ReportTitle,
                 Report = this.Report,
                 ImageName = this.FileName
@@ -74,6 +75,7 @@ namespace PSI.ViewModels
             for (int i = 0; i < sorted.Count(); i++)
                 Items.Move(Items.IndexOf(sorted[i]), i);
         }
+
 
         [RelayCommand]
         async void Pick()
@@ -119,10 +121,23 @@ namespace PSI.ViewModels
             }
         }
 
-        [RelayCommand]
-        async Task Details(string s)
+        public string Report
         {
-            await Shell.Current.GoToAsync($"{nameof(ReportDetailPage)}?Text={s}");
+            get { return _report; }
+            set
+            {
+                _report = value;
+
+                if (_report.CensorTextExtension())
+                {
+                    InvalidInput = "Curse words are not allowed!";
+                }
+                else
+                {
+                    InvalidInput = "";
+                }
+
+            }
         }
 
         public string FileName { get; set; }

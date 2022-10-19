@@ -72,11 +72,11 @@
 
         <HorizontalStackLayout Margin="0,20,20,20" Spacing="10">
             <Button Text="Save" 
-                Clicked="OnSaveButtonClicked" />
+                    Clicked="OnSaveButtonClicked" />
             <Button Text="Delete"
-                Clicked="OnDeleteButtonClicked" />
+                    Clicked="OnDeleteButtonClicked" />
             <Button Text="Cancel" 
-                Clicked="OnCancelButtonClicked" />
+                    Clicked="OnCancelButtonClicked" />
         </HorizontalStackLayout>
 
         <Label Text="" 

@@ -10,17 +10,17 @@ public partial class SelectionView : ContentPage
         InitializeComponent();
     }
 
-    async private void somethingClicked(object sender, EventArgs e)
+    async private void SomethingClicked(object sender, EventArgs e)
     {
         AppState.utilityState = UtilityState.Litter;
         await Shell.Current.GoToAsync("..");
     }
-    async private void taromatClicked(object sender, EventArgs e)
+    async private void TaromatClicked(object sender, EventArgs e)
     {
         AppState.utilityState = UtilityState.Taromat;
         await Shell.Current.GoToAsync("..");
     }
-    async private void trashCanClicked(object sender, EventArgs e)
+    async private void TrashCanClicked(object sender, EventArgs e)
     {
         AppState.utilityState = UtilityState.TrashCan;
         await Shell.Current.GoToAsync("..");
