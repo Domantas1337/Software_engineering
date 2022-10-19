@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Core.Extensions;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.VisualBasic;
 using PSI.FileManagers;
@@ -6,6 +7,7 @@ using PSI.Generators;
 using PSI.Models;
 using PSI.Views;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace PSI.ViewModels
 {
@@ -17,13 +19,13 @@ namespace PSI.ViewModels
         {
             Items = new ObservableCollection<ReportItem>();
 
-            List<ReportItem> reportItems = JSONFileManager<ReportItem>.Read(Constants.reportsFilePath);
+            List<ReportItem> reportItems = JSONFileManager<ReportItem>.Read(Constants.ReportsFilePath);
             reportItems.Sort();
 
             for(int i = 0; i < reportItems.Count; i++)
             {
                 ReportItem temporaryItem = reportItems[i];
-                temporaryItem.ImageName = Constants.currentAssemblyPath + @"\" + temporaryItem.ImageName;
+                temporaryItem.ImageName = Constants.CurrentAssemblyPath + @"\" + temporaryItem.ImageName;
                 Items.Add(temporaryItem);
             }
 
@@ -45,7 +47,7 @@ namespace PSI.ViewModels
         [RelayCommand]
         async void Add()
         {
-            ReportItem reportItem = new ReportItem()
+            ReportItem reportItem = new()
             {
                 Day = date.Day,
                 Month = date.Month,
@@ -58,7 +60,7 @@ namespace PSI.ViewModels
 
             Items.Add(reportItem);
 
-            JSONFileManager<ReportItem>.Write(Constants.reportsFilePath, reportItem);
+            JSONFileManager<ReportItem>.Write(Constants.ReportsFilePath, reportItem);
 
             Report = string.Empty;
             ReportTitle = string.Empty;
@@ -71,9 +73,7 @@ namespace PSI.ViewModels
         [RelayCommand]
         void SortItems()
         {
-            List<ReportItem> sorted = Items.OrderBy(x => x).ToList();
-            for (int i = 0; i < sorted.Count(); i++)
-                Items.Move(Items.IndexOf(sorted[i]), i);
+            Items = Items.OrderBy(x => x).ToObservableCollection();
         }
 
 
@@ -85,7 +85,7 @@ namespace PSI.ViewModels
             if (photo != null)
             {
                 // save the file into local storage
-                string localFilePath = Path.Combine(Constants.currentAssemblyPath, photo.FileName);
+                string localFilePath = Path.Combine(Constants.CurrentAssemblyPath, photo.FileName);
 
 
                 using Stream sourceStream = await photo.OpenReadAsync();

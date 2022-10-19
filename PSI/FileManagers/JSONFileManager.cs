@@ -6,7 +6,7 @@ using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace PSI.FileManagers
 {
-    internal static class JSONFileManager<T> where T : struct
+    internal static class JSONFileManager<T>
     {
         public static List<T> Read(string filePath)
         {

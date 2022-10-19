@@ -12,11 +12,11 @@
                BackgroundColor="{x:StaticResource DashboardBackground}"
                Grid.Row="1" 
                VerticalOptions="CenterAndExpand"
-               Margin="0,0,40,0"
+               Margin="40"
                >
             <ScrollView>
                 <VerticalStackLayout Spacing="25">
-                    <Label Text="SIGN IN" FontSize="28" FontAttributes="Bold" />
+                    <Label Text="SIGN UP" FontSize="28" TextColor="black" FontAttributes="Bold" />
 
                     <Frame Padding="10" BorderColor="Transparent" CornerRadius="0">
                         <Grid ColumnDefinitions="25,*" ColumnSpacing="10">
@@ -39,10 +39,10 @@
                         </Grid>
                     </Frame>
 
-                    <Button CornerRadius="0" HeightRequest="60" Text="SIGN UP" BackgroundColor="#50C878" FontSize="20" FontAttributes="Bold" />
+                    <Button CornerRadius="0" HeightRequest="60" TextColor="black" Text="SIGN UP" BackgroundColor="#50C878" FontSize="20" FontAttributes="Bold" />
 
-                    <HorizontalStackLayout Spacing="10">
-                        <Label  FontAttributes="Bold" TextColor="Gray" Text="already have a account?" VerticalTextAlignment="Center" />
+                    <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                        <Label  FontAttributes="Bold" TextColor="DarkGray" Text="Already have a account?" VerticalTextAlignment="Center" />
                         <Label  Text="SIGN IN" FontSize="18" 
                            FontAttributes="Bold"
                            TextColor="#50C878" />
