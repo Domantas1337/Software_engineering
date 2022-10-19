@@ -7,44 +7,21 @@ namespace PSI.Views;
 [QueryProperty(nameof(LocationItem), "Item")]
 public partial class AddLocationView : ContentPage
 {
-
     public LocationItem locationItem;
-    private string _street, _city;
-    private double _longitude, _latitude;
+    private double _longitude, _latitude; 
     private UtilityState _state;
 
-    public string Street
-    { 
-        get => _street; 
-        set{
-            _street = value;
-        }
-    }
-    public string City
-    {
-        get => _city;
-        set
-        {
-            _city = value;
-        }
-    }
-    public double Longitude
-    {
+    public string Street { get; set; }
+    public string City { get; set; }
+    public double Longitude { 
         get => _longitude;
-        set
-        {
-            _longitude = value;
-        }
+        set { _longitude = value; }
     }
     public double Latitude
     {
         get => _latitude;
-        set
-        {
-            _latitude = value;
-        }
+        set { _latitude = value; }
     }
-
     public AddLocationView()
 	{
 		InitializeComponent();
@@ -69,19 +46,20 @@ public partial class AddLocationView : ContentPage
             Longitude = this.Longitude,
             Latitude = this.Latitude
         };
-        JSONFileManager<LocationItem>.write(Constants.locationsFilePath, locatioItem);
+        JSONFileManager<LocationItem>.Write(Constants.locationsFilePath, locatioItem);
 
         await Shell.Current.GoToAsync("..");
     }
 
     async void OnDeleteButtonClicked(object sender, EventArgs e)
     {
-        List<LocationItem> list = JSONFileManager<LocationItem>.read(Constants.locationsFilePath);
+        List<LocationItem> list = JSONFileManager<LocationItem>.Read(Constants.locationsFilePath);
 
-        var newList = list.Where(l => l.Longitude != _longitude)
-                          .Select(l => l);
+        var newList = from item in list
+                      where item.Latitude != _latitude || item.Longitude != _longitude
+                      select item;
 
-        JSONFileManager<LocationItem>.write(Constants.locationsFilePath, default, newList.ToList());
+        JSONFileManager<LocationItem>.Write(Constants.locationsFilePath, default, newList.ToList());
         await Shell.Current.GoToAsync("..");
     }
 
@@ -89,6 +67,5 @@ public partial class AddLocationView : ContentPage
     {
         await Shell.Current.GoToAsync("..");
     }
-
 
 }

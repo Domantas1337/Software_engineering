@@ -6,9 +6,8 @@
              x:DataType="viewmodel:DetailViewModel"
              Title="NewPage1">
     <VerticalStackLayout>
-        <Label 
-            Text="{Binding Text}"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+        <Label Text="{Binding Text}"
+               VerticalOptions="Center" 
+               HorizontalOptions="Center" />
     </VerticalStackLayout>
 </ContentPage>

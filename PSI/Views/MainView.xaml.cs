@@ -11,14 +11,13 @@ public partial class MainView : ContentPage
         InitializeComponent();
         BindingContext = vm;
     }
-    /*
-        public void ApplyQueryAttributes(IDictionary<string, object> query)
-        {
-            ReportItem report = (ReportItem)query["pav"];
 
-            ReportTitle.Text = report.Title;
-        }
-    */
+    public async void GenerateReportPage(object sender, SelectedItemChangedEventArgs args)
+    {
+        ReportItem item = (ReportItem)args.SelectedItem;
+
+        await Shell.Current.GoToAsync($"{nameof(ReportDetailPage)}?Text={item.Report}");
+    }
 
     async void StateButtonClicked(object senderm, EventArgs e) => await Shell.Current.GoToAsync(nameof(SelectionView));
     async void OnAddItemClicked(object sender, EventArgs e) => await Shell.Current.GoToAsync(nameof(AddLocationView));

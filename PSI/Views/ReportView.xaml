@@ -26,12 +26,12 @@
     <VerticalStackLayout Margin="30" >
         <Label Text="Report Title" />
         <Entry Text="{Binding ReportTitle}" 
-            Placeholder="Name" />
+               Placeholder="Name" />
 
         <Label Text="Report" />
         <Editor Text="{Binding Report}"
-            Placeholder="Enter your report here"
-            HeightRequest="250"
+                Placeholder="Enter your report here"
+                HeightRequest="250"
         />
 
         <DatePicker MinimumDate="2022, 01, 01"
@@ -39,26 +39,21 @@
                     Date="{Binding Date}"
                     />
 
-        <Label x:Name="invalidInputMessage" Text=""/>
+        <Label x:Name="InvalidInput" 
+               Text="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ReportViewModel}}, Path=InvalidInput}"/>
 
         <HorizontalStackLayout>
-            <Button 
-                Text="Pick Image"
-                FontAttributes="Bold"
-                Grid.Row="1"
-                Command="{Binding PickCommand}"
-                HorizontalOptions="Center" />
-
+            <Button Text="Pick Image"
+                    FontAttributes="Bold"
+                    Grid.Row="1"
+                    Command="{Binding PickCommand}"
+                    HorizontalOptions="Center" />
             <Button Text="Add" 
-                    Command="{Binding AddCommand}"
-                    />
+                    Command="{Binding AddCommand}" />
             <Button Text="Cancel" 
-                Clicked="OnCancelButtonClicked" 
-            />
+                    Clicked="OnCancelButtonClicked" />
         </HorizontalStackLayout>
 
-        
     </VerticalStackLayout>
-
 
 </ContentPage>

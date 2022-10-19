@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              x:Class="PSI.Views.MainView"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:viewmodel="clr-namespace:PSI.ViewModels"
              xmlns:local="clr-namespace:PSI.Models"
              x:DataType="viewmodel:ReportViewModel"
@@ -53,45 +54,40 @@
                         Text="" FontSize="18" 
                         FontAttributes="Bold"
                         TextColor="#50C878" />
-
-                <HorizontalStackLayout.GestureRecognizers>
-                </HorizontalStackLayout.GestureRecognizers>
-
+                
             </HorizontalStackLayout>
         </VerticalStackLayout>
         
         
     </ContentPage.Content>
 
-
     <VerticalStackLayout>
-        <ListView
-            SelectionMode="None"
-            ItemsSource="{Binding Items}"
-        >
+        <ListView ItemSelected ="GenerateReportPage"
+                  ItemsSource="{Binding Items}">
 
-        <ListView.ItemTemplate >
+            <ListView.ItemTemplate CommandProperty = "{Binding Report}"
+                                   Command ="{Binding Details}">
+                
                 <DataTemplate x:DataType="local:ReportItem">
                     <ViewCell>
 
                         <HorizontalStackLayout>
-                                
-                                    <Image 
-                                    HeightRequest="100"
-                                    Source="{Binding ImageName}" />
-                                <Label 
-                                       Text="{Binding Title}" 
-                                       VerticalOptions="Center"
-                                       HorizontalOptions="Center"
-                                       FontSize="36"
-                                       FontAttributes="Bold"
-                                       Padding="20,0,0,20"
-                                    />
-                            </HorizontalStackLayout>
-                        </ViewCell>
-                  
-            </DataTemplate>
-        </ListView.ItemTemplate>
-    </ListView>
-        </VerticalStackLayout>
+                            <Image HeightRequest="100"
+                                   Source="{Binding ImageName}" />
+                               
+                            <Label Text="{Binding Title}" 
+                                   VerticalOptions="Center"
+                                   HorizontalOptions="Center"
+                                   FontSize="36"
+                                   FontAttributes="Bold"
+                                   Padding="20,0,0,20"
+                                   />
+                        </HorizontalStackLayout>
+                    </ViewCell>
+ 
+                </DataTemplate>
+            </ListView.ItemTemplate>
+           
+        </ListView>
+    </VerticalStackLayout>
 </ContentPage>

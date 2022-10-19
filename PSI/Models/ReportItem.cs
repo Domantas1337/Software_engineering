@@ -22,10 +22,5 @@ namespace PSI.Models
         {
             return this.Title.CompareTo(other.Title);
         }
-
-        public override string ToString()
-        {
-            return Title;
-        }
     }
 }
