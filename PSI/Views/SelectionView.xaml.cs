@@ -10,7 +10,6 @@ public partial class SelectionView : ContentPage
         InitializeComponent();
     }
 
-    // Pakeistiiiiiiiiiiiiiiiiiii
     async private void somethingClicked(object sender, EventArgs e)
     {
         AppState.utilityState = UtilityState.Litter;

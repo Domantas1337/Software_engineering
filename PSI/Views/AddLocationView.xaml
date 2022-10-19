@@ -31,6 +31,7 @@
             <Label Text="Select utility" />
             <Picker 
                     x:Name="picker"
+                    SelectedIndex="0"
                     SelectedIndexChanged="OnSelectedChanged">
                 <Picker.ItemsSource>
                     <x:Array Type="{x:Type x:String}">
@@ -39,6 +40,9 @@
                         <x:String>Litter</x:String>
                     </x:Array>
                 </Picker.ItemsSource>
+                <Picker.SelectedItem>
+                    <x:String>Trash can</x:String>
+                </Picker.SelectedItem>
             </Picker>
         </VerticalStackLayout>
 
@@ -56,13 +60,14 @@
 
         <HorizontalStackLayout Margin="0,20,20,20" Spacing="10">
             <Label Text="Longitude" Margin="0,20,20,10"/>
-            <Entry Text="{Binding Longitude}"
+            <Entry Text="{Binding LongitudeText}"
                    WidthRequest="175"
                    Placeholder="Enter longitude" />
             <Label Text="Latitude" Margin="10,20,20,10"/>
-            <Entry Text="{Binding Latitude}"
+            <Entry Text="{Binding LatitudeText}"
                    WidthRequest="175"
-                   Placeholder="Enter latitude" />
+                   Placeholder="Enter latitude"
+                   />
         </HorizontalStackLayout>
 
         <HorizontalStackLayout Margin="0,20,20,20" Spacing="10">
@@ -73,6 +78,12 @@
             <Button Text="Cancel" 
                 Clicked="OnCancelButtonClicked" />
         </HorizontalStackLayout>
-        
+
+        <Label Text="" 
+                   x:Name="errorMsg"
+                   TextColor="Red"
+                   FontSize="17"
+                   Margin="90,0,0,0"/>
+
     </VerticalStackLayout>
 </ContentPage>

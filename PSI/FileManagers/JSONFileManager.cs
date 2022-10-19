@@ -27,7 +27,7 @@ namespace PSI.FileManagers
 
             return items;
         }
-        public static async void write(string filePath, T item = default, List<T> items = null)
+        public static async void Write(string filePath, T item = default, List<T> items = null)
         {
             if (items == null)
             {
