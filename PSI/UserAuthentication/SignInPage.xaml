@@ -22,18 +22,18 @@
                 <Frame Padding="10" BorderColor="Transparent" CornerRadius="0">
                     <Grid ColumnDefinitions="25,*" ColumnSpacing="10">
                         <Image VerticalOptions="Center" Source="email.png" HeightRequest="25" WidthRequest="25" />
-                        <handless:BorderlessEntry TextChanged="EmailEntered" VerticalOptions="Center" Grid.Column="1" />
+                        <handless:BorderlessEntry VerticalOptions="Center" Grid.Column="1" Text="{Binding Email}" />
                     </Grid>
                 </Frame>
 
                 <Frame Padding="10" BorderColor="Transparent" CornerRadius="0">
                     <Grid ColumnDefinitions="25,*" ColumnSpacing="10">
                         <Image VerticalOptions="Center" Source="password.png" HeightRequest="25" WidthRequest="25" />
-                        <handless:BorderlessEntry Text="{Binding Password}" VerticalOptions="Center" Grid.Column="1" />
+                        <handless:BorderlessEntry Text="{Binding Password}" VerticalOptions="Center" Grid.Column="1" IsPassword="true" />
                     </Grid>
                 </Frame>
 
-                <Button CornerRadius="0" HeightRequest="60" Text="SIGN IN" TextColor="Black" BackgroundColor="#50C878" FontSize="20" FontAttributes="Bold" />
+                <Button CornerRadius="0" HeightRequest="60" Text="SIGN IN" TextColor="Black" BackgroundColor="#50C878" FontSize="20" FontAttributes="Bold"  Clicked="OnSignInClicked"/>
                 <Label FontAttributes="Bold" Text="Forgot Password?" TextColor="DarkGray" HorizontalTextAlignment="Center" />
                 <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
                     <Label  FontAttributes="Bold" TextColor="DarkGray" Text="Don't have account?" VerticalTextAlignment="Center" />

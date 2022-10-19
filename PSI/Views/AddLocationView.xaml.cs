@@ -26,7 +26,6 @@ public partial class AddLocationView : ContentPage
     void OnSelectedChanged(object sender, EventArgs e)
     {
         var picker = (Picker) sender;
-        int selectedIndex = picker.SelectedIndex;
         State = (UtilityState) picker.SelectedIndex;
     }
     async void OnSaveButtonClicked(object sender, EventArgs e)
@@ -84,7 +83,7 @@ public partial class AddLocationView : ContentPage
         }
         else
         {
-            LocationItem locationItem = new LocationItem()
+            LocationItem locationItem = new()
             {
                 State = this.State,
                 Street = this.Street,
@@ -110,7 +109,7 @@ public partial class AddLocationView : ContentPage
 
         var newList = from item in list
                       where item.Longitude != Longitude
-                            && item.Latitude != Longitude
+                            || item.Latitude != Longitude
                       select item;
 
         JSONFileManager<LocationItem>.Write(

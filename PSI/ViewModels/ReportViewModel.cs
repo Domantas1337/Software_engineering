@@ -14,6 +14,25 @@ namespace PSI.ViewModels
     public partial class ReportViewModel : ObservableObject
     {
         string _report;
+        public string Report
+        {
+            get { return _report; }
+            set
+            {
+                _report = value;
+
+                if (_report.CensorTextExtension())
+                {
+                    InvalidInput = "Curse words are not allowed!";
+                }
+                else
+                {
+                    InvalidInput = "";
+                }
+
+            }
+        }
+        public string FileName { get; set; }
 
         public ReportViewModel()
         {
@@ -120,26 +139,5 @@ namespace PSI.ViewModels
                 await sourceStream.CopyToAsync(localFileStream);
             }
         }
-
-        public string Report
-        {
-            get { return _report; }
-            set
-            {
-                _report = value;
-
-                if (_report.CensorTextExtension())
-                {
-                    InvalidInput = "Curse words are not allowed!";
-                }
-                else
-                {
-                    InvalidInput = "";
-                }
-
-            }
-        }
-
-        public string FileName { get; set; }
     }
 }
