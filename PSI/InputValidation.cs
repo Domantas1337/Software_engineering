@@ -9,7 +9,7 @@ namespace PSI
     internal static class InputValidation
     {
 
-        public static bool IsEmail(this string email)
+        public static bool IsEmailExtension(this string email)
         {
             if (Regex.IsMatch (
                 email,
@@ -24,7 +24,11 @@ namespace PSI
         }
         public static bool CensorTextExtension(this string text)
         {
-            if (Regex.IsMatch(text, "(?i)(shit)|(fuc(k)?)"))
+            if (Regex.IsMatch(
+                text,
+                "(?i)(shit)|(fuc(k)?)"
+                )
+            )
             {
                 return true;
             }

@@ -18,7 +18,7 @@ public partial class SignInPage : ContentPage
     {
         string email = ((Entry)sender).Text;
 
-        if (email.isEmailExtension())
+        if (email.IsEmailExtension())
         {
             signInNotice.Text = "";
         }

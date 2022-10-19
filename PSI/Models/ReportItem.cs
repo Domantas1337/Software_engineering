@@ -20,6 +20,14 @@ namespace PSI.Models
 
         public int CompareTo(ReportItem other)
         {
+            if (this.Title == null)
+            {
+                return 1;
+            }
+            if (other.Title == null)
+            {
+                return -1;
+            }
             return this.Title.CompareTo(other.Title);
         }
     }
