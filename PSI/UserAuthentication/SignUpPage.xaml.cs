@@ -3,6 +3,9 @@ using System.Reflection.Metadata.Ecma335;
 using System.Security.Cryptography;
 using PSI.Models;
 using PSI.FileManagers;
+using System.Text;
+using PSI.Database;
+using PSI.Generators;
 
 namespace PSI.UserAuthentication;
 
@@ -12,13 +15,16 @@ public partial class SignUpPage : ContentPage
     public string Password { get; set; }
     public string RepeatPassword { get; set; }
     public string Email { get; set; }
-
     public string ErrorBody { get; set; } = "Invalid:";
 
-    public SignUpPage()
+    public UserDataBase dataBase;
+
+    public SignUpPage(UserDataBase userDataBase)
     {
         InitializeComponent();
         BindingContext = this;
+
+        dataBase = userDataBase;
     }
 
     private async void TapGestureRecognizer_Tapped_For_SignIn(object sender, EventArgs e)
@@ -26,7 +32,7 @@ public partial class SignUpPage : ContentPage
         await Shell.Current.GoToAsync("..");
     }
 
-    public async void OnSignUpClicked(object sender, EventArgs e)
+    async void OnSignUpClicked(object sender, EventArgs e)
     {
         bool errored = false;
         if (!Email.IsEmailExtension())
@@ -36,7 +42,7 @@ public partial class SignUpPage : ContentPage
         }
         if (Password != RepeatPassword)
         {
-            ErrorBody += " password ";
+            ErrorBody += " passwords don't match ";
             errored = true;
         }
         if (errored)
@@ -46,13 +52,12 @@ public partial class SignUpPage : ContentPage
         }
         else
         {
-            SHA512 shaManaged = new SHA512Managed();
-            byte[] result = shaManaged.ComputeHash(Convert.FromBase64String(Password));
             UserDataItem userData = new()
             {
+                Id = IDGenerator.GenerateID(),
                 Name = this.Username,
                 Email = this.Email,
-                PasswordHash = result
+                Password = this.Password
             };
 
             JSONFileManager<UserDataItem>.Write(
@@ -60,6 +65,7 @@ public partial class SignUpPage : ContentPage
                                         filePath: Constants.UsersFilePath
                                         );
 
+            await dataBase.SaveItemAsync(userData);
             await Shell.Current.GoToAsync("..");
         }
     }

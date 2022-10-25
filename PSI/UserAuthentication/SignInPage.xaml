@@ -18,7 +18,9 @@
             <VerticalStackLayout Spacing="25">
                 <Label Text="SIGN IN" TextColor="Black"  FontSize="28" FontAttributes="Bold" />
                 <Label x:Name ="signInNotice"  FontAttributes="Bold" Text="" TextColor="Red" HorizontalTextAlignment="Center" />
-                
+                <Label x:Name ="signedInNotice"  FontAttributes="Bold" Text="" TextColor="Green" HorizontalTextAlignment="Center" />
+
+
                 <Frame Padding="10" BorderColor="Transparent" CornerRadius="0">
                     <Grid ColumnDefinitions="25,*" ColumnSpacing="10">
                         <Image VerticalOptions="Center" Source="email.png" HeightRequest="25" WidthRequest="25" />

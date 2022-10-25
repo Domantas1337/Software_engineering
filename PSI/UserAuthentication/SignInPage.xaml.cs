@@ -1,11 +1,14 @@
 using PSI.FileManagers;
 using PSI.Models;
 using System.Security.Cryptography;
+using System.Text;
 
 namespace PSI.UserAuthentication;
 
 public partial class SignInPage : ContentPage
 {
+
+    public string Name { get; set; }
     public string Password { set; get; }
     public string Email { get; set; }
 
@@ -29,17 +32,21 @@ public partial class SignInPage : ContentPage
         else
         {
             List<UserDataItem> usersData = JSONFileManager<UserDataItem>.Read(Constants.UsersFilePath);
-            SHA512 shaManaged = new SHA512Managed();
-            byte[] result = shaManaged.ComputeHash(Convert.FromBase64String(Password));
-            var newData = (from item in usersData
-                          where item.PasswordHash == result
-                          && item.Email == Email
-                          select item.Name).ToList();
-            if (newData.Count == 1)
+            List<String> newData = (from item in usersData
+                           where item.Email.Equals(Email)
+                           && item.Password.Equals(Password)
+                           select item.Name).ToList();
+            if (newData.Count > 0)
             {
-                signInNotice.Text = newData.First();
+                signedInNotice.Text = newData.First();
+                signInNotice.Text = String.Empty;
             }
-            await Shell.Current.GoToAsync("..");
+                //await Shell.Current.GoToAsync("..");
+            else
+            {
+                signInNotice.Text = "Invalid signin";
+                signedInNotice.Text = String.Empty;
+            }
         }
     }
 }

@@ -8,7 +8,7 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace PSI.Models
 {
-    public struct ReportItem : IComparable<ReportItem>
+    public class ReportItem : IComparable<ReportItem>
     {
         public int Year { get; set; }
         public int Month { get; set; }
