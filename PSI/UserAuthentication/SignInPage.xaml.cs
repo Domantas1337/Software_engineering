@@ -23,7 +23,7 @@ public partial class SignInPage : ContentPage
         await Shell.Current.GoToAsync(nameof(SignUpPage));
     }
 
-    public async void OnSignInClicked(object sender, EventArgs e)
+    public void OnSignInClicked(object sender, EventArgs e)
     {
         if (!Email.IsEmailExtension())
         {
@@ -41,7 +41,6 @@ public partial class SignInPage : ContentPage
                 signedInNotice.Text = newData.First();
                 signInNotice.Text = String.Empty;
             }
-                //await Shell.Current.GoToAsync("..");
             else
             {
                 signInNotice.Text = "Invalid signin";
