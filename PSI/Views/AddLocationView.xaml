@@ -35,15 +35,19 @@
                     SelectedIndexChanged="OnSelectedChanged">
                 <Picker.ItemsSource>
                     <x:Array Type="{x:Type x:String}">
-                        <x:String>Trash can</x:String>
                         <x:String>Taromat</x:String>
+                        <x:String>Trash can</x:String>
                         <x:String>Litter</x:String>
                     </x:Array>
                 </Picker.ItemsSource>
                 <Picker.SelectedItem>
-                    <x:String>Trash can</x:String>
+                    <x:String>Taromat</x:String>
                 </Picker.SelectedItem>
             </Picker>
+        </VerticalStackLayout>
+
+        <VerticalStackLayout x:Name="extraContents">
+
         </VerticalStackLayout>
 
         <VerticalStackLayout>

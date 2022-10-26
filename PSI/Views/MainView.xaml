@@ -19,7 +19,7 @@
             </ToolbarItem.IconImageSource>
         </ToolbarItem>
 
-        <ToolbarItem Text="Anouncament" Clicked="OnReportButtonClicked">
+        <ToolbarItem Text="Report a bug" Clicked="OnReportButtonClicked">
             <ToolbarItem.IconImageSource>
                 <OnPlatform x:TypeArguments="ImageSource">
                     <On Platform="Android, WinUI" Value="bell.png" />
@@ -27,7 +27,7 @@
             </ToolbarItem.IconImageSource>
         </ToolbarItem>
 
-        <ToolbarItem Text="Anouncament" Clicked="StateButtonClicked">
+        <ToolbarItem Text="Select state" Clicked="StateButtonClicked">
             <ToolbarItem.IconImageSource>
                 <OnPlatform x:TypeArguments="ImageSource">
                     <On Platform="Android, WinUI" Value="utility.png"/>
@@ -35,7 +35,7 @@
             </ToolbarItem.IconImageSource>
         </ToolbarItem>
 
-        <ToolbarItem Text="Anouncament" Clicked="OnAuthenticationClicked">
+        <ToolbarItem Text="Authenticate" Clicked="OnAuthenticationClicked">
             <ToolbarItem.IconImageSource>
                 <OnPlatform x:TypeArguments="ImageSource">
                     <On Platform="Android, WinUI" Value="user.png"/>

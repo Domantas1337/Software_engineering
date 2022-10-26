@@ -8,8 +8,8 @@ namespace PSI.State
 {
     public enum UtilityState
     {
-        TrashCan,
         Taromat,
+        TrashCan,
         Litter
     }
 }
