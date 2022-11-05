@@ -36,7 +36,7 @@
                 <Picker.ItemsSource>
                     <x:Array Type="{x:Type x:String}">
                         <x:String>Taromat</x:String>
-                        <x:String>Trash can</x:String>
+                        <x:String>Trash bin</x:String>
                         <x:String>Litter</x:String>
                     </x:Array>
                 </Picker.ItemsSource>
@@ -46,8 +46,23 @@
             </Picker>
         </VerticalStackLayout>
 
-        <VerticalStackLayout x:Name="extraContents">
-
+        <VerticalStackLayout>
+            <VerticalStackLayout x:Name="binDetails" IsVisible="false">
+                <Label Text="Select bin"/>
+                <HorizontalStackLayout
+                    HeightRequest="250"
+                    Spacing="20">
+                    <ImageButton Source="organic.png" x:Name="organicButton"/>
+                    <ImageButton Source="plastic.png" x:Name="plasticButton"/>
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+            <VerticalStackLayout x:Name="details" IsVisible="true">
+                <Label Text="Details"/>
+                <Editor
+                    Text="{Binding Details}"
+                    Placeholder="Enter details"
+                    HeightRequest="250"/>
+            </VerticalStackLayout>
         </VerticalStackLayout>
 
         <VerticalStackLayout>

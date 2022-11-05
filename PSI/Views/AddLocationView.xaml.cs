@@ -1,6 +1,9 @@
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Controls.Platform.Compatibility;
 using PSI.FileManagers;
 using PSI.Models;
 using PSI.State;
+using PSI.States;
 
 namespace PSI.Views;
 
@@ -10,6 +13,7 @@ public partial class AddLocationView : ContentPage
     public String ErrorBody = "Invalid:\n";
     public LocationItem locationItem;
     public UtilityState State = 0;
+    public BinSelectionState selectedBin;
 
     public string Street { get; set; }
     public string City { get; set; }
@@ -17,58 +21,54 @@ public partial class AddLocationView : ContentPage
     public double Longitude { get; set; }
     public string LatitudeText { get; set; }
     public double Latitude { get; set; }
-    public VerticalStackLayout vsl = new()
-    {
-        new Label()
-        {
-            Text = "Details"
-        },
-        new Editor()
-        {
-            Placeholder = "Enter details about littering here",
-            HeightRequest = 250
-        }
-    };
-    public HorizontalStackLayout hsl = new()
-    {
-        HeightRequest = 250
-    };
-    public VerticalStackLayout vslImages = new()
-    {            
-        new Label()
-            {
-                Text = "Details"
-            }
-    };
+    public string Details { get; set; }
+
+    // TODO: make more models that save specific selections
 
     public AddLocationView()
 	{
 		InitializeComponent();
 	    BindingContext = this;
-        ImageButton organicButton = new()
-        {
-            Source = "organic.png",
-            Aspect = Aspect.Fill,
-        };
-        hsl.Add(organicButton);
-        vslImages.Add(hsl);
+        organicButton.Clicked += OnButtonClicked;
+        organicButton.Clicked += (obj, args) => selectedBin = BinSelectionState.Organic;
+        plasticButton.Clicked += OnButtonClicked;
+        plasticButton.Clicked += (obj, args) => selectedBin = BinSelectionState.Plastic;
     }
+
+    void OnButtonClicked(object sender, EventArgs e)
+    {
+        ResetButtons(sender, e);
+        MakeButtonClicked(sender, e);
+    }
+
+    void MakeButtonClicked(object sender, EventArgs e)
+    {
+        ((ImageButton)sender).Scale = 0.8;
+    }
+
+    void ResetButtons(object sender, EventArgs e)
+    {
+        organicButton.Scale = 1;
+        plasticButton.Scale = 1;
+    }
+
     void OnSelectedChanged(object sender, EventArgs e)
     {
         var picker = (Picker) sender;
         State = (UtilityState) picker.SelectedIndex;
-        Debug.WriteLine("changed");
-        if (extraContents != null)
+        if (binDetails == null)
         {
-            extraContents.Remove(vsl);
-            if (State.Equals(UtilityState.Litter))
-            {
-                extraContents.Add(vsl);
-            }
-            if (State.Equals(UtilityState.TrashCan))
-            {
-                extraContents.Add(vslImages);
-            }
+            return;
+        }
+        binDetails.IsVisible = false;
+        details.IsVisible = false;
+        if (State == UtilityState.TrashCan)
+        {
+            binDetails.IsVisible = true;
+        }
+        else if (State == UtilityState.Litter || State == UtilityState.Taromat)
+        {
+            details.IsVisible = true;
         }
     }
     async void OnSaveButtonClicked(object sender, EventArgs e)
