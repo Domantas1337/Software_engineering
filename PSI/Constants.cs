@@ -15,5 +15,7 @@ namespace PSI
 
         public static string UsersJsonName = "users.json";
         public static string UsersFilePath = $"{CurrentAssemblyPath}\\{UsersJsonName}";
+
+        public static string RestUrl = "https://localhost:7067/swagger/";
     }
 }

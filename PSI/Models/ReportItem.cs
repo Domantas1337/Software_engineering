@@ -15,7 +15,7 @@ namespace PSI.Models
         public int Day { get; set; }
         public string ID { get; set; }
         public string Title { get; set; }
-        public string Report { get; set; }
+        public string[] Report { get; set; }
         public string ImageName { get; set;  }
 
         public int CompareTo(ReportItem other)

@@ -9,4 +9,9 @@ public partial class ReportDetailPage : ContentPage
 		InitializeComponent();
 		BindingContext = vm;
 	}
+
+	public void OnReportScrolled(object sender, ScrolledEventArgs e)
+	{
+        Console.WriteLine($"ScrollX: {e.ScrollX}, ScrollY: {e.ScrollY}");
+    }
 }

@@ -13,13 +13,27 @@ namespace PSI.ViewModels
 {
     public partial class ReportViewModel : ObservableObject
     {
+        string[] getReport; 
         string _report;
         public string Report
         {
             get { return _report; }
             set
             {
+
                 _report = value;
+
+
+                string tempString = string.Empty;
+                Debug.WriteLine(_report);
+
+                getReport = _report.Split(
+                    new string[] { "\r\n", "\r", "\n" },
+                    StringSplitOptions.None
+                );
+
+                Debug.WriteLine(getReport.Length);
+
 
                 if (_report.CensorTextExtension())
                 {
@@ -73,7 +87,7 @@ namespace PSI.ViewModels
                 Year = date.Year,
                 ID = IDGenerator.GenerateID(),
                 Title = this.ReportTitle,
-                Report = this.Report,
+                Report = getReport,
                 ImageName = this.FileName
             };
 

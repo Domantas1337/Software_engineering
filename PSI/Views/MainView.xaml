@@ -65,8 +65,7 @@
     </ContentPage.Content>
 
     <VerticalStackLayout>
-        <Label
-                  Text="{Binding Source={RelativeSource AncestorType={x:Type authentication:SignInPage}}, Path=Name}"/>
+        <Label      Text="{Binding Source={RelativeSource AncestorType={x:Type authentication:SignInPage}}, Path=Name}"/>
 
         <ListView ItemSelected ="GenerateReportPage"
                   ItemsSource="{Binding Items}">
