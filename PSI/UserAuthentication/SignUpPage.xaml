@@ -12,37 +12,45 @@
                BackgroundColor="{x:StaticResource DashboardBackground}"
                Grid.Row="1" 
                VerticalOptions="CenterAndExpand"
-               Margin="0,0,40,0"
+               Margin="40"
                >
             <ScrollView>
                 <VerticalStackLayout Spacing="25">
-                    <Label Text="SIGN IN" FontSize="28" FontAttributes="Bold" />
+                    <Label Text="SIGN UP" FontSize="28" TextColor="Black" FontAttributes="Bold" />
+                    <Label x:Name ="signUpNotice"  FontAttributes="Bold" Text="" TextColor="Red" HorizontalTextAlignment="Center" />
 
                     <Frame Padding="10" BorderColor="Transparent" CornerRadius="0">
                         <Grid ColumnDefinitions="25,*" ColumnSpacing="10">
                             <Image VerticalOptions="Center" Source="user.png" HeightRequest="25" WidthRequest="25" />
-                            <handless:BorderlessEntry VerticalOptions="Center" Grid.Column="1" />
+                            <handless:BorderlessEntry VerticalOptions="Center" Grid.Column="1" Text="{Binding Username}" />
                         </Grid>
                     </Frame>
 
                     <Frame Padding="10" BorderColor="Transparent" CornerRadius="0">
                         <Grid ColumnDefinitions="25,*" ColumnSpacing="10">
                             <Image VerticalOptions="Center" Source="email.png" HeightRequest="25" WidthRequest="25" />
-                            <handless:BorderlessEntry VerticalOptions="Center" Grid.Column="1" />
+                            <handless:BorderlessEntry VerticalOptions="Center" Grid.Column="1" Text="{Binding Email}" />
                         </Grid>
                     </Frame>
 
                     <Frame Padding="10" BorderColor="Transparent" CornerRadius="0">
                         <Grid ColumnDefinitions="25,*" ColumnSpacing="10">
                             <Image VerticalOptions="Center" Source="password.png" HeightRequest="25" WidthRequest="25" />
-                            <handless:BorderlessEntry VerticalOptions="Center" Grid.Column="1" />
+                            <handless:BorderlessEntry VerticalOptions="Center" Grid.Column="1" Text="{Binding Password}" />
                         </Grid>
                     </Frame>
 
-                    <Button CornerRadius="0" HeightRequest="60" Text="SIGN UP" BackgroundColor="#50C878" FontSize="20" FontAttributes="Bold" />
+                    <Frame Padding="10" BorderColor="Transparent" CornerRadius="0">
+                        <Grid ColumnDefinitions="25,*" ColumnSpacing="10">
+                            <Image VerticalOptions="Center" Source="password.png" HeightRequest="25" WidthRequest="25" />
+                            <handless:BorderlessEntry VerticalOptions="Center" Grid.Column="1" Text="{Binding RepeatPassword}"/>
+                        </Grid>
+                    </Frame>
 
-                    <HorizontalStackLayout Spacing="10">
-                        <Label  FontAttributes="Bold" TextColor="Gray" Text="already have a account?" VerticalTextAlignment="Center" />
+                    <Button CornerRadius="0" HeightRequest="60" TextColor="Black" Text="SIGN UP" BackgroundColor="#50C878" FontSize="20" FontAttributes="Bold" Clicked="OnSignUpClicked" />
+
+                    <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                        <Label  FontAttributes="Bold" TextColor="DarkGray" Text="Already have a account?" VerticalTextAlignment="Center" />
                         <Label  Text="SIGN IN" FontSize="18" 
                            FontAttributes="Bold"
                            TextColor="#50C878" />

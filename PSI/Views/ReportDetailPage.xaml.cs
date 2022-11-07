@@ -8,5 +8,12 @@ public partial class ReportDetailPage : ContentPage
 	{
 		InitializeComponent();
 		BindingContext = vm;
+
+		Debug.WriteLine("Time on ReportDetailPage: " + vm.currentTime);
 	}
+
+	public void OnReportScrolled(object sender, ScrolledEventArgs e)
+	{
+        Debug.WriteLine($"ScrollX: {e.ScrollX}, ScrollY: {e.ScrollY}");
+    }
 }

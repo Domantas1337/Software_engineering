@@ -4,12 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PSI.State
+namespace PSI.Handlers
 {
-    public enum UtilityState
+    public static class ImageHandler
     {
-        Taromat,
-        TrashCan,
-        Litter
     }
 }

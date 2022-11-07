@@ -9,16 +9,26 @@ namespace PSI
     internal static class InputValidation
     {
 
-        public static bool isEmailExtension(this string email)
+        public static bool IsEmailExtension(this string email)
         {
-            if(Regex.IsMatch(email, @"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z", RegexOptions.IgnoreCase)){
+            if (Regex.IsMatch (
+                email,
+                @"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z",
+                RegexOptions.IgnoreCase
+                )
+            )
+            {
                 return true;
             }
             return false;
         }
         public static bool CensorTextExtension(this string text)
         {
-            if (Regex.IsMatch(text, "(?i)(shit)|(fuc(k)?)"))
+            if (Regex.IsMatch(
+                text,
+                "(?i)(shit)|(fuc(k)?)"
+                )
+            )
             {
                 return true;
             }

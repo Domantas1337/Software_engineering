@@ -25,39 +25,56 @@
         </Style>
     </ContentPage.Resources>
 
-    <VerticalStackLayout Margin="20">
-        <Label Text="Select utility" />
+    <VerticalStackLayout Margin="40" Spacing="30">
 
-        <Picker x:Name="picker"
-                SelectedIndexChanged="OnSelectedChanged" >
-            <Picker.ItemsSource>
-                <x:Array Type="{x:Type x:String}">
-                    <x:String>Trash can</x:String>
+        <VerticalStackLayout>
+            <Label Text="Select utility" />
+            <Picker 
+                    x:Name="picker"
+                    SelectedIndex="0"
+                    SelectedIndexChanged="OnSelectedChanged">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Taromat</x:String>
+                        <x:String>Trash can</x:String>
+                        <x:String>Litter</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+                <Picker.SelectedItem>
                     <x:String>Taromat</x:String>
-                    <x:String>Litter</x:String>
-                </x:Array>
-            </Picker.ItemsSource>
-        </Picker>
+                </Picker.SelectedItem>
+            </Picker>
+        </VerticalStackLayout>
 
-        <Label Text="Street" />
-        <Entry Text="{Binding Street}" 
+        <VerticalStackLayout x:Name="extraContents">
+
+        </VerticalStackLayout>
+
+        <VerticalStackLayout>
+            <Label Text="Street" />
+            <Entry Text="{Binding Street}" 
                Placeholder="Enter street" />
-        <Label Text="City" />
-        <Entry Text="{Binding City}"
-               Placeholder="Enter city" />
-        
-        <HorizontalStackLayout>
+        </VerticalStackLayout>
+
+        <VerticalStackLayout>
+            <Label Text="City" />
+            <Entry Text="{Binding City}"
+                Placeholder="Enter city" />
+        </VerticalStackLayout>
+
+        <HorizontalStackLayout Margin="0,20,20,20" Spacing="10">
             <Label Text="Longitude" Margin="0,20,20,10"/>
-            <Entry Text="{Binding Longitude}"
+            <Entry Text="{Binding LongitudeText}"
                    WidthRequest="175"
                    Placeholder="Enter longitude" />
             <Label Text="Latitude" Margin="10,20,20,10"/>
-            <Entry Text="{Binding Latitude}"
+            <Entry Text="{Binding LatitudeText}"
                    WidthRequest="175"
-                   Placeholder="Enter latitude" />
+                   Placeholder="Enter latitude"
+                   />
         </HorizontalStackLayout>
 
-        <HorizontalStackLayout Margin ="0,20,20,20">
+        <HorizontalStackLayout Margin="0,20,20,20" Spacing="10">
             <Button Text="Save" 
                     Clicked="OnSaveButtonClicked" />
             <Button Text="Delete"
@@ -65,6 +82,12 @@
             <Button Text="Cancel" 
                     Clicked="OnCancelButtonClicked" />
         </HorizontalStackLayout>
-        
+
+        <Label Text="" 
+                   x:Name="errorMsg"
+                   TextColor="Red"
+                   FontSize="17"
+                   Margin="90,0,0,0"/>
+
     </VerticalStackLayout>
 </ContentPage>
