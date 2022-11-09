@@ -2,7 +2,7 @@ using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Platform.Compatibility;
 using PSI.FileManagers;
 using PSI.Models;
-using PSI.States;
+using PSI.State;
 
 namespace PSI.Views;
 

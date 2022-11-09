@@ -45,9 +45,15 @@ namespace PSI.Database
         {
             await Init();
             if (item.Id != "")
+            {
+                Debug.Write(item.Id);
                 return await Database.UpdateAsync(item);
+            }
             else
+            {
+                Debug.Write(item.Id);
                 return await Database.InsertAsync(item);
+            }
         }
 
         public async Task<int> DeleteItemAsync(UserDataItem item)

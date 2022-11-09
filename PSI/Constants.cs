@@ -12,8 +12,17 @@ namespace PSI
 
         public static string ReportsJsonName = "reports.json";
         public static string ReportsFilePath = $"{CurrentAssemblyPath}\\{ReportsJsonName}";
+        public static string CurrentAssemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        
+        public static string LocationsJsonName = "locations.json";
+        public static string LocationsFilePath = $"{CurrentAssemblyPath}\\{LocationsJsonName}";
+
+        public static string ReportsJsonName = "reports.json";
+        public static string ReportsFilePath = $"{CurrentAssemblyPath}\\{ReportsJsonName}";
 
         public static string UsersJsonName = "users.json";
         public static string UsersFilePath = $"{CurrentAssemblyPath}\\{UsersJsonName}";
+
+        public static string RestUrl = "https://localhost:7067/swagger/";
     }
 }

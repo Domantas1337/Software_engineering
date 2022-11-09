@@ -4,10 +4,20 @@
              x:Class="PSI.Views.ReportDetailPage"
              xmlns:viewmodel ="clr-namespace:PSI.ViewModels"
              x:DataType="viewmodel:DetailViewModel"
+             xmlns:local="clr-namespace:PSI.Models"
              Title="NewPage1">
-    <VerticalStackLayout>
-        <Label Text="{Binding Text}"
-               VerticalOptions="Center" 
-               HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    <ScrollView Margin="20" Scrolled = "OnReportScrolled">
+        <StackLayout BindableLayout.ItemsSource="{Binding AReport}">
+            <BindableLayout.ItemTemplate >
+                <DataTemplate>
+                    <StackLayout Orientation="Horizontal">
+                        <Label 
+                               Text = "{Binding .}"
+                               FontSize="24"
+                               VerticalOptions="Center" />
+                    </StackLayout>
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+        </StackLayout>
+    </ScrollView>
 </ContentPage>
