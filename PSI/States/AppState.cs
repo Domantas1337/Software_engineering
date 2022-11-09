@@ -1,11 +1,4 @@
-﻿using PSI.State;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PSI.State
+﻿namespace PSI.States
 {
     internal class AppState
     {
