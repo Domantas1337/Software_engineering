@@ -61,7 +61,7 @@
                 <Editor
                     Text="{Binding Details}"
                     Placeholder="Enter details"
-                    HeightRequest="250"/>
+                    HeightRequest="50"/>
             </VerticalStackLayout>
         </VerticalStackLayout>
 

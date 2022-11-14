@@ -19,7 +19,7 @@ namespace PSIAPI.Migrations
             modelBuilder.Entity("PSIAPI.Models.LocationItem", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("City")
                         .HasColumnType("TEXT");

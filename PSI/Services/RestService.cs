@@ -1,58 +1,174 @@
-﻿using PSI.Models;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
+using System.Threading.Tasks;
+
+
+using PSI.Models;
 using PSI.Services;
 
 namespace PSI.Services
 {
     public class RestService : IRestService
     {
-        HttpClient _client;
-        JsonSerializerOptions _serializerOptions;
+        private readonly HttpClient _httpClient;
+        private readonly string _baseAddress;
+        private readonly string _url;
+        private readonly JsonSerializerOptions _jsonSerializerOptions;
 
-        public List<Car> Items { get; private set; }
-
-        public RestService()
+        public RestService(HttpClient httpClient)
         {
-            _client = new HttpClient();
-            _serializerOptions = new JsonSerializerOptions
+            //_httpClient = new HttpClient();
+            _httpClient = httpClient;
+
+            _baseAddress = DeviceInfo.Platform == DevicePlatform.Android ? "http://10.0.2.2:5209" : "https://localhost:7120";
+            _url = $"{_baseAddress}/api";
+
+            _jsonSerializerOptions = new JsonSerializerOptions
             {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                WriteIndented = true
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             };
         }
 
-        public async Task<List<Car>> RefreshDataAsync()
+
+
+        public async Task AddToDoAsync(LocationItem toDo)
         {
-
-            Debug.WriteLine("WHATT");
-
-            Items = new List<Car>();
-
-            Uri uri = new Uri(string.Format(Constants.RestUrl, string.Empty));
-            Debug.WriteLine("WHATT");
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+            {
+                Debug.WriteLine("---> No internet access...");
+                return;
+            }
 
             try
             {
-                HttpResponseMessage response = null;
+                string jsonToDo = JsonSerializer.Serialize<LocationItem>(toDo, _jsonSerializerOptions);
+                StringContent content = new StringContent(jsonToDo, Encoding.UTF8, "application/json");
 
-                    response = await _client.GetAsync(uri);
+                HttpResponseMessage response = await _httpClient.PostAsync($"{_url}/psi", content).ConfigureAwait(false); ;
+
+
+
                 if (response.IsSuccessStatusCode)
                 {
-                    string content = await response.Content.ReadAsStringAsync();
-                    Items = JsonSerializer.Deserialize<List<Car>>(content, _serializerOptions);
+                    Debug.WriteLine("Successfully created ToDo");
+                }
+                else
+                {
+                    Debug.WriteLine("---> Non Http 2xx2x2xxx response");
+                    Debug.WriteLine("---> Non Http 2xx response");
                 }
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(@"\tERROR {0}", ex.Message);
+                Debug.WriteLine($"Whoops exception: {ex.Message}");
             }
 
-            return Items;
+            return;
+
         }
 
+        public async Task DeleteToDoAsync(int id)
+        {
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+            {
+                Debug.WriteLine("---> No internet access...");
+                return;
+            }
 
+            try
+            {
+                HttpResponseMessage response = await _httpClient.DeleteAsync($"{_url}/psi/{id}");
 
+                if (response.IsSuccessStatusCode)
+                {
+                    Debug.WriteLine("Successfully created ToDo");
+                }
+                else
+                {
+                    Debug.WriteLine("---> Non Http 2xx response");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Whoops exception: {ex.Message}");
+            }
+
+            return;
+        }
+
+        public async Task<List<LocationItem>> GetAllToDosAsync()
+        {
+            List<LocationItem> todos = new List<LocationItem>();
+
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+            {
+                Debug.WriteLine("---> No internet access...");
+                return todos;
+            }
+
+            try
+            {
+                HttpResponseMessage response = await _httpClient.GetAsync($"{_url}/psi");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string content = await response.Content.ReadAsStringAsync();
+
+                    Debug.WriteLine("aaaabcbcbcbc");
+                    var something = Newtonsoft.Json.JsonConvert.DeserializeObject<List<LocationItem>>(content)
+                        ?? new(); 
+
+                    foreach(LocationItem i in something){
+                        Debug.WriteLine(i.City);
+                    }
+                }
+                else
+                {
+                    Debug.WriteLine("---> Non Http 2xx response");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Whoops exception: {ex.Message}");
+            }
+
+            return todos;
+        }
+
+        public async Task UpdateToDoAsync(LocationItem toDo)
+        {
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+            {
+                Debug.WriteLine("---> No internet access...");
+                return;
+            }
+
+            try
+            {
+                string jsonToDo = JsonSerializer.Serialize<LocationItem>(toDo, _jsonSerializerOptions);
+                StringContent content = new StringContent(jsonToDo, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await _httpClient.PutAsync($"{_url}/psi/{toDo.Id}", content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    Debug.WriteLine("Successfully created ToDo");
+                }
+                else
+                {
+                    Debug.WriteLine("---> Non Http 2xx response");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Whoops exception: {ex.Message}");
+            }
+
+            return;
+        }
     }
 }

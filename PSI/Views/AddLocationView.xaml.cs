@@ -2,7 +2,8 @@ using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Platform.Compatibility;
 using PSI.FileManagers;
 using PSI.Models;
-using PSI.State;
+using PSI.Services;
+using PSI.States;
 
 namespace PSI.Views;
 
@@ -24,10 +25,14 @@ public partial class AddLocationView : ContentPage
 
     // TODO: make more models that save specific selections
 
-    public AddLocationView()
-	{
-		InitializeComponent();
-	    BindingContext = this;
+    private readonly IRestService _dataService;
+
+    public AddLocationView(IRestService dataService)
+    {
+        InitializeComponent();
+
+        _dataService = dataService;
+        BindingContext = this;
         organicButton.Clicked += OnButtonClicked;
         organicButton.Clicked += (obj, args) => selectedBin = BinSelectionState.Organic;
         plasticButton.Clicked += OnButtonClicked;
@@ -53,8 +58,8 @@ public partial class AddLocationView : ContentPage
 
     void OnSelectedChanged(object sender, EventArgs e)
     {
-        var picker = (Picker) sender;
-        State = (UtilityState) picker.SelectedIndex;
+        var picker = (Picker)sender;
+        State = (UtilityState)picker.SelectedIndex;
         if (binDetails == null)
         {
             return;
@@ -72,6 +77,8 @@ public partial class AddLocationView : ContentPage
     }
     async void OnSaveButtonClicked(object sender, EventArgs e)
     {
+
+
         bool errored = false;
         if (String.IsNullOrEmpty(Street))
         {
@@ -94,7 +101,8 @@ public partial class AddLocationView : ContentPage
             {
                 Longitude = Double.Parse(LongitudeText);
             }
-            catch (Exception exc) {
+            catch (Exception exc)
+            {
                 ErrorBody += "\n* longitude\n";
                 errored = true;
                 Debug.Write(exc.Message);
@@ -127,6 +135,7 @@ public partial class AddLocationView : ContentPage
         {
             LocationItem locationItem = new()
             {
+                Id = (int)((int)Longitude + Latitude),
                 State = this.State,
                 Street = this.Street,
                 City = this.City,
@@ -137,6 +146,10 @@ public partial class AddLocationView : ContentPage
                                         filePath: Constants.LocationsFilePath,
                                         item: locationItem
                                         );
+
+
+            Debug.WriteLine("---> Add new Item");
+            await _dataService.AddToDoAsync(locationItem);
 
             await Shell.Current.GoToAsync("..");
         }
