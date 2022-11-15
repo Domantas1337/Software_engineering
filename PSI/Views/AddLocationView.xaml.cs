@@ -149,7 +149,7 @@ public partial class AddLocationView : ContentPage
 
 
             Debug.WriteLine("---> Add new Item");
-            await _dataService.AddToDoAsync(locationItem);
+            await _dataService.AddLocationItemAsync(locationItem);
 
             await Shell.Current.GoToAsync("..");
         }

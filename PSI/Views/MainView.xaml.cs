@@ -25,7 +25,7 @@ public partial class MainView : ContentPage
         base.OnAppearing();
 
         Debug.WriteLine("yes");
-        var vars = await _dataService.GetAllToDosAsync();
+        var vars = await _dataService.GetAllLocationItemsAsync();
         
 
     }

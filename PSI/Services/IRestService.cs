@@ -9,9 +9,9 @@ namespace PSI.Services
 {
     public interface IRestService
     {
-        Task<List<LocationItem>> GetAllToDosAsync();
-        Task AddToDoAsync(LocationItem toDo);
-        Task UpdateToDoAsync(LocationItem toDo);
-        Task DeleteToDoAsync(int id);
+        Task<List<LocationItem>> GetAllLocationItemsAsync();
+        Task AddLocationItemAsync(LocationItem locationItem);
+        Task UpdateLocationItemAsync(LocationItem locationItem);
+        Task DeleteLocationItemAsync(int id);
     }
 }
