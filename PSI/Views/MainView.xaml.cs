@@ -11,23 +11,24 @@ public partial class MainView : ContentPage
 {
 
     private readonly IRestService _dataService;
+    public List<LocationItem> locations; 
     public MainView(ReportViewModel vm, IRestService dataService)
     {
         InitializeComponent();
         BindingContext = vm;
 
         _dataService = dataService;
-
     }
 
     protected async override void OnAppearing()
     {
         base.OnAppearing();
 
-        Debug.WriteLine("yes");
-        var vars = await _dataService.GetAllToDosAsync();
-        
-
+        locations = await _dataService.GetAllToDosAsync();
+        for(int i = 0; i < locations.Count; i++)
+        {
+            Debug.WriteLine(locations[i].Street);
+        }
     }
     public async void GenerateReportPage(object sender, SelectedItemChangedEventArgs args)
     {
@@ -41,8 +42,13 @@ public partial class MainView : ContentPage
                                                                 }
         );
     }
-
-    async void StateButtonClicked(object senderm, EventArgs e) => await Shell.Current.GoToAsync(nameof(SelectionView));
+    async void MapButtonClicked(object sender, EventArgs e) => await Shell.Current.GoToAsync(nameof(LocationsView), new Dictionary<string, object>
+                                                                {
+                                                                    {
+                                                                        "Locations", locations
+                                                                    }
+                                                                });
+    async void StateButtonClicked(object sender, EventArgs e) => await Shell.Current.GoToAsync(nameof(SelectionView));
     async void OnAddItemClicked(object sender, EventArgs e) => await Shell.Current.GoToAsync(nameof(AddLocationView));
     async void OnAuthenticationClicked(object sender, EventArgs e) => await Shell.Current.GoToAsync(nameof(SignInPage));
     async void OnReportButtonClicked(object sender, EventArgs e) => await Shell.Current.GoToAsync(nameof(ReportView));

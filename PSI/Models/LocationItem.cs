@@ -17,7 +17,6 @@ namespace PSI.Models
         public string? City { get; set; }
         public double? Longitude { get; set; }
         public double? Latitude { get; set; }
-
         public int Compare(LocationItem x, LocationItem y)
         {
             if (x.Longitude != y.Longitude)

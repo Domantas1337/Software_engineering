@@ -151,6 +151,7 @@ namespace PSI.ViewModels
                 Debug.WriteLine(FileName);
 
                 await sourceStream.CopyToAsync(localFileStream);
+                
             }
         }
     }

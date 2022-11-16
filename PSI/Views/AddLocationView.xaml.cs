@@ -142,10 +142,11 @@ public partial class AddLocationView : ContentPage
                 Longitude = Longitude,
                 Latitude = Latitude
             };
-            JSONFileManager<LocationItem>.Write(
-                                        filePath: Constants.LocationsFilePath,
-                                        item: locationItem
-                                        );
+            
+            // JSONFileManager<LocationItem>.Write(
+            //                            filePath: Constants.LocationsFilePath,
+            //                            item: locationItem
+            //                            );
 
 
             Debug.WriteLine("---> Add new Item");

@@ -5,6 +5,7 @@ using PSI.UserAuthentication;
 using PSI.ViewModels;
 using PSI.Database;
 using PSI.Services;
+using Microsoft.Maui.Controls.Hosting;
 
 namespace PSI;
 
@@ -19,7 +20,9 @@ public static class MauiProgram
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-            });
+            })
+            .UseMauiMaps();
+            
 
         builder.UseMauiCommunityToolkit();
 
@@ -32,6 +35,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<SignInPage>();
         builder.Services.AddSingleton<SignUpPage>();
         builder.Services.AddSingleton<UserDataBase>();
+        builder.Services.AddSingleton<LocationsView>();
 
         builder.Services.AddTransient<ReportDetailPage>();
         builder.Services.AddTransient<DetailViewModel>();
