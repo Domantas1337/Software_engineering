@@ -71,6 +71,37 @@ namespace PSI.Services
 
         }
 
+        public async Task PureAddLocationItemAsync(LocationItem locationItem)
+        {
+            try
+            {
+                string jsonLocationItem = JsonSerializer.Serialize<LocationItem>(locationItem, _jsonSerializerOptions);
+                StringContent content = new(jsonLocationItem, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await _httpClient.PostAsync($"{_url}/psi", content).ConfigureAwait(false); ;
+
+
+
+                if (response.IsSuccessStatusCode)
+                {
+                    Debug.WriteLine("Successfully created locationItem");
+                }
+                else
+                {
+                    Debug.WriteLine("---> Non Http 2xx2x2xxx response");
+                    Debug.WriteLine("---> Non Http 2xx response");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Whoops exception: {ex.Message}");
+            }
+
+            return;
+
+        }
+
+
         public async Task DeleteLocationItemAsync(int id)
         {
             if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
@@ -98,6 +129,40 @@ namespace PSI.Services
             }
 
             return;
+        }
+
+        public async Task<List<LocationItem>> PureGetAllLocationItemsAsync()
+        {
+            List<LocationItem> locationItems = new ();
+
+            try
+            {
+                HttpResponseMessage response = await _httpClient.GetAsync($"{_url}/psi");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string content = await response.Content.ReadAsStringAsync();
+
+                    Debug.WriteLine("aaaabcbcbcbc");
+                    var something = Newtonsoft.Json.JsonConvert.DeserializeObject<List<LocationItem>>(content)
+                        ?? new();
+
+                    foreach (LocationItem i in something)
+                    {
+                        Debug.WriteLine(i.City);
+                    }
+                }
+                else
+                {
+                    Debug.WriteLine("---> Non Http 2xx response");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Whoops exception: {ex.Message}");
+            }
+
+            return locationItems;
         }
 
         public async Task<List<LocationItem>> GetAllLocationItemsAsync()
