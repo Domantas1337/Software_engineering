@@ -38,6 +38,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<LocationsView>();
 
         builder.Services.AddTransient<ReportDetailPage>();
+
         builder.Services.AddTransient<DetailViewModel>();
 
         builder.Services.AddHttpClient<IRestService, RestService>();

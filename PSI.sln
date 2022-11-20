@@ -5,7 +5,9 @@ VisualStudioVersion = 17.0.31611.283
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PSI", "PSI\PSI.csproj", "{B1DE97C5-60E2-4261-A099-4C0DB3A831B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PSIAPI", "PSIAPI\PSIAPI.csproj", "{44B8678B-FE1E-4868-8CBF-19304A7D1650}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PSIAPI", "PSIAPI\PSIAPI.csproj", "{44B8678B-FE1E-4868-8CBF-19304A7D1650}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XUnitTests", "XUnitTests\XUnitTests.csproj", "{C6AED75D-EF91-4642-B114-74FF4D04A6EA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,6 +25,10 @@ Global
 		{44B8678B-FE1E-4868-8CBF-19304A7D1650}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44B8678B-FE1E-4868-8CBF-19304A7D1650}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44B8678B-FE1E-4868-8CBF-19304A7D1650}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6AED75D-EF91-4642-B114-74FF4D04A6EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6AED75D-EF91-4642-B114-74FF4D04A6EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6AED75D-EF91-4642-B114-74FF4D04A6EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6AED75D-EF91-4642-B114-74FF4D04A6EA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

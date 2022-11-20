@@ -52,7 +52,11 @@ namespace PSI.ViewModels
         {
             Items = new ObservableCollection<ReportItem>();
 
-            List<ReportItem> reportItems = JSONFileManager<ReportItem>.Read(Constants.ReportsFilePath);
+            List<ReportItem> reportItems = new List<ReportItem>
+            {
+                new ReportItem() { Day = 1, Month = 2, Year = 2023, ID = "avcd", Title = "Title", ImageName = null }
+            };
+
             reportItems.Sort();
 
             for(int i = 0; i < reportItems.Count; i++)
@@ -151,7 +155,6 @@ namespace PSI.ViewModels
                 Debug.WriteLine(FileName);
 
                 await sourceStream.CopyToAsync(localFileStream);
-                
             }
         }
     }

@@ -4,24 +4,33 @@
              x:Class="PSI.Views.LocationsView"
              xmlns:maps="clr-namespace:Microsoft.Maui.Controls.Maps;assembly=Microsoft.Maui.Controls.Maps"
              xmlns:sensors="clr-namespace:Microsoft.Maui.Devices.Sensors;assembly=Microsoft.Maui.Essentials"
-             xmlns:viewmodel="clr-namespace:PSI.ViewModels"
+             xmlns:viewmodel="clr-namespace:PSI.Views"
              xmlns:local="clr-namespace:PSI.Models"
-             x:DataType="viewmodel:LocationsViewModel"
+             x:DataType="viewmodel:LocationsView"
              Title="MapView"
              >
 
-    <maps:Map 
+    <StackLayout>
+
+        
+
+        <maps:Map 
+            
             x:Name="map"
             IsShowingUser="True"
+            ItemsSource="{Binding Locations}"
         >
-        
-        <maps:Map.ItemTemplate>
-            <DataTemplate>
-                <maps:Pin     Location="{Binding Coords}"
-                              Address="{Binding Streets}"
-                              Label="{Binding Cities}" />
-            </DataTemplate>
-        </maps:Map.ItemTemplate>
+            
+            <maps:Map.ItemTemplate>
+                <DataTemplate x:DataType="local:LocationItem">
+                    <maps:Pin 
+                             
+                              Location="{Binding Position}"
+                              Address="{Binding Street}"
+                              Label="{Binding City}" />
+                </DataTemplate>
+            </maps:Map.ItemTemplate>
 
-    </maps:Map>
+        </maps:Map>
+    </StackLayout>
 </ContentPage>

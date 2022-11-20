@@ -1,5 +1,3 @@
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Controls.Platform.Compatibility;
 using PSI.FileManagers;
 using PSI.Models;
 using PSI.Services;
@@ -142,15 +140,14 @@ public partial class AddLocationView : ContentPage
                 Longitude = Longitude,
                 Latitude = Latitude
             };
-            
-            // JSONFileManager<LocationItem>.Write(
-            //                            filePath: Constants.LocationsFilePath,
-            //                            item: locationItem
-            //                            );
+           // JSONFileManager<LocationItem>.Write(
+           //                             filePath: Constants.LocationsFilePath,
+           //                             item: locationItem
+           //                             );
 
 
             Debug.WriteLine("---> Add new Item");
-            await _dataService.AddToDoAsync(locationItem);
+            await _dataService.AddLocationItemAsync(locationItem);
 
             await Shell.Current.GoToAsync("..");
         }

@@ -33,9 +33,7 @@ namespace PSI.Services
             };
         }
 
-
-
-        public async Task AddToDoAsync(LocationItem toDo)
+        public async Task AddLocationItemAsync(LocationItem locationItem)
         {
             if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
             {
@@ -45,8 +43,8 @@ namespace PSI.Services
 
             try
             {
-                string jsonToDo = JsonSerializer.Serialize<LocationItem>(toDo, _jsonSerializerOptions);
-                StringContent content = new StringContent(jsonToDo, Encoding.UTF8, "application/json");
+                string jsonLocationItem = JsonSerializer.Serialize<LocationItem>(locationItem, _jsonSerializerOptions);
+                StringContent content = new (jsonLocationItem, Encoding.UTF8, "application/json");
 
                 HttpResponseMessage response = await _httpClient.PostAsync($"{_url}/psi", content).ConfigureAwait(false); ;
 
@@ -54,7 +52,7 @@ namespace PSI.Services
 
                 if (response.IsSuccessStatusCode)
                 {
-                    Debug.WriteLine("Successfully created ToDo");
+                    Debug.WriteLine("Successfully created locationItem");
                 }
                 else
                 {
@@ -71,21 +69,44 @@ namespace PSI.Services
 
         }
 
-        public async Task DeleteToDoAsync(int id)
+        public async Task PureAddLocationItemAsync(LocationItem locationItem)
         {
-            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
-            {
-                Debug.WriteLine("---> No internet access...");
-                return;
-            }
-
             try
             {
-                HttpResponseMessage response = await _httpClient.DeleteAsync($"{_url}/psi/{id}");
+                string jsonLocationItem = JsonSerializer.Serialize<LocationItem>(locationItem, _jsonSerializerOptions);
+                StringContent content = new(jsonLocationItem, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await _httpClient.PostAsync($"{_url}/psi", content).ConfigureAwait(false); ;
 
                 if (response.IsSuccessStatusCode)
                 {
-                    Debug.WriteLine("Successfully created ToDo");
+                    Debug.WriteLine("Successfully created locationItem");
+                }
+                else
+                {
+                    Debug.WriteLine("---> Non Http 2xx2x2xxx response");
+                    Debug.WriteLine("---> Non Http 2xx response");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Whoops exception: {ex.Message}");
+            }
+
+            return;
+
+        }
+
+
+        public async Task PureDeleteLocationItemAsync(int id)
+        {
+            try
+            {
+                HttpResponseMessage response = await _httpClient.DeleteAsync($"{_url}/psi/{id}");
+                Debug.WriteLine("kaaa");
+                if (response.IsSuccessStatusCode)
+                {
+                    Debug.WriteLine("Successfully created locationItem");
                 }
                 else
                 {
@@ -100,15 +121,33 @@ namespace PSI.Services
             return;
         }
 
-        public async Task<List<LocationItem>> GetAllToDosAsync()
+        public async Task DeleteLocationItemAsync(int id)
         {
-            List<LocationItem> todos = new List<LocationItem>();
 
-            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+            try
             {
-                Debug.WriteLine("---> No internet access...");
-                return todos;
+                HttpResponseMessage response = await _httpClient.DeleteAsync($"{_url}/psi/{id}");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    Debug.WriteLine("Successfully created locationItem");
+                }
+                else
+                {
+                    Debug.WriteLine("---> Non Http 2xx response");
+                }
             }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Whoops exception: {ex.Message}");
+            }
+
+            return;
+        }
+
+        public async Task<List<LocationItem>> PureGetAllLocationItemsAsync()
+        {
+            List<LocationItem> locationItems = new ();
 
             try
             {
@@ -120,10 +159,11 @@ namespace PSI.Services
 
                     Debug.WriteLine("aaaabcbcbcbc");
                     var something = Newtonsoft.Json.JsonConvert.DeserializeObject<List<LocationItem>>(content)
-                        ?? new(); 
+                        ?? new();
 
-                    foreach(LocationItem i in something){
-                        Debug.WriteLine(i.City);
+                    foreach (LocationItem i in something)
+                    {
+                        locationItems.Add(i);
                     }
                 }
                 else
@@ -136,10 +176,49 @@ namespace PSI.Services
                 Debug.WriteLine($"Whoops exception: {ex.Message}");
             }
 
-            return todos;
+            return locationItems;
         }
 
-        public async Task UpdateToDoAsync(LocationItem toDo)
+        public async Task<List<LocationItem>> GetAllLocationItemsAsync()
+        {
+            List<LocationItem> locationItems = new ();
+
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+            {
+                Debug.WriteLine("---> No internet access...");
+                return locationItems;
+            }
+
+            try
+            {
+                HttpResponseMessage response = await _httpClient.GetAsync($"{_url}/psi");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string content = await response.Content.ReadAsStringAsync();
+
+                    Debug.WriteLine("aaaabcbcbcbc");
+                    var something = Newtonsoft.Json.JsonConvert.DeserializeObject<List<LocationItem>>(content)
+                        ?? new (); 
+
+                    foreach(LocationItem i in something){
+                        locationItems.Add(i);
+                    }
+                }
+                else
+                {
+                    Debug.WriteLine("---> Non Http 2xx response");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Whoops exception: {ex.Message}");
+            }
+
+            return locationItems;
+        }
+
+        public async Task UpdateLocationItemAsync(LocationItem locationItem)
         {
             if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
             {
@@ -149,14 +228,14 @@ namespace PSI.Services
 
             try
             {
-                string jsonToDo = JsonSerializer.Serialize<LocationItem>(toDo, _jsonSerializerOptions);
-                StringContent content = new StringContent(jsonToDo, Encoding.UTF8, "application/json");
+                string jsonLocationItem = JsonSerializer.Serialize<LocationItem>(locationItem, _jsonSerializerOptions);
+                StringContent content = new (jsonLocationItem, Encoding.UTF8, "application/json");
 
-                HttpResponseMessage response = await _httpClient.PutAsync($"{_url}/psi/{toDo.Id}", content);
+                HttpResponseMessage response = await _httpClient.PutAsync($"{_url}/psi/{locationItem.Id}", content);
 
                 if (response.IsSuccessStatusCode)
                 {
-                    Debug.WriteLine("Successfully created ToDo");
+                    Debug.WriteLine("Successfully created locationItem");
                 }
                 else
                 {

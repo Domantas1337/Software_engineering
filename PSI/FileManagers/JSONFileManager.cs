@@ -12,12 +12,11 @@ namespace PSI.FileManagers
         {
             
             List<T> items;
-
+            
             if (File.Exists(filePath) == false)
             {
                 File.Create(filePath);
             }
-
             StreamReader readStream = new(filePath);
             string json = readStream.ReadToEnd();
             Debug.WriteLine($"Read from {filePath}");
@@ -25,7 +24,7 @@ namespace PSI.FileManagers
 
             items = JsonConvert.DeserializeObject<List<T>>(json)
                         ?? new();
-            
+
             return items;
         }
         public static async void Write(string filePath, T item = default, List<T> items = null)
@@ -38,7 +37,6 @@ namespace PSI.FileManagers
 
             await using FileStream createStream = File.Create(filePath);
             await JsonSerializer.SerializeAsync(createStream, items);
-            createStream.Close();
         }
     }
 }
