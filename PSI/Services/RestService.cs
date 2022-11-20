@@ -18,6 +18,11 @@ namespace PSI.Services
         private readonly string _baseAddress;
         private readonly string _url;
         private readonly JsonSerializerOptions _jsonSerializerOptions;
+        private readonly Location currentLocation = new(54.72908271722996, 25.264220631657665);
+
+
+        public event EventHandler<LocationEventArgs> LocationsExist;
+
 
         public RestService(HttpClient httpClient)
         {
@@ -103,7 +108,6 @@ namespace PSI.Services
             try
             {
                 HttpResponseMessage response = await _httpClient.DeleteAsync($"{_url}/psi/{id}");
-                Debug.WriteLine("kaaa");
                 if (response.IsSuccessStatusCode)
                 {
                     Debug.WriteLine("Successfully created locationItem");
@@ -156,8 +160,6 @@ namespace PSI.Services
                 if (response.IsSuccessStatusCode)
                 {
                     string content = await response.Content.ReadAsStringAsync();
-
-                    Debug.WriteLine("aaaabcbcbcbc");
                     var something = Newtonsoft.Json.JsonConvert.DeserializeObject<List<LocationItem>>(content)
                         ?? new();
 
@@ -196,14 +198,38 @@ namespace PSI.Services
                 if (response.IsSuccessStatusCode)
                 {
                     string content = await response.Content.ReadAsStringAsync();
+                    
+                    double distance = 1e9;
+                    LocationItem nearestLocation = default;
 
-                    Debug.WriteLine("aaaabcbcbcbc");
-                    var something = Newtonsoft.Json.JsonConvert.DeserializeObject<List<LocationItem>>(content)
+                    var tempLocations = Newtonsoft.Json.JsonConvert.DeserializeObject<List<LocationItem>>(content)
                         ?? new (); 
 
-                    foreach(LocationItem i in something){
-                        locationItems.Add(i);
+                    foreach(LocationItem item in tempLocations){
+                        Location location = new((double)item.Latitude, (double)item.Longitude);
+
+                        if (location.CalculateDistance(currentLocation, DistanceUnits.Kilometers) < distance) {
+                            distance = location.CalculateDistance(currentLocation, DistanceUnits.Kilometers);
+                            Debug.WriteLine(distance);
+                            nearestLocation = item;
+                        }
+
+                        locationItems.Add(
+                                            new LocationItem()
+                                            {
+                                                Street = item.Street,
+                                                City = item.City,
+                                                Id = item.Id,
+                                                Longitude = item.Longitude,
+                                                Latitude = item.Latitude,
+                                                State = item.State,
+                                                Position = location
+                                            }
+                        );
                     }
+
+                    LocationsExist(this, new LocationEventArgs(nearestLocation, distance));
+
                 }
                 else
                 {

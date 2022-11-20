@@ -3,6 +3,7 @@ using PSI.Models;
 using PSI.States;
 using PSI.ViewModels;
 using System.Collections.ObjectModel;
+using System.Runtime.CompilerServices;
 
 namespace PSI.Views;
 
@@ -14,6 +15,7 @@ public partial class LocationsView : ContentPage
     private bool _isCheckingLocation;
     private Location location;
 
+
     public ObservableCollection<LocationItem> Locations
     {
         get => locations;
@@ -23,6 +25,12 @@ public partial class LocationsView : ContentPage
             OnPropertyChanged();
         }
     }
+
+    protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    {
+
+    }
+
 
     public async Task GetCurrentLocation()
     {
@@ -49,7 +57,6 @@ public partial class LocationsView : ContentPage
             }
             );
 
-            Debug.WriteLine(location);
         }
         // Catch one of the following exceptions:
         //   FeatureNotSupportedException
@@ -88,7 +95,6 @@ public partial class LocationsView : ContentPage
 		{
 			foreach(LocationItem i in Locations)
 			{
-				Debug.WriteLine("aaa" + i.City);
 				if(i.State == 0)
 				{
 					RequestedLocations.Add(i);

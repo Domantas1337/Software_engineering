@@ -1,5 +1,7 @@
+using CommunityToolkit.Maui.Core.Extensions;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Maui.Controls;
+using Microsoft.Maui.Maps;
 using PSI.Models;
 using PSI.Services;
 using PSI.UserAuthentication;
@@ -13,12 +15,16 @@ public partial class MainView : ContentPage
 {
 
     public ObservableCollection<LocationItem> locations;
+    public Location currentLocation = new(54.72908271722996, 25.264220631657665);
     private readonly IRestService _dataService;
-    public MainView(ReportViewModel vm, IRestService dataService)
+    private AddLocationView _addLocationView;
+    public MainView(ReportViewModel vm, AddLocationView addLocationView, IRestService dataService)
     {
         InitializeComponent();
         BindingContext = vm;
 
+        dataService.LocationsExist += OnLocationExists;        
+        
         _dataService = dataService;
     }
 
@@ -26,50 +32,25 @@ public partial class MainView : ContentPage
     {
         base.OnAppearing();
 
+        double distance = 1e9;
+        LocationItem nearestLocation = default;
 
-        Debug.WriteLine("bbbb");
-
-        List<LocationItem> temp = await _dataService.GetAllLocationItemsAsync();
-
-        Debug.WriteLine("prasideda");
-        Debug.WriteLine(temp.Count);
-
-        locations = new ObservableCollection<LocationItem>();
-        foreach (LocationItem item in temp)
+        List<LocationItem> locationList = await _dataService.GetAllLocationItemsAsync();
+        locations = locationList.ToObservableCollection();
+        
+        foreach (LocationItem item in locationList)
         {
-            locations.Add(
-                new LocationItem()
-                {
-                    Street = item.Street,
-                    City = item.City,
-                    Id = item.Id,
-                    Longitude = item.Longitude,
-                    Latitude = item.Latitude,
-                    State = item.State,
-                    Position = new Location((double)item.Latitude, (double)item.Longitude)
-                }
-            );
+            distance = currentLocation.CalculateDistance(item.Position, DistanceUnits.Kilometers) < distance ?
+                       currentLocation.CalculateDistance(item.Position, DistanceUnits.Kilometers) : distance;
+            nearestLocation = item;
         }
 
-        locations.Add(
-                new LocationItem()
-                {
-                    Street = "Street",
-                    City = "City",
-                    Id = 21,
-                    Longitude = 1,
-                    Latitude = 2,
-                    Position = new Location(36.9628066, -122.0194722)
-                }
-            );
 
-
-        Debug.WriteLine("Baigiasi");
-
-        for (int i = 0; i < locations.Count; ++i)
-        {
-            Debug.WriteLine(locations[i].Street + locations[i].Position);
-        }
+    }
+    
+    public  void OnLocationExists(object sender, LocationEventArgs e)
+    {
+        Debug.WriteLine("Answer: " );
     }
     public async void GenerateReportPage(object sender, SelectedItemChangedEventArgs args)
     {

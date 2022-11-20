@@ -25,14 +25,12 @@ namespace PSI.ViewModels
 
 
                 string tempString = string.Empty;
-                Debug.WriteLine(_report);
 
                 getReport = _report.Split(
                     new string[] { "\r\n", "\r", "\n" },
                     StringSplitOptions.None
                 );
 
-                Debug.WriteLine(getReport.Length);
 
 
                 if (_report.CensorTextExtension())
