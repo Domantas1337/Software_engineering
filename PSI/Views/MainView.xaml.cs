@@ -38,19 +38,24 @@ public partial class MainView : ContentPage
         List<LocationItem> locationList = await _dataService.GetAllLocationItemsAsync();
         locations = locationList.ToObservableCollection();
         
-        foreach (LocationItem item in locationList)
+        foreach (LocationItem item in locations)
         {
             distance = currentLocation.CalculateDistance(item.Position, DistanceUnits.Kilometers) < distance ?
                        currentLocation.CalculateDistance(item.Position, DistanceUnits.Kilometers) : distance;
             nearestLocation = item;
+
+            Debug.WriteLine(item.Street + " aaaa");
         }
 
 
+
     }
-    
-    public  void OnLocationExists(object sender, LocationEventArgs e)
+
+    public void OnLocationExists(object sender, LocationEventArgs e)
     {
-        Debug.WriteLine("Answer: " );
+
+        Debug.WriteLine("Answer: " + e.Message);
+
     }
     public async void GenerateReportPage(object sender, SelectedItemChangedEventArgs args)
     {

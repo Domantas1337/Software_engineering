@@ -15,6 +15,8 @@ namespace PSI.ViewModels
     {
         string[] getReport; 
         string _report;
+
+
         public string Report
         {
             get { return _report; }
@@ -30,8 +32,6 @@ namespace PSI.ViewModels
                     new string[] { "\r\n", "\r", "\n" },
                     StringSplitOptions.None
                 );
-
-
 
                 if (_report.CensorTextExtension())
                 {

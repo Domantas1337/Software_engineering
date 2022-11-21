@@ -26,12 +26,6 @@ public partial class LocationsView : ContentPage
         }
     }
 
-    protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-    {
-
-    }
-
-
     public async Task GetCurrentLocation()
     {
         try
@@ -44,18 +38,6 @@ public partial class LocationsView : ContentPage
 
             location = await Geolocation.Default.GetLocationAsync(request, _cancelTokenSource.Token);
 
-
-            Locations.Add(new LocationItem()
-            {
-                Id = 536,
-                Longitude = 12,
-                Latitude = 11,
-                State = 0,
-                Street = "Current",
-                City = "Location",
-                Position = location
-            }
-            );
 
         }
         // Catch one of the following exceptions:
@@ -88,8 +70,6 @@ public partial class LocationsView : ContentPage
 
 		Locations ??= new ObservableCollection<LocationItem>();
 		
-	
-
 		RequestedLocations = new ObservableCollection<LocationItem>();
 		if (Locations != null)
 		{

@@ -21,6 +21,8 @@ namespace PSI.Services
         private readonly Location currentLocation = new(54.72908271722996, 25.264220631657665);
 
 
+        private Lazy<LocationItem> nearestLocation;
+
         public event EventHandler<LocationEventArgs> LocationsExist;
 
 
@@ -58,6 +60,8 @@ namespace PSI.Services
                 if (response.IsSuccessStatusCode)
                 {
                     Debug.WriteLine("Successfully created locationItem");
+                    
+                    LocationsExist(this, new LocationEventArgs(locationItem, locationItem.Position.CalculateDistance(currentLocation, DistanceUnits.Kilometers), "A new litter location near you:"));
                 }
                 else
                 {
@@ -200,35 +204,30 @@ namespace PSI.Services
                     string content = await response.Content.ReadAsStringAsync();
                     
                     double distance = 1e9;
-                    LocationItem nearestLocation = default;
 
                     var tempLocations = Newtonsoft.Json.JsonConvert.DeserializeObject<List<LocationItem>>(content)
                         ?? new (); 
 
                     foreach(LocationItem item in tempLocations){
                         Location location = new((double)item.Latitude, (double)item.Longitude);
+                        
+                        double temporaryDistance = location.CalculateDistance(currentLocation, DistanceUnits.Kilometers);
 
-                        if (location.CalculateDistance(currentLocation, DistanceUnits.Kilometers) < distance) {
+
+                        item.Position = location;
+                        
+                        if (temporaryDistance < distance && temporaryDistance <= 2000000) {
                             distance = location.CalculateDistance(currentLocation, DistanceUnits.Kilometers);
-                            Debug.WriteLine(distance);
-                            nearestLocation = item;
+                           
+                            nearestLocation = new Lazy<LocationItem>(() => item);
+                            
                         }
 
-                        locationItems.Add(
-                                            new LocationItem()
-                                            {
-                                                Street = item.Street,
-                                                City = item.City,
-                                                Id = item.Id,
-                                                Longitude = item.Longitude,
-                                                Latitude = item.Latitude,
-                                                State = item.State,
-                                                Position = location
-                                            }
-                        );
                     }
+                    locationItems = tempLocations;
 
-                    LocationsExist(this, new LocationEventArgs(nearestLocation, distance));
+                    
+                        LocationsExist(this, new LocationEventArgs(nearestLocation.Value, distance, "Litter location near you:"));
 
                 }
                 else

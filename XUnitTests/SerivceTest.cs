@@ -24,7 +24,7 @@ namespace XUnitTests
                 Id = 42,
                 Street = "Wall Street",
                 City = "New York",
-                State = UtilityState.Taromat,
+                State = (PSI.UtilityState)UtilityState.Taromat,
                 Longitude = 11,
                 Latitude = 12
             };
@@ -47,7 +47,7 @@ namespace XUnitTests
                 Id = 42,
                 Street = "Wall Street",
                 City = "New York",
-                State = UtilityState.Taromat,
+                State = (PSI.UtilityState)UtilityState.Taromat,
                 Longitude = 11,
                 Latitude = 12
             };

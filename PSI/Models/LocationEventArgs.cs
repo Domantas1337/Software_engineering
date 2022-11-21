@@ -11,11 +11,11 @@ namespace PSI.Models
     {
         public LocationItem Location;
         public double NearestLocation;
-
-        public LocationEventArgs(LocationItem location, double nearestLocation)
+        public string Message;
+        public LocationEventArgs(LocationItem location, double nearestLocation, string message)
         {
             Location = location;
-            NearestLocation = nearestLocation;
+            NearestLocation = nearestLocation;            Message = message;
         }
     }
 }

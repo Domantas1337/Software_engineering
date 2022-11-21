@@ -8,7 +8,6 @@ namespace PSI.Views;
 [QueryProperty(nameof(LocationItem), "Item")]
 public partial class AddLocationView : ContentPage
 {
-    public event EventHandler<LocationEventArgs> LocationAdded;
     public String ErrorBody = "Invalid:\n";
     public LocationItem locationItem;
     public UtilityState State = 0;
