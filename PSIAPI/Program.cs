@@ -55,9 +55,9 @@ app.MapPut("api/psi/{id}", async (AppDbContext context, string id, LocationItem 
 });
 
 
-app.MapDelete("api/psi/{id}", async(AppDbContext context, string id) =>
+app.MapDelete("api/psi/{id}", async(AppDbContext context, int id) =>
 {
-    var locationItemModel = await context.LocationItems.FirstOrDefaultAsync(t => t.Id.Equals(id));
+    var locationItemModel = await context.LocationItems.FirstOrDefaultAsync(t => t.Id == id);
 
     if (locationItemModel == null)
     {

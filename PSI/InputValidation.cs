@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PSI
 {
-    internal static class InputValidation
+    public static class InputValidation
     {
 
         public static bool IsEmailExtension(this string email)

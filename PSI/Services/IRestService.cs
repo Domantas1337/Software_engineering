@@ -13,5 +13,7 @@ namespace PSI.Services
         Task AddLocationItemAsync(LocationItem locationItem);
         Task UpdateLocationItemAsync(LocationItem locationItem);
         Task DeleteLocationItemAsync(int id);
+
+        event EventHandler<LocationEventArgs> LocationsExist;
     }
 }

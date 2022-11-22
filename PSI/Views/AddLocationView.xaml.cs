@@ -12,6 +12,7 @@ public partial class AddLocationView : ContentPage
     public LocationItem locationItem;
     public UtilityState State = 0;
     public BinSelectionState selectedBin;
+    private readonly Location currentLocation = new(54.72908271722996, 25.264220631657665);
 
     public string Street { get; set; }
     public string City { get; set; }
@@ -139,15 +140,11 @@ public partial class AddLocationView : ContentPage
                 City = this.City,
                 Longitude = Longitude,
                 Latitude = Latitude
+                
             };
-            JSONFileManager<LocationItem>.Write(
-                                        filePath: Constants.LocationsFilePath,
-                                        item: locationItem
-                                        );
-
-
-            Debug.WriteLine("---> Add new Item");
             await _dataService.AddLocationItemAsync(locationItem);
+
+            Location location = new((double)locationItem.Latitude, (double)locationItem.Longitude);
 
             await Shell.Current.GoToAsync("..");
         }

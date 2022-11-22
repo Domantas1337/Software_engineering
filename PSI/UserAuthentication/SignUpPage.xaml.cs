@@ -32,7 +32,7 @@ public partial class SignUpPage : ContentPage
         await Shell.Current.GoToAsync("..");
     }
 
-    async void OnSignUpClicked(object sender, EventArgs e)
+    public async void OnSignUpClicked(object sender, EventArgs e)
     {
         bool errored = false;
         if (!Email.IsEmailExtension())

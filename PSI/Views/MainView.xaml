@@ -11,6 +11,14 @@
 
     <ContentPage.ToolbarItems>
 
+        <ToolbarItem Text="Map" Clicked="MapButtonClicked">
+            <ToolbarItem.IconImageSource>
+                <OnPlatform x:TypeArguments="ImageSource">
+                    <On Platform="Android, WinUI" Value="map.png" />
+                </OnPlatform>
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+
         <ToolbarItem Text="Add Item" Clicked="OnAddItemClicked">
             <ToolbarItem.IconImageSource>
                 <OnPlatform x:TypeArguments="ImageSource">

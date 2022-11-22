@@ -15,6 +15,8 @@ namespace PSI.ViewModels
     {
         string[] getReport; 
         string _report;
+
+
         public string Report
         {
             get { return _report; }
@@ -25,15 +27,11 @@ namespace PSI.ViewModels
 
 
                 string tempString = string.Empty;
-                Debug.WriteLine(_report);
 
                 getReport = _report.Split(
                     new string[] { "\r\n", "\r", "\n" },
                     StringSplitOptions.None
                 );
-
-                Debug.WriteLine(getReport.Length);
-
 
                 if (_report.CensorTextExtension())
                 {
@@ -52,7 +50,11 @@ namespace PSI.ViewModels
         {
             Items = new ObservableCollection<ReportItem>();
 
-            List<ReportItem> reportItems = JSONFileManager<ReportItem>.Read(Constants.ReportsFilePath);
+            List<ReportItem> reportItems = new List<ReportItem>
+            {
+                new ReportItem() { Day = 1, Month = 2, Year = 2023, ID = "avcd", Title = "Title", ImageName = null }
+            };
+
             reportItems.Sort();
 
             for(int i = 0; i < reportItems.Count; i++)

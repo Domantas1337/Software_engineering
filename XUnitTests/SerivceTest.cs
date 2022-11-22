@@ -16,6 +16,28 @@ namespace XUnitTests
         }
 
         [Fact]
+        public async void TestRemoveItem()
+        {
+            RestService restService = new(new HttpClient());
+            LocationItem locationItem = new()
+            {
+                Id = 42,
+                Street = "Wall Street",
+                City = "New York",
+                State = (PSI.UtilityState)UtilityState.Taromat,
+                Longitude = 11,
+                Latitude = 12
+            };
+
+            await restService.PureAddLocationItemAsync(locationItem);
+            await restService.DeleteLocationItemAsync(42);
+            var items = await restService.PureGetAllLocationItemsAsync();
+            var itemsList = items.FindAll(x => x.Id == 42).ToList();
+
+            Assert.True(itemsList.Count == 0);
+        }
+
+        [Fact]
         public async void TestAddItem()
         {
             // ARRANGE
@@ -25,7 +47,7 @@ namespace XUnitTests
                 Id = 42,
                 Street = "Wall Street",
                 City = "New York",
-                State = UtilityState.Taromat,
+                State = (PSI.UtilityState)UtilityState.Taromat,
                 Longitude = 11,
                 Latitude = 12
             };

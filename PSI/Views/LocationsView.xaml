@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PSI.Views.LocationsView"
+             xmlns:maps="clr-namespace:Microsoft.Maui.Controls.Maps;assembly=Microsoft.Maui.Controls.Maps"
+             xmlns:sensors="clr-namespace:Microsoft.Maui.Devices.Sensors;assembly=Microsoft.Maui.Essentials"
+             xmlns:viewmodel="clr-namespace:PSI.Views"
+             xmlns:local="clr-namespace:PSI.Models"
+             x:DataType="viewmodel:LocationsView"
+             Title="MapView"
+             >
+
+    <StackLayout>
+
+        
+
+        <maps:Map 
+            
+            x:Name="map"
+            IsShowingUser="True"
+            ItemsSource="{Binding Locations}"
+        >
+            
+            <maps:Map.ItemTemplate>
+                <DataTemplate x:DataType="local:LocationItem">
+                    <maps:Pin 
+                             
+                              Location="{Binding Position}"
+                              Address="{Binding Street}"
+                              Label="{Binding City}" />
+                </DataTemplate>
+            </maps:Map.ItemTemplate>
+
+        </maps:Map>
+    </StackLayout>
+</ContentPage>
