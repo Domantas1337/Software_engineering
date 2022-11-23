@@ -18,8 +18,8 @@ namespace PSIAPI.Migrations
 
             modelBuilder.Entity("PSIAPI.Models.LocationItem", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Id")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("City")
                         .HasColumnType("TEXT");
@@ -39,23 +39,6 @@ namespace PSIAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("LocationItems");
-                });
-
-            modelBuilder.Entity("PSIAPI.Models.LogItem", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Date")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Details")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("LogItems");
                 });
 #pragma warning restore 612, 618
         }
