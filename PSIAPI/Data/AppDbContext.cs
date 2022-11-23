@@ -6,6 +6,7 @@ namespace PSIAPI.Data
     public class AppDbContext : DbContext
     {
         public DbSet<LocationItem> LocationItems => Set<LocationItem>();
+        public DbSet<LogItem> logItems => Set<LogItem>();
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
 
