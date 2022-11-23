@@ -11,8 +11,10 @@ namespace PSIAPI.Models
 
     public class LogItem {
         [Key]
-        public int? Id { get; set; }
-        public DateTime dateTime { get; set; } = DateTime.Now;
-        public string? exceptionDetails { get; set; }
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+        public string Id { get; set; }
+        public string Date { get; set; }
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+        public string? Details { get; set; }
     }
 }
