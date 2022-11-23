@@ -2,14 +2,12 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using PSIAPI.Data;
-using PSIAPI.Models;
 
 
 
 var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddSingleton<PSIAPI.Interfaces.ILocationRepository, PSIAPI.Services.LocationRepository>();
 builder.Services.AddControllers();
+
 
 
 builder.Services.AddDbContext<AppDbContext>(opt =>
@@ -24,7 +22,6 @@ var configuration = new MapperConfiguration(cfg =>
 var mapper = new Mapper(configuration);
 /*builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());*/
 
-var app = builder.Build();
 
 /*app.UseHttpsRedirection();
 
@@ -106,5 +103,7 @@ app.MapDelete("api/psi/{id}", async (AppDbContext context, string id) =>
     return Results.NoContent();
 });*/
 
+var app = builder.Build();
+app.MapControllers();
 
 app.Run();
