@@ -17,25 +17,25 @@ namespace PSIAPI.Services
 
         public async Task<bool> ExistsAsync(string id)
         {
-            var exists = await _context.LocationItems.AnyAsync(t => t.Id.Equals(id));
+            var exists = await _context.LocationItems.AnyAsync(t => t.ID.Equals(id));
             return exists;
         }
 
         public async Task<LocationItem?> FindAsync(string id)
         {
-            var locationItemModel = await _context.LocationItems.FirstOrDefaultAsync(t => t.Id.Equals(id));
+            var locationItemModel = await _context.LocationItems.FirstOrDefaultAsync(t => t.ID.Equals(id));
             return locationItemModel;
         }
 
-        public async void DeleteAsync(string id)
+        public async Task DeleteAsync(string id)
         {
             _context.Remove(id);
             await _context.SaveChangesAsync();
         }
 
-        public async void AddAsync(LocationItem locationItem)
+        public async Task AddAsync(LocationItem item)
         {
-            await _context.LocationItems.AddAsync(locationItem);
+            await _context.LocationItems.AddAsync(item);
             await _context.SaveChangesAsync();
         }
 
@@ -45,13 +45,13 @@ namespace PSIAPI.Services
             return items;
         }
 
-        public async void UpdateAsync(string id, LocationItem locationItem, LocationItem locationItemModel)
+        public async Task UpdateAsync(LocationItem existingItem, LocationItem item)
         {
-            locationItemModel.State = locationItem.State;
-            locationItemModel.City = locationItem.City;
-            locationItemModel.Street = locationItem.Street;
-            locationItemModel.Longitude = locationItem.Longitude;
-            locationItemModel.Latitude = locationItem.Latitude;
+            existingItem.State = item.State;
+            existingItem.City = item.City;
+            existingItem.Street = item.Street;
+            existingItem.Longitude = item.Longitude;
+            existingItem.Latitude = item.Latitude;
             await _context.SaveChangesAsync();
         }
     }

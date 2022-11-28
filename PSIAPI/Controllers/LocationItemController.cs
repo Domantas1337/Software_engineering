@@ -21,57 +21,72 @@ namespace TodoAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
-            var items = await _context.LocationItems.ToListAsync();
-
+            var items = await _repo.GetAllAsync();
             return Ok(items);
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostAsync(LocationItem locationItem)
+        public async Task<IActionResult> PostAsync([FromBody] LocationItem item)
         {
-            await _context.LocationItems.AddAsync(locationItem);
-
-            await _context.SaveChangesAsync();
-
-            return Created($"api/{_endpointName}/{locationItem.Id}", locationItem);
+            try
+            {
+                if (item == null || !ModelState.IsValid)
+                {
+                    return BadRequest("Invalid item");
+                }
+                bool itemExists = await _repo.ExistsAsync(item.ID);
+                if (itemExists)
+                {
+                    return StatusCode(StatusCodes.Status409Conflict, "Item with ID already exists");
+                }
+                await _repo.AddAsync(item);
+            }
+            catch (Exception)
+            {
+                return BadRequest("Couldn't create item");
+            }
+            return Created($"api/{_endpointName}/{item.ID}", item);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAsync(string id, LocationItem locationItem)
+        public async Task<IActionResult> PutAsync(string id, [FromBody] LocationItem item)
         {
-            var locationItemModel = await _context.LocationItems.FirstOrDefaultAsync(t => t.Id.Equals(id));
-
-            if (locationItemModel == null)
+            try
             {
-                return NotFound();
+                if (item == null || !ModelState.IsValid)
+                {
+                    return BadRequest("Invalid item");
+                }
+                LocationItem existingItem = await _repo.FindAsync(id);
+                if (existingItem == null)
+                {
+                    return NotFound("Item with ID doesn't exist");
+                }
+                await _repo.UpdateAsync(existingItem, item);
             }
-
-            locationItemModel.State = locationItem.State;
-            locationItemModel.City = locationItem.City;
-            locationItemModel.Street = locationItem.Street;
-            locationItemModel.Longitude = locationItem.Longitude;
-            locationItemModel.Latitude = locationItem.Latitude;
-            /*mapper.Map(locationItem, locationItemModel);*/
-
-            await _context.SaveChangesAsync();
-
+            catch (Exception)
+            {
+                return BadRequest("Couldn't update item");
+            }
             return NoContent();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(string id)
         {
-            var locationItemModel = await _context.LocationItems.FirstOrDefaultAsync(t => t.Id.Equals(id));
-
-            if (locationItemModel == null)
+            try
             {
-                return NotFound();
+                var item = _repo.FindAsync(id);
+                if (item == null)
+                {
+                    return NotFound("Item with ID doesn't exist");
+                }
+                await _repo.DeleteAsync(id);
             }
-
-            _context.LocationItems.Remove(locationItemModel);
-
-            await _context.SaveChangesAsync();
-
+            catch (Exception)
+            {
+                return BadRequest("Couldn't delete item");
+            }
             return NoContent();
         }
     }

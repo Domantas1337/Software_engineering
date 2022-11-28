@@ -11,7 +11,7 @@ namespace PSIAPI.Models
 
     public class LogItem {
         [Key]
-        public int Id { get; set; }
+        public string ID { get; set; }
         public string? Date { get; set; }
         public string? Details { get; set; }
     }

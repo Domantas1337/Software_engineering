@@ -11,7 +11,7 @@ namespace PSIAPI.Models
 
     public class LocationItem {
         [Key]
-        public int Id { get; set; }
+        public string ID { get; set; }
         public UtilityState State { get; set; }
         public string? Street { get; set; }
         public string? City { get; set; }
