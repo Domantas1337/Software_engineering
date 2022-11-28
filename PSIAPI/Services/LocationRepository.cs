@@ -52,7 +52,11 @@ namespace PSIAPI.Services
         {
             var locationItem = new LocationItem
             {
+<<<<<<< HEAD
                 Id = new Guid().ToString("N"),
+=======
+                Id = new Guid().ToString(),
+>>>>>>> 6534e38215ff5c7f5b65fc62592d94f7fb06510e
                 State = States.UtilityState.Taromat,
                 City = "TestCity",
                 Street = "Test",

@@ -16,9 +16,15 @@ namespace TodoAPI.Controllers
         private readonly ILocationRepository LocationRepository;
         private readonly AppDbContext _context;
 
+<<<<<<< HEAD
         public LocationItemsController(AppDbContext context, ILocationRepository locationRepository)
         {
             LocationRepository = locationRepository;
+=======
+        public LocationItemsController(AppDbContext context)
+        {
+            LocationRepository = todoRepository;
+>>>>>>> 6534e38215ff5c7f5b65fc62592d94f7fb06510e
             _context = context;
         }
 
@@ -55,7 +61,11 @@ namespace TodoAPI.Controllers
             locationItemModel.Street = locationItem.Street;
             locationItemModel.Longitude = locationItem.Longitude;
             locationItemModel.Latitude = locationItem.Latitude;
+<<<<<<< HEAD
             // mapper.Map(locationItem, locationItemModel);
+=======
+            /*mapper.Map(locationItem, locationItemModel);*/
+>>>>>>> 6534e38215ff5c7f5b65fc62592d94f7fb06510e
 
             await _context.SaveChangesAsync();
 

@@ -38,7 +38,11 @@ namespace PSIAPI.Controllers
         }
 
         [HttpDelete("{id}")]
+<<<<<<< HEAD
         public async Task<IActionResult> DeleteAsync(int id)
+=======
+        public async Task<IActionResult> DeleteAsync(string id)
+>>>>>>> 6534e38215ff5c7f5b65fc62592d94f7fb06510e
         {
             var logItemModel = await _context.LogItems.FirstOrDefaultAsync(t => t.Id.Equals(id));
 
