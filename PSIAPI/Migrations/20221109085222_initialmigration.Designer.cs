@@ -43,6 +43,22 @@ namespace PSIAPI.Migrations
 
                     b.ToTable("LocationItems");
                 });
+
+            modelBuilder.Entity("PSIAPI.Models.LogItem", b =>
+            {
+                b.Property<string>("Id")
+                    .HasColumnType("TEXT");
+
+                b.Property<string>("exceptionDetails")
+                    .HasColumnType("TEXT");
+
+                b.Property<string>("dateTime")
+                   .HasColumnType("TEXT");
+
+                b.HasKey("Id");
+
+                b.ToTable("LogItems");
+            });
 #pragma warning restore 612, 618
         }
     }

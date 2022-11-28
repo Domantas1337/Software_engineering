@@ -25,6 +25,19 @@ namespace PSIAPI.Migrations
                 {
                     table.PrimaryKey("PK_LocationItems", x => x.Id);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "LogItems",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "TEXT", nullable: false),
+                    exceptionDetails = table.Column<string>(type: "TEXT", nullable: true),
+                    dateTime = table.Column<string>(type: "TEXT", nullable: true),
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LogItems", x => x.Id);
+                });
         }
 
         /// <inheritdoc />
@@ -32,6 +45,8 @@ namespace PSIAPI.Migrations
         {
             migrationBuilder.DropTable(
                 name: "LocationItems");
+            migrationBuilder.DropTable(
+                name: "LogItems");
         }
     }
 }

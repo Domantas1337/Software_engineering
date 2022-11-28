@@ -12,7 +12,7 @@ using PSI.Services;
 
 namespace PSI.Services
 {
-    public class RestService : IRestService
+    public class LogRestService
     {
         private readonly HttpClient _httpClient;
         private readonly string _baseAddress;
@@ -23,10 +23,7 @@ namespace PSI.Services
 
         private Lazy<LocationItem> nearestLocation;
 
-        public event EventHandler<LocationEventArgs> LocationsExist;
-
-
-        public RestService(HttpClient httpClient)
+        public LogRestService(HttpClient httpClient)
         {
             //_httpClient = new HttpClient();
             _httpClient = httpClient;
@@ -40,7 +37,7 @@ namespace PSI.Services
             };
         }
 
-        public async Task AddLocationItemAsync(LocationItem locationItem)
+        public async Task AddLocationItemAsync(LogItem logItem)
         {
             if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
             {
@@ -50,10 +47,10 @@ namespace PSI.Services
 
             try
             {
-                string jsonLocationItem = JsonSerializer.Serialize<LocationItem>(locationItem, _jsonSerializerOptions);
-                StringContent content = new (jsonLocationItem, Encoding.UTF8, "application/json");
+                string jsonLocationItem = JsonSerializer.Serialize<LogItem>(logItem, _jsonSerializerOptions);
+                StringContent content = new(jsonLocationItem, Encoding.UTF8, "application/json");
 
-                HttpResponseMessage response = await _httpClient.PostAsync($"{_url}/location", content).ConfigureAwait(false); ;
+                HttpResponseMessage response = await _httpClient.PostAsync($"{_url}/log", content).ConfigureAwait(false); ;
 
 
 
@@ -76,22 +73,20 @@ namespace PSI.Services
 
         }
 
-        public async Task PureAddLocationItemAsync(LocationItem locationItem)
+        public async Task PureAddLocationItemAsync(LogItem logItem)
         {
             try
             {
-                string jsonLocationItem = JsonSerializer.Serialize<LocationItem>(locationItem, _jsonSerializerOptions);
-                StringContent content = new (jsonLocationItem, Encoding.UTF8, "application/json");
+                string jsonLocationItem = JsonSerializer.Serialize<LogItem>(logItem, _jsonSerializerOptions);
+                StringContent content = new(jsonLocationItem, Encoding.UTF8, "application/json");
 
-                HttpResponseMessage response = await _httpClient.PostAsync($"{_url}/location", content).ConfigureAwait(false); ;
+                HttpResponseMessage response = await _httpClient.PostAsync($"{_url}/log", content).ConfigureAwait(false); ;
 
 
 
                 if (response.IsSuccessStatusCode)
                 {
                     Debug.WriteLine("Successfully created locationItem");
-                    
-                    LocationsExist(this, new LocationEventArgs(locationItem, locationItem.Position.CalculateDistance(currentLocation, DistanceUnits.Kilometers), "A new litter location near you:"));
                 }
                 else
                 {
@@ -113,7 +108,7 @@ namespace PSI.Services
         {
             try
             {
-                HttpResponseMessage response = await _httpClient.DeleteAsync($"{_url}/location/{id}");
+                HttpResponseMessage response = await _httpClient.DeleteAsync($"{_url}/log/{id}");
                 if (response.IsSuccessStatusCode)
                 {
                     Debug.WriteLine("Successfully created locationItem");
@@ -136,7 +131,7 @@ namespace PSI.Services
 
             try
             {
-                HttpResponseMessage response = await _httpClient.DeleteAsync($"{_url}/location/{id}");
+                HttpResponseMessage response = await _httpClient.DeleteAsync($"{_url}/log/{id}");
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -155,23 +150,23 @@ namespace PSI.Services
             return;
         }
 
-        public async Task<List<LocationItem>> PureGetAllLocationItemsAsync()
+        public async Task<List<LogItem>> PureGetAllLocationItemsAsync()
         {
-            List<LocationItem> locationItems = new ();
+            List<LogItem> logItems = new();
 
             try
             {
-                HttpResponseMessage response = await _httpClient.GetAsync($"{_url}/location");
+                HttpResponseMessage response = await _httpClient.GetAsync($"{_url}/log");
 
                 if (response.IsSuccessStatusCode)
                 {
                     string content = await response.Content.ReadAsStringAsync();
-                    var something = Newtonsoft.Json.JsonConvert.DeserializeObject<List<LocationItem>>(content)
+                    var something = Newtonsoft.Json.JsonConvert.DeserializeObject<List<LogItem>>(content)
                         ?? new();
 
-                    foreach (LocationItem i in something)
+                    foreach (LogItem i in something)
                     {
-                        locationItems.Add(i);
+                        logItems.Add(i);
                     }
                 }
                 else
@@ -184,17 +179,17 @@ namespace PSI.Services
                 Debug.WriteLine($"Whoops exception: {ex.Message}");
             }
 
-            return locationItems;
+            return logItems;
         }
 
-        public async Task<List<LocationItem>> GetAllLocationItemsAsync()
+        public async Task<List<LogItem>> GetAllLocationItemsAsync()
         {
-            List<LocationItem> locationItems = new ();
+            List<LogItem> logItems = new();
 
             if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
             {
                 Debug.WriteLine("---> No internet access...");
-                return locationItems;
+                return logItems;
             }
 
             try
@@ -204,32 +199,14 @@ namespace PSI.Services
                 if (response.IsSuccessStatusCode)
                 {
                     string content = await response.Content.ReadAsStringAsync();
-                    
+
                     double distance = 1e9;
 
-                    var tempLocations = Newtonsoft.Json.JsonConvert.DeserializeObject<List<LocationItem>>(content)
-                        ?? new (); 
+                    var tempLocations = Newtonsoft.Json.JsonConvert.DeserializeObject<List<LogItem>>(content)
+                        ?? new();
 
-                    foreach(LocationItem item in tempLocations){
-                        Location location = new((double)item.Latitude, (double)item.Longitude);
-                        
-                        double temporaryDistance = location.CalculateDistance(currentLocation, DistanceUnits.Kilometers);
+                    logItems = tempLocations;                    
 
-
-                        item.Position = location;
-                        
-                        if (temporaryDistance < distance && temporaryDistance <= 2000000) {
-                            distance = location.CalculateDistance(currentLocation, DistanceUnits.Kilometers);
-                           
-                            nearestLocation = new Lazy<LocationItem>(() => item);
-                            
-                        }
-
-                    }
-                    locationItems = tempLocations;
-
-                    
-                        LocationsExist(this, new LocationEventArgs(nearestLocation.Value, distance, "Litter location near you:"));
 
                 }
                 else
@@ -242,10 +219,10 @@ namespace PSI.Services
                 Debug.WriteLine($"Whoops exception: {ex.Message}");
             }
 
-            return locationItems;
+            return logItems;
         }
 
-        public async Task UpdateLocationItemAsync(LocationItem locationItem)
+        public async Task UpdateLocationItemAsync(LogItem logItem)
         {
             if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
             {
@@ -255,10 +232,10 @@ namespace PSI.Services
 
             try
             {
-                string jsonLocationItem = JsonSerializer.Serialize<LocationItem>(locationItem, _jsonSerializerOptions);
-                StringContent content = new (jsonLocationItem, Encoding.UTF8, "application/json");
+                string jsonLocationItem = JsonSerializer.Serialize<LogItem>(logItem, _jsonSerializerOptions);
+                StringContent content = new(jsonLocationItem, Encoding.UTF8, "application/json");
 
-                HttpResponseMessage response = await _httpClient.PutAsync($"{_url}/location/{locationItem.Id}", content);
+                HttpResponseMessage response = await _httpClient.PutAsync($"{_url}/log/{logItem.Id}", content);
 
                 if (response.IsSuccessStatusCode)
                 {

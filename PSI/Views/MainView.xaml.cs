@@ -17,14 +17,17 @@ public partial class MainView : ContentPage
     public ObservableCollection<LocationItem> locations;
     public Location currentLocation = new(54.72908271722996, 25.264220631657665);
     private readonly IRestService _dataService;
+    private readonly LogRestService _logRestService;
+
     private AddLocationView _addLocationView;
-    public MainView(ReportViewModel vm, AddLocationView addLocationView, IRestService dataService)
+    public MainView(ReportViewModel vm, AddLocationView addLocationView, IRestService dataService, LogRestService logRestService)
     {
         InitializeComponent();
         BindingContext = vm;
 
-        dataService.LocationsExist += OnLocationExists;        
-        
+        dataService.LocationsExist += OnLocationExists;
+
+        _logRestService = logRestService;
         _dataService = dataService;
     }
 
@@ -47,7 +50,15 @@ public partial class MainView : ContentPage
             Debug.WriteLine(item.Street + " aaaa");
         }
 
+        int y = 0;
 
+        try
+        {
+            int x = 2 / y;
+        }catch(Exception ex)
+        {
+            _logRestService.AddLocationItemAsync(new LogItem() { dateTime = new DateTime().ToString(), Id = new Guid().ToString("N"), exceptionDetails = ex.Message });
+        }
 
     }
 

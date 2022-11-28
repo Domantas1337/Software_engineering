@@ -42,6 +42,7 @@ public static class MauiProgram
         builder.Services.AddTransient<DetailViewModel>();
 
         builder.Services.AddHttpClient<IRestService, RestService>();
+        builder.Services.AddHttpClient<LogRestService>();
 
 
         return builder.Build();

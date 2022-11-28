@@ -2,20 +2,17 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using PSIAPI.Data;
-<<<<<<< HEAD
 using PSIAPI.Interfaces;
 
 using PSIAPI.Models;
-=======
->>>>>>> 6534e38215ff5c7f5b65fc62592d94f7fb06510e
 
 
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddControllers();
-
 
 builder.Services.AddSingleton<ILocationRepository, PSIAPI.Services.LocationRepository>();
+builder.Services.AddSingleton<ILogRepository, PSIAPI.Services.LogRepository>();
+
 builder.Services.AddControllers();
 
 builder.Services.AddDbContext<AppDbContext>(opt =>
@@ -23,32 +20,17 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
     opt.UseSqlite(builder.Configuration.GetConnectionString("SqliteConnection"));
 });
 
-<<<<<<< HEAD
 
 /*builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());*/
 var app = builder.Build();
-=======
-var configuration = new MapperConfiguration(cfg =>
-{
-    cfg.CreateMap<LocationItem, LocationItem>();
-});
-var mapper = new Mapper(configuration);
-/*builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());*/
->>>>>>> 6534e38215ff5c7f5b65fc62592d94f7fb06510e
 
 
 /*app.UseHttpsRedirection();
 
-<<<<<<< HEAD
 app.UseAuthorization();
 
 app.MapControllers();
 */
-=======
-app.UseAuthorization();*/
-
-app.MapControllers();
->>>>>>> 6534e38215ff5c7f5b65fc62592d94f7fb06510e
 
 
 /*app.MapGet("api/psi", async (AppDbContext context) =>
@@ -124,10 +106,6 @@ app.MapDelete("api/psi/{id}", async (AppDbContext context, string id) =>
     return Results.NoContent();
 });*/
 
-<<<<<<< HEAD
-=======
-var app = builder.Build();
->>>>>>> 6534e38215ff5c7f5b65fc62592d94f7fb06510e
 app.MapControllers();
 
 app.Run();
