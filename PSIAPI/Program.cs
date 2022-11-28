@@ -2,7 +2,7 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using PSIAPI.Data;
-
+using PSIAPI.Models;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,11 +15,11 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
     opt.UseSqlite(builder.Configuration.GetConnectionString("SqliteConnection"));
 });
 
-var configuration = new MapperConfiguration(cfg =>
+/*var configuration = new MapperConfiguration(cfg =>
 {
     cfg.CreateMap<LocationItem, LocationItem>();
 });
-var mapper = new Mapper(configuration);
+var mapper = new Mapper(configuration);*/
 /*builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());*/
 
 
@@ -27,10 +27,12 @@ var mapper = new Mapper(configuration);
 
 app.UseAuthorization();*/
 
+
+var app = builder.Build();
 app.MapControllers();
 
 
-/*app.MapGet("api/psi", async (AppDbContext context) =>
+app.MapGet("api/psi", async (AppDbContext context) =>
 {
     var items = await context.LocationItems.ToListAsync();
 
@@ -47,24 +49,6 @@ app.MapPost("api/psi", async (AppDbContext context, LocationItem locationItem) =
     return Results.Created($"api/psi/{locationItem.Id}", locationItem);
 });
 
-app.MapGet("api/log", async (AppDbContext context) =>
-{
-    var items = await context.LogItems.ToListAsync();
-
-    return Results.Ok(items);
-});
-
-
-app.MapPost("api/log", async (AppDbContext context, LogItem logItem) =>
-{
-    await context.LogItems.AddAsync(logItem);
-
-    await context.SaveChangesAsync();
-
-    return Results.Created($"api/log/{logItem.Id}", logItem);
-});
-
-
 app.MapPut("api/psi/{id}", async (AppDbContext context, string id, LocationItem locationItem) =>
 {
     var locationItemModel = await context.LocationItems.FirstOrDefaultAsync(t => t.Id.Equals(id));
@@ -74,12 +58,11 @@ app.MapPut("api/psi/{id}", async (AppDbContext context, string id, LocationItem 
         return Results.NotFound();
     }
 
-*//*    locationItemModel.State = locationItem.State;
+    locationItemModel.State = locationItem.State;
     locationItemModel.City = locationItem.City;
     locationItemModel.Street = locationItem.Street;
     locationItemModel.Longitude = locationItem.Longitude;
-    locationItemModel.Latitude = locationItem.Latitude;*//*
-    mapper.Map(locationItem, locationItemModel);
+    locationItemModel.Latitude = locationItem.Latitude;
 
     await context.SaveChangesAsync();
 
@@ -101,9 +84,6 @@ app.MapDelete("api/psi/{id}", async (AppDbContext context, string id) =>
     await context.SaveChangesAsync();
 
     return Results.NoContent();
-});*/
-
-var app = builder.Build();
-app.MapControllers();
+});
 
 app.Run();

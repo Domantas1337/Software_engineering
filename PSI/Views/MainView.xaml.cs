@@ -16,9 +16,9 @@ public partial class MainView : ContentPage
 
     public ObservableCollection<LocationItem> locations;
     public Location currentLocation = new(54.72908271722996, 25.264220631657665);
-    private readonly IRestService _dataService;
-    private AddLocationView _addLocationView;
-    public MainView(ReportViewModel vm, AddLocationView addLocationView, IRestService dataService)
+    private readonly ILocationService _dataService;
+    private  readonly AddLocationView _addLocationView;
+    public MainView(ReportViewModel vm, AddLocationView addLocationView, ILocationService dataService)
     {
         InitializeComponent();
         BindingContext = vm;

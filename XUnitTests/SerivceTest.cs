@@ -18,7 +18,7 @@ namespace XUnitTests
         [Fact]
         public async void TestRemoveItem()
         {
-            RestService restService = new(new HttpClient());
+            LocationService restService = new(new HttpClient());
             LocationItem locationItem = new()
             {
                 Id = 42,
@@ -41,7 +41,7 @@ namespace XUnitTests
         public async void TestAddItem()
         {
             // ARRANGE
-            RestService restService = new(new HttpClient());
+            LocationService restService = new(new HttpClient());
             LocationItem locationItem = new ()
             {
                 Id = 42,

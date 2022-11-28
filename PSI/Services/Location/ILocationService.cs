@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PSI.Services
 {
-    public interface IRestService
+    public interface ILocationService
     {
         Task<List<LocationItem>> GetAllLocationItemsAsync();
         Task AddLocationItemAsync(LocationItem locationItem);

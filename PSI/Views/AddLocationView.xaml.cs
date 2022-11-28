@@ -24,9 +24,9 @@ public partial class AddLocationView : ContentPage
 
     // TODO: make more models that save specific selections
 
-    private readonly IRestService _dataService;
+    private readonly ILocationService _dataService;
 
-    public AddLocationView(IRestService dataService)
+    public AddLocationView(ILocationService dataService)
     {
         InitializeComponent();
 

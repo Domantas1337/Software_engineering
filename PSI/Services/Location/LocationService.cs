@@ -12,7 +12,7 @@ using PSI.Services;
 
 namespace PSI.Services
 {
-    public class RestService : IRestService
+    public class LocationService : ILocationService
     {
         private readonly HttpClient _httpClient;
         private readonly string _baseAddress;
@@ -26,7 +26,7 @@ namespace PSI.Services
         public event EventHandler<LocationEventArgs> LocationsExist;
 
 
-        public RestService(HttpClient httpClient)
+        public LocationService(HttpClient httpClient)
         {
             //_httpClient = new HttpClient();
             _httpClient = httpClient;

@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PSIAPI.Data;
-using PSIAPI.Interfaces;
 using PSIAPI.Models;
-using SQLitePCL;
 
 namespace TodoAPI.Controllers
 {
@@ -13,12 +11,10 @@ namespace TodoAPI.Controllers
     public class LocationItemsController : ControllerBase
     {
         private const string _endpointName = "location";
-        private readonly ILocationRepository LocationRepository;
         private readonly AppDbContext _context;
 
         public LocationItemsController(AppDbContext context)
         {
-            LocationRepository = todoRepository;
             _context = context;
         }
 

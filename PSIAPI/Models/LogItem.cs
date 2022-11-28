@@ -11,8 +11,8 @@ namespace PSIAPI.Models
 
     public class LogItem {
         [Key]
-        public int? Id { get; set; }
-        public DateTime dateTime { get; set; } = DateTime.Now;
-        public string? exceptionDetails { get; set; }
+        public int Id { get; set; }
+        public string? Date { get; set; }
+        public string? Details { get; set; }
     }
 }

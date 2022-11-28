@@ -10,8 +10,8 @@ using PSIAPI.Data;
 namespace PSIAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20221109085222_initialmigration")]
-    partial class initialmigration
+    [Migration("20221128123111_LocationLogMigration")]
+    partial class LocationLogMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -22,6 +22,7 @@ namespace PSIAPI.Migrations
             modelBuilder.Entity("PSIAPI.Models.LocationItem", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("City")
@@ -42,6 +43,23 @@ namespace PSIAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("LocationItems");
+                });
+
+            modelBuilder.Entity("PSIAPI.Models.LogItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Date")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Details")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LogItems");
                 });
 #pragma warning restore 612, 618
         }
