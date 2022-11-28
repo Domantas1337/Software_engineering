@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using PSIAPI.Data;
+using PSIAPI.Interfaces;
 using PSIAPI.Models;
 
 namespace TodoAPI.Controllers
@@ -11,11 +11,11 @@ namespace TodoAPI.Controllers
     public class LocationItemsController : ControllerBase
     {
         private const string _endpointName = "location";
-        private readonly AppDbContext _context;
+        private readonly ILocationItemRepository _repo;
 
-        public LocationItemsController(AppDbContext context)
+        public LocationItemsController(ILocationItemRepository repo)
         {
-            _context = context;
+            _repo = repo;
         }
 
         [HttpGet]
