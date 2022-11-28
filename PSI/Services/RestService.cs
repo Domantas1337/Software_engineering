@@ -60,8 +60,6 @@ namespace PSI.Services
                 if (response.IsSuccessStatusCode)
                 {
                     Debug.WriteLine("Successfully created locationItem");
-                    
-                    LocationsExist(this, new LocationEventArgs(locationItem, locationItem.Position.CalculateDistance(currentLocation, DistanceUnits.Kilometers), "A new litter location near you:"));
                 }
                 else
                 {
@@ -83,13 +81,17 @@ namespace PSI.Services
             try
             {
                 string jsonLocationItem = JsonSerializer.Serialize<LocationItem>(locationItem, _jsonSerializerOptions);
-                StringContent content = new(jsonLocationItem, Encoding.UTF8, "application/json");
+                StringContent content = new (jsonLocationItem, Encoding.UTF8, "application/json");
 
                 HttpResponseMessage response = await _httpClient.PostAsync($"{_url}/psi", content).ConfigureAwait(false); ;
+
+
 
                 if (response.IsSuccessStatusCode)
                 {
                     Debug.WriteLine("Successfully created locationItem");
+                    
+                    LocationsExist(this, new LocationEventArgs(locationItem, locationItem.Position.CalculateDistance(currentLocation, DistanceUnits.Kilometers), "A new litter location near you:"));
                 }
                 else
                 {
@@ -107,7 +109,7 @@ namespace PSI.Services
         }
 
 
-        public async Task PureDeleteLocationItemAsync(int id)
+        public async Task PureDeleteLocationItemAsync(string id)
         {
             try
             {
@@ -129,7 +131,7 @@ namespace PSI.Services
             return;
         }
 
-        public async Task DeleteLocationItemAsync(int id)
+        public async Task DeleteLocationItemAsync(string id)
         {
 
             try
@@ -197,7 +199,7 @@ namespace PSI.Services
 
             try
             {
-                HttpResponseMessage response = await _httpClient.GetAsync($"{_url}/psi");
+                HttpResponseMessage response = await _httpClient.GetAsync($"{_url}/location");
 
                 if (response.IsSuccessStatusCode)
                 {

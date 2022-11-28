@@ -134,7 +134,7 @@ public partial class AddLocationView : ContentPage
         {
             LocationItem locationItem = new()
             {
-                Id = (int)((int)Longitude + Latitude),
+                Id = new Guid().ToString("N"),
                 State = this.State,
                 Street = this.Street,
                 City = this.City,

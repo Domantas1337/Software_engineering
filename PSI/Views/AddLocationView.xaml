@@ -80,7 +80,7 @@
                 Placeholder="Enter city" />
             </VerticalStackLayout>
 
-            <HorizontalStackLayout Margin="0,20,20,20" Spacing="10">
+            <VerticalStackLayout Margin="0,20,20,20" Spacing="10">
                 <Label Text="Longitude" Margin="0,20,20,10"/>
                 <Entry Text="{Binding LongitudeText}"
                    WidthRequest="175"
@@ -90,7 +90,7 @@
                    WidthRequest="175"
                    Placeholder="Enter latitude"
                    />
-            </HorizontalStackLayout>
+            </VerticalStackLayout>
 
             <HorizontalStackLayout Margin="0,20,20,20" Spacing="10">
                 <Button Text="Save" 
