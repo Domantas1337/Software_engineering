@@ -8,12 +8,12 @@ namespace TodoAPI.Controllers
 
     [ApiController]
     [Route($"api/{_endpointName}")]
-    public class LocationItemsController : ControllerBase
+    public class LocationItemController : ControllerBase
     {
         private const string _endpointName = "location";
         private readonly ILocationItemRepository _repo;
 
-        public LocationItemsController(ILocationItemRepository repo)
+        public LocationItemController(ILocationItemRepository repo)
         {
             _repo = repo;
         }
@@ -76,12 +76,12 @@ namespace TodoAPI.Controllers
         {
             try
             {
-                var item = _repo.FindAsync(id);
+                var item = await _repo.FindAsync(id);
                 if (item == null)
                 {
                     return NotFound("Item with ID doesn't exist");
                 }
-                await _repo.DeleteAsync(id);
+                await _repo.DeleteAsync(item);
             }
             catch (Exception)
             {

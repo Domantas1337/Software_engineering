@@ -1,21 +1,17 @@
-using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using PSIAPI.Data;
-using PSIAPI.Models;
+using PSIAPI.Interfaces;
+using PSIAPI.Services;
 
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddControllers();
-
-
-
 builder.Services.AddDbContext<AppDbContext>(opt =>
 {
     opt.UseSqlite(builder.Configuration.GetConnectionString("SqliteConnection"));
 });
-
-
+builder.Services.AddScoped<ILocationItemRepository, LocationItemRepository>();
+builder.Services.AddScoped<ILogItemRepository, LogItemRepository>();
+builder.Services.AddControllers();
 
 var app = builder.Build();
 app.MapControllers();

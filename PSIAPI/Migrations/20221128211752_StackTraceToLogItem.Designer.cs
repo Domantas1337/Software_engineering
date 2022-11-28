@@ -10,8 +10,8 @@ using PSIAPI.Data;
 namespace PSIAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20221128123111_LocationLogMigration")]
-    partial class LocationLogMigration
+    [Migration("20221128211752_StackTraceToLogItem")]
+    partial class StackTraceToLogItem
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,9 +21,8 @@ namespace PSIAPI.Migrations
 
             modelBuilder.Entity("PSIAPI.Models.LocationItem", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("ID")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("City")
                         .HasColumnType("TEXT");
@@ -40,16 +39,15 @@ namespace PSIAPI.Migrations
                     b.Property<string>("Street")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
                     b.ToTable("LocationItems");
                 });
 
             modelBuilder.Entity("PSIAPI.Models.LogItem", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("ID")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Date")
                         .HasColumnType("TEXT");
@@ -57,7 +55,10 @@ namespace PSIAPI.Migrations
                     b.Property<string>("Details")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
+                    b.Property<string>("StackTrace")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("ID");
 
                     b.ToTable("LogItems");
                 });

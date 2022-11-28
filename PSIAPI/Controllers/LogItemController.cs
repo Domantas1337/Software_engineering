@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using PSIAPI.Data;
+using PSIAPI.Interfaces;
 using PSIAPI.Models;
-using SQLitePCL;
 
-namespace PSIAPI.Controllers
+namespace TodoAPI.Controllers
 {
 
     [ApiController]
@@ -12,45 +10,59 @@ namespace PSIAPI.Controllers
     public class LogItemController : ControllerBase
     {
         private const string _endpointName = "log";
-        private readonly AppDbContext _context;
+        private readonly ILogItemRepository _repo;
 
-        public LogItemController(AppDbContext context)
+        public LogItemController(ILogItemRepository repo)
         {
-            _context = context;
+            _repo = repo;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
-            var items = await _context.LogItems.ToListAsync();
-
+            var items = await _repo.GetAllAsync();
             return Ok(items);
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostAsync(LogItem logItem)
+        public async Task<IActionResult> PostAsync([FromBody] LogItem item)
         {
-            await _context.LogItems.AddAsync(logItem);
-
-            await _context.SaveChangesAsync();
-
-            return Created($"api/{_endpointName}/{logItem.Id}", logItem);
+            try
+            {
+                if (item == null || !ModelState.IsValid)
+                {
+                    return BadRequest("Invalid item");
+                }
+                bool itemExists = await _repo.ExistsAsync(item.ID);
+                if (itemExists)
+                {
+                    return StatusCode(StatusCodes.Status409Conflict, "Item with ID already exists");
+                }
+                await _repo.AddAsync(item);
+            }
+            catch (Exception)
+            {
+                return BadRequest("Couldn't create item");
+            }
+            return Created($"api/{_endpointName}/{item.ID}", item);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(string id)
         {
-            var logItemModel = await _context.LogItems.FirstOrDefaultAsync(t => t.Id.Equals(id));
-
-            if (logItemModel == null)
+            try
             {
-                return NotFound();
+                var item = await _repo.FindAsync(id);
+                if (item == null)
+                {
+                    return NotFound("Item with ID doesn't exist");
+                }
+                await _repo.DeleteAsync(item);
             }
-
-            _context.LogItems.Remove(logItemModel);
-
-            await _context.SaveChangesAsync();
-
+            catch (Exception)
+            {
+                return BadRequest("Couldn't delete item");
+            }
             return NoContent();
         }
     }

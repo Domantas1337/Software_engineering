@@ -2,7 +2,6 @@
 using PSIAPI.Interfaces;
 using PSIAPI.Models;
 using PSIAPI.Data;
-using Microsoft.AspNetCore.Mvc;
 
 namespace PSIAPI.Services
 {
@@ -27,9 +26,9 @@ namespace PSIAPI.Services
             return locationItemModel;
         }
 
-        public async Task DeleteAsync(string id)
+        public async Task DeleteAsync(LocationItem item)
         {
-            _context.Remove(id);
+            _context.Remove(item);
             await _context.SaveChangesAsync();
         }
 

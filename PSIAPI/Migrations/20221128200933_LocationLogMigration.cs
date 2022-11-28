@@ -14,8 +14,7 @@ namespace PSIAPI.Migrations
                 name: "LocationItems",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                    ID = table.Column<string>(type: "TEXT", nullable: false),
                     State = table.Column<int>(type: "INTEGER", nullable: false),
                     Street = table.Column<string>(type: "TEXT", nullable: true),
                     City = table.Column<string>(type: "TEXT", nullable: true),
@@ -24,21 +23,20 @@ namespace PSIAPI.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_LocationItems", x => x.Id);
+                    table.PrimaryKey("PK_LocationItems", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
                 name: "LogItems",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                    ID = table.Column<string>(type: "TEXT", nullable: false),
                     Date = table.Column<string>(type: "TEXT", nullable: true),
                     Details = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_LogItems", x => x.Id);
+                    table.PrimaryKey("PK_LogItems", x => x.ID);
                 });
         }
 
