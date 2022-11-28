@@ -57,7 +57,13 @@ public partial class MainView : ContentPage
             int x = 2 / y;
         }catch(Exception ex)
         {
-            _logRestService.AddLocationItemAsync(new LogItem() { dateTime = new DateTime().ToString(), Id = new Guid().ToString("N"), exceptionDetails = ex.Message });
+
+    _logRestService.AddLocationItemAsync(new LogItem() {
+        Id = Generators.IDGenerator.GenerateID(),
+        dateTime = DateTime.Now.ToString(),
+        type = ex.GetType().Name.ToString(),
+        line = ex.StackTrace.Substring(ex.StackTrace.Length - 7, 7),
+        exceptionDetails = ex.Message }) ;
         }
 
     }
