@@ -11,10 +11,9 @@ namespace PSI.Models
     public class LogItem
     {
         [Key]
-        public string? Id { get; set; }
-        public string dateTime { get; set; } = DateTime.Now.ToString();
-        public string? type { get; set; }
-        public string? line { get; set; }
-        public string? exceptionDetails { get; set; }
+        public string ID { get; set; }
+        public string Date { get; set; }
+        public string Details { get; set; }
+        public string Trace { get; set; }
     }
 }

@@ -57,7 +57,7 @@ namespace TodoAPI.Controllers
                 {
                     return BadRequest("Invalid item");
                 }
-                LocationItem existingItem = await _repo.FindAsync(id);
+                LocationItem? existingItem = await _repo.FindAsync(id);
                 if (existingItem == null)
                 {
                     return NotFound("Item with ID doesn't exist");

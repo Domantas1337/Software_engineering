@@ -30,10 +30,8 @@ namespace PSI.Services
         {
             //_httpClient = new HttpClient();
             _httpClient = httpClient;
-
             _baseAddress = DeviceInfo.Platform == DevicePlatform.Android ? "http://10.0.2.2:5153" : "https://localhost:7120";
             _url = $"{_baseAddress}/api";
-
             _jsonSerializerOptions = new JsonSerializerOptions
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
@@ -42,21 +40,12 @@ namespace PSI.Services
 
         public async Task AddLocationItemAsync(LocationItem locationItem)
         {
-            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
-            {
-                Debug.WriteLine("---> No internet access...");
-                return;
-            }
-
             try
             {
                 string jsonLocationItem = JsonSerializer.Serialize<LocationItem>(locationItem, _jsonSerializerOptions);
                 StringContent content = new (jsonLocationItem, Encoding.UTF8, "application/json");
 
                 HttpResponseMessage response = await _httpClient.PostAsync($"{_url}/location", content).ConfigureAwait(false); ;
-
-
-
                 if (response.IsSuccessStatusCode)
                 {
                     Debug.WriteLine("Successfully created locationItem");
@@ -71,63 +60,6 @@ namespace PSI.Services
             {
                 Debug.WriteLine($"Whoops exception: {ex.Message}");
             }
-
-            return;
-
-        }
-
-        public async Task PureAddLocationItemAsync(LocationItem locationItem)
-        {
-            try
-            {
-                string jsonLocationItem = JsonSerializer.Serialize<LocationItem>(locationItem, _jsonSerializerOptions);
-                StringContent content = new (jsonLocationItem, Encoding.UTF8, "application/json");
-
-                HttpResponseMessage response = await _httpClient.PostAsync($"{_url}/location", content).ConfigureAwait(false); ;
-
-
-
-                if (response.IsSuccessStatusCode)
-                {
-                    Debug.WriteLine("Successfully created locationItem");
-                    
-                    LocationsExist(this, new LocationEventArgs(locationItem, locationItem.Position.CalculateDistance(currentLocation, DistanceUnits.Kilometers), "A new litter location near you:"));
-                }
-                else
-                {
-                    Debug.WriteLine("---> Non Http 2xx2x2xxx response");
-                    Debug.WriteLine("---> Non Http 2xx response");
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Whoops exception: {ex.Message}");
-            }
-
-            return;
-
-        }
-
-
-        public async Task PureDeleteLocationItemAsync(string id)
-        {
-            try
-            {
-                HttpResponseMessage response = await _httpClient.DeleteAsync($"{_url}/location/{id}");
-                if (response.IsSuccessStatusCode)
-                {
-                    Debug.WriteLine("Successfully created locationItem");
-                }
-                else
-                {
-                    Debug.WriteLine("---> Non Http 2xx response");
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Whoops exception: {ex.Message}");
-            }
-
             return;
         }
 
@@ -153,38 +85,6 @@ namespace PSI.Services
             }
 
             return;
-        }
-
-        public async Task<List<LocationItem>> PureGetAllLocationItemsAsync()
-        {
-            List<LocationItem> locationItems = new ();
-
-            try
-            {
-                HttpResponseMessage response = await _httpClient.GetAsync($"{_url}/location");
-
-                if (response.IsSuccessStatusCode)
-                {
-                    string content = await response.Content.ReadAsStringAsync();
-                    var something = Newtonsoft.Json.JsonConvert.DeserializeObject<List<LocationItem>>(content)
-                        ?? new();
-
-                    foreach (LocationItem i in something)
-                    {
-                        locationItems.Add(i);
-                    }
-                }
-                else
-                {
-                    Debug.WriteLine("---> Non Http 2xx response");
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Whoops exception: {ex.Message}");
-            }
-
-            return locationItems;
         }
 
         public async Task<List<LocationItem>> GetAllLocationItemsAsync()

@@ -10,8 +10,8 @@ using PSIAPI.Data;
 namespace PSIAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20221128211752_StackTraceToLogItem")]
-    partial class StackTraceToLogItem
+    [Migration("20221129111732_Inital")]
+    partial class Inital
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,6 +25,7 @@ namespace PSIAPI.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("City")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<double>("Latitude")
@@ -37,6 +38,7 @@ namespace PSIAPI.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Street")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("ID");
@@ -50,12 +52,15 @@ namespace PSIAPI.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Date")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Details")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("StackTrace")
+                    b.Property<string>("Trace")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("ID");

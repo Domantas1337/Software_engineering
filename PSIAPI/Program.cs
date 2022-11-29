@@ -3,7 +3,6 @@ using PSIAPI.Data;
 using PSIAPI.Interfaces;
 using PSIAPI.Services;
 
-using PSIAPI.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<AppDbContext>(opt =>
@@ -14,6 +13,8 @@ builder.Services.AddScoped<ILocationItemRepository, LocationItemRepository>();
 builder.Services.AddScoped<ILogItemRepository, LogItemRepository>();
 builder.Services.AddControllers();
 
+
+var app = builder.Build();
 app.MapControllers();
 
 app.Run();
