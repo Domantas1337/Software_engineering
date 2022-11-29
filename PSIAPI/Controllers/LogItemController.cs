@@ -48,7 +48,7 @@ namespace TodoAPI.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAsync(string id)
+        public async Task<IActionResult> DeleteAsync(int id)
         {
             try
             {
