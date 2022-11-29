@@ -95,7 +95,7 @@ namespace PSI.ViewModels
 
             Items.Add(reportItem);
 
-            JSONFileManager<ReportItem>.Write(Constants.ReportsFilePath, reportItem);
+            await JSONManager<ReportItem>.WriteAsync(Constants.ReportsFilePath, reportItem);
 
             Report = string.Empty;
             ReportTitle = string.Empty;

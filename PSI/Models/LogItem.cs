@@ -8,8 +8,7 @@ using System.Threading.Tasks;
 namespace PSI.Models
 {
 
-    public class LogItem
-    {
+    public class LogItem {
         [Key]
         public string ID { get; set; }
         public string Date { get; set; }

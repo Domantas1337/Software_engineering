@@ -35,14 +35,6 @@
             </ToolbarItem.IconImageSource>
         </ToolbarItem>
 
-        <ToolbarItem Text="Select state" Clicked="StateButtonClicked">
-            <ToolbarItem.IconImageSource>
-                <OnPlatform x:TypeArguments="ImageSource">
-                    <On Platform="Android, WinUI" Value="utility.png"/>
-                </OnPlatform>
-            </ToolbarItem.IconImageSource>
-        </ToolbarItem>
-
         <ToolbarItem Text="Authenticate" Clicked="OnAuthenticationClicked">
             <ToolbarItem.IconImageSource>
                 <OnPlatform x:TypeArguments="ImageSource">

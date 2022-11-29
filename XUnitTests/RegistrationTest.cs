@@ -1,5 +1,4 @@
 ﻿using PSI;
-using PSI.Database;
 using PSI.UserAuthentication;
 using System.Diagnostics;
 using Xunit.Abstractions;
@@ -22,8 +21,7 @@ namespace XUnitTests
             string passwordOne = "password1";
             string passwordTwo = "password2";
 
-            UserDataBase userDataBase = new();
-            SignUpPage signUpPage = new(userDataBase)
+            SignUpPage signUpPage = new()
             {
                 Password = passwordOne,
                 RepeatPassword = passwordTwo

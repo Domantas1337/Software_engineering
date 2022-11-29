@@ -4,7 +4,6 @@ using System.Security.Cryptography;
 using PSI.Models;
 using PSI.FileManagers;
 using System.Text;
-using PSI.Database;
 using PSI.Generators;
 
 namespace PSI.UserAuthentication;
@@ -17,14 +16,10 @@ public partial class SignUpPage : ContentPage
     public string Email { get; set; }
     public string ErrorBody { get; set; } = "Invalid:";
 
-    public UserDataBase dataBase;
-
-    public SignUpPage(UserDataBase userDataBase)
+    public SignUpPage()
     {
         InitializeComponent();
         BindingContext = this;
-
-        dataBase = userDataBase;
     }
 
     private async void TapGestureRecognizer_Tapped_For_SignIn(object sender, EventArgs e)
@@ -60,12 +55,10 @@ public partial class SignUpPage : ContentPage
                 Password = this.Password
             };
 
-            JSONFileManager<UserDataItem>.Write(
+            await JSONManager<UserDataItem>.WriteAsync(
                                         item: userData,
                                         filePath: Constants.UsersFilePath
                                         );
-
-            await dataBase.SaveItemAsync(userData);
             await Shell.Current.GoToAsync("..");
         }
     }

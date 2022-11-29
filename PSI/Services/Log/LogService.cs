@@ -10,16 +10,16 @@ using PSI.Models;
 
 namespace PSI.Services
 {
-    public class LocationService : ILocationService
+    public class LogService : ILogService
     {
         private readonly HttpClient _httpClient;
         private readonly string _baseAddress;
         private readonly string _url;
         private const string _mediaType = "application/json";
-        private const string _endpoint = "location";
+        private const string _endpoint = "log";
 
 
-        public LocationService(HttpClient httpClient)
+        public LogService(HttpClient httpClient)
         {
             _httpClient = httpClient;
             _baseAddress = DeviceInfo.Platform == DevicePlatform.Android ? "http://10.0.2.2:5153" : "https://localhost:7120";
@@ -30,7 +30,7 @@ namespace PSI.Services
         {
             if (response.IsSuccessStatusCode)
             {
-                Debug.WriteLine($"Successfully {methodMsg} locationItem");
+                Debug.WriteLine($"Successfully {methodMsg} logItem");
             }
             else
             {
@@ -39,12 +39,12 @@ namespace PSI.Services
             }
         }
 
-        public async Task AddLocationItemAsync(LocationItem locationItem)
+        public async Task AddLogItemAsync(LogItem item)
         {
             try
             {
-                string jsonLocationItem = JSONManager<LocationItem>.SerializeToJSONString(locationItem);
-                StringContent content = new (jsonLocationItem, Encoding.UTF8, _mediaType);
+                string jsonString = JSONManager<LogItem>.SerializeToJSONString(item);
+                StringContent content = new(jsonString, Encoding.UTF8, _mediaType);
 
                 HttpResponseMessage response = await _httpClient.PostAsync($"{_url}/{_endpoint}", content).ConfigureAwait(false);
                 InnerOnResponseOutcome(response, "added");
@@ -56,7 +56,7 @@ namespace PSI.Services
             return;
         }
 
-        public async Task DeleteLocationItemAsync(string id)
+        public async Task DeleteLogItemAsync(string id)
         {
             try
             {
@@ -70,9 +70,9 @@ namespace PSI.Services
             return;
         }
 
-        public async Task<List<LocationItem>> GetAllLocationItemsAsync()
+        public async Task<List<LogItem>> GetAllLogItemsAsync()
         {
-            List<LocationItem> locationItems = new();
+            List<LogItem> items = new();
             try
             {
                 HttpResponseMessage response = await _httpClient.GetAsync($"{_url}/{_endpoint}");
@@ -81,7 +81,7 @@ namespace PSI.Services
                 {
                     string content = await response.Content.ReadAsStringAsync();
 
-                    locationItems = JSONManager<LocationItem>.DeserializeFromJSONString(content);
+                    items = JSONManager<LogItem>.DeserializeFromJSONString(content);
                 }
                 else
                 {
@@ -92,23 +92,7 @@ namespace PSI.Services
             {
                 await Logger.LogAsync(ex);
             }
-            return locationItems;
-        }
-
-        public async Task UpdateLocationItemAsync(LocationItem locationItem)
-        {
-            try
-            {
-                string jsonLocationItem = JSONManager<LocationItem>.SerializeToJSONString(locationItem);
-                StringContent content = new (jsonLocationItem, Encoding.UTF8, _mediaType);
-                HttpResponseMessage response = await _httpClient.PutAsync($"{_url}/{_endpoint}/{locationItem.ID}", content);
-                InnerOnResponseOutcome(response, "updated");
-            }
-            catch (Exception ex)
-            {
-                await Logger.LogAsync(ex);
-            }
-            return;
+            return items;
         }
     }
 }

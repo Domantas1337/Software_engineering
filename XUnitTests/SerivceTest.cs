@@ -21,7 +21,7 @@ namespace XUnitTests
             LocationService restService = new(new HttpClient());
             LocationItem locationItem = new()
             {
-                Id = 42,
+                ID = "42",
                 Street = "Wall Street",
                 City = "New York",
                 State = (PSI.UtilityState)UtilityState.Taromat,
@@ -29,10 +29,10 @@ namespace XUnitTests
                 Latitude = 12
             };
 
-            await restService.PureAddLocationItemAsync(locationItem);
-            await restService.DeleteLocationItemAsync(42);
-            var items = await restService.PureGetAllLocationItemsAsync();
-            var itemsList = items.FindAll(x => x.Id == 42).ToList();
+            await restService.AddLocationItemAsync(locationItem);
+            await restService.DeleteLocationItemAsync("42");
+            var items = await restService.GetAllLocationItemsAsync();
+            var itemsList = items.FindAll(x => x.ID.Equals("42")).ToList();
 
             Assert.True(itemsList.Count == 0);
         }
@@ -44,7 +44,7 @@ namespace XUnitTests
             LocationService restService = new(new HttpClient());
             LocationItem locationItem = new ()
             {
-                Id = 42,
+                ID = "42",
                 Street = "Wall Street",
                 City = "New York",
                 State = (PSI.UtilityState)UtilityState.Taromat,
@@ -53,10 +53,10 @@ namespace XUnitTests
             };
 
             // ACT
-            var items0 = await restService.PureGetAllLocationItemsAsync();
-            await restService.PureAddLocationItemAsync(locationItem);
-            var items = await restService.PureGetAllLocationItemsAsync();
-            var itemsList = items.FindAll(x => x.Id == 42).ToList();
+            var items0 = await restService.GetAllLocationItemsAsync();
+            await restService.AddLocationItemAsync(locationItem);
+            var items = await restService.GetAllLocationItemsAsync();
+            var itemsList = items.FindAll(x => x.ID.Equals("42")).ToList();
 
             // ASSERT
             _testOutputHelper.WriteLine(itemsList.Count.ToString());

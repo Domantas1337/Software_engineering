@@ -23,7 +23,7 @@ public partial class SignInPage : ContentPage
         await Shell.Current.GoToAsync(nameof(SignUpPage));
     }
 
-    public void OnSignInClicked(object sender, EventArgs e)
+    public async void OnSignInClicked(object sender, EventArgs e)
     {
         if (!Email.IsEmailExtension())
         {
@@ -31,7 +31,7 @@ public partial class SignInPage : ContentPage
         }
         else
         {
-            List<UserDataItem> usersData = JSONFileManager<UserDataItem>.Read(Constants.UsersFilePath);
+            List<UserDataItem> usersData = await JSONManager<UserDataItem>.ReadAsync(Constants.UsersFilePath);
             List<String> newData = (from item in usersData
                            where item.Email.Equals(Email)
                            && item.Password.Equals(Password)

@@ -24,7 +24,7 @@
             <maps:Map.ItemTemplate>
                 <DataTemplate x:DataType="local:LocationItem">
                     <maps:Pin 
-                             
+                              
                               Location="{Binding Position}"
                               Address="{Binding Street}"
                               Label="{Binding City}" />

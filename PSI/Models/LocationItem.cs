@@ -9,18 +9,17 @@ using System.Threading.Tasks;
 namespace PSI.Models
 {
 
-    public class LocationItem : IComparer<LocationItem>{
+    public class LocationItem
+    {
         [Key]
-        public string? Id { get; set; }
+        public string ID { get; set; }
         public UtilityState State { get; set; }
         public string Street { get; set; }
-        public string? City { get; set; }
-        public double? Longitude { get; set; }
-        public double?  Latitude { get; set; }
-        public Location Position { 
-            get;
-            set;
-        }
+        public string City { get; set; }
+        public double Longitude { get; set; }
+        public double Latitude { get; set; }
+        public Location Position { get; set; }
+
 
         public int Compare(LocationItem x, LocationItem y)
         {

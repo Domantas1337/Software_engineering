@@ -6,10 +6,10 @@ namespace TodoAPI.Controllers
 {
 
     [ApiController]
-    [Route($"api/{_endpointName}")]
+    [Route($"api/{_endpoint}")]
     public class LogItemController : ControllerBase
     {
-        private const string _endpointName = "log";
+        private const string _endpoint = "log";
         private readonly ILogItemRepository _repo;
 
         public LogItemController(ILogItemRepository repo)
@@ -44,7 +44,7 @@ namespace TodoAPI.Controllers
             {
                 return BadRequest("Couldn't create item");
             }
-            return Created($"api/{_endpointName}/{item.ID}", item);
+            return Created($"api/{_endpoint}/{item.ID}", item);
         }
 
         [HttpDelete("{id}")]

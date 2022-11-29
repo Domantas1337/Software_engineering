@@ -12,7 +12,6 @@ public partial class AddLocationView : ContentPage
     public LocationItem locationItem;
     public UtilityState State = 0;
     public BinSelectionState selectedBin;
-    private readonly Location currentLocation = new(54.72908271722996, 25.264220631657665);
 
     public string Street { get; set; }
     public string City { get; set; }
@@ -29,7 +28,6 @@ public partial class AddLocationView : ContentPage
     public AddLocationView(ILocationService dataService)
     {
         InitializeComponent();
-
         _dataService = dataService;
         BindingContext = this;
         organicButton.Clicked += OnButtonClicked;
@@ -134,7 +132,7 @@ public partial class AddLocationView : ContentPage
         {
             LocationItem locationItem = new()
             {
-                Id = new Guid().ToString("N"),
+                ID = new Guid().ToString(),
                 State = this.State,
                 Street = this.Street,
                 City = this.City,
@@ -144,15 +142,13 @@ public partial class AddLocationView : ContentPage
             };
             await _dataService.AddLocationItemAsync(locationItem);
 
-            Location location = new((double)locationItem.Latitude, (double)locationItem.Longitude);
-
             await Shell.Current.GoToAsync("..");
         }
     }
 
     async void OnDeleteButtonClicked(object sender, EventArgs e)
     {
-        List<LocationItem> list = JSONFileManager<LocationItem>.Read(Constants.LocationsFilePath);
+        List<LocationItem> list = await JSONManager<LocationItem>.ReadAsync(Constants.LocationsFilePath);
 
         /*var newList = list.Where(l => l.Longitude != _longitude)
                           .Select(l => l);*/
@@ -162,7 +158,7 @@ public partial class AddLocationView : ContentPage
                             || item.Latitude != Longitude
                       select item;
 
-        JSONFileManager<LocationItem>.Write(
+        await JSONManager<LocationItem>.WriteAsync(
                                     filePath: Constants.LocationsFilePath,
                                     items: newList.ToList()
                                     );
