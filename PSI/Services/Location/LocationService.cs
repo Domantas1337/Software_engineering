@@ -28,7 +28,7 @@ namespace PSI.Services
             _url = $"{_baseAddress}/api";
         }
 
-        private void InnerOnResponseOutcome(HttpResponseMessage response, string methodMsg)
+        private static void InnerOnResponseOutcome(HttpResponseMessage response, string methodMsg)
         {
             if (response.IsSuccessStatusCode)
             {
@@ -85,15 +85,20 @@ namespace PSI.Services
                     string content = await response.Content.ReadAsStringAsync();
 
                     locationItems = JSONManager.DeserializeFromJSONString<LocationItem>(content);
-                    foreach(LocationItem item in locationItems)
+
+                    // kilometers
+                    Location closestLocation = new (1200, 1200);
+                    Location currentLocation = CurrentLocation.GetCurrentLocationMock();
+                    foreach (LocationItem item in locationItems)
                     {
-                        if (CurrentLocation.GetCurrentLocation.CalculateDistance(currentLocation, DistanceUnits.Kilometers) < distance)
-                        {
-                            distance = location.CalculateDistance(currentLocation, DistanceUnits.Kilometers);
-                            Debug.WriteLine(distance);
-                            nearestLocation = item;
-                        }
                         item.Position = new Location(item.Latitude, item.Longitude);
+                        double currentToItemDistance = currentLocation.CalculateDistance(item.Position, DistanceUnits.Kilometers);
+                        double closestDistance = currentLocation.CalculateDistance(closestLocation, DistanceUnits.Kilometers);
+                        if (currentToItemDistance < closestDistance)
+                        {
+                            closestLocation = item.Position;
+                        }
+                        Debug.WriteLine(closestLocation);
                     }
                 }
                 else

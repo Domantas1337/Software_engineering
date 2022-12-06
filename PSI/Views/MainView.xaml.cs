@@ -26,8 +26,6 @@ public partial class MainView : ContentPage
 
         _logService = logService;
         _locationService = locationService;
-
-        _locationService.LocationsExist += OnLocationExists;
     }
 
     protected override void OnAppearing()

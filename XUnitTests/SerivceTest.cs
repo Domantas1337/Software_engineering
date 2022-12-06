@@ -76,8 +76,8 @@ namespace XUnitTests
             // ASSERT
             _testOutputHelper.WriteLine(itemsListAfterAdd.Count.ToString());
             Assert.True(itemsListAfterAdd.Count == 1);
-            Assert.True(itemsListAfterAdd.First().CompareTo(locationItem) == 1 ? true : false);
-            Assert.True(itemsListAfterUpdate.First().CompareTo(locationItemUpdated) == 1 ? true : false);
+            Assert.True(itemsListAfterAdd.First().CompareTo(locationItem) == 1);
+            Assert.True(itemsListAfterUpdate.First().CompareTo(locationItemUpdated) == 1);
             Assert.True(itemsListAfterDelete.Count == 0);
         }
     }
