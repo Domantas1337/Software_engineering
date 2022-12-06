@@ -9,13 +9,24 @@ namespace PSI.Verification
 {
     public static class Verifier
     {
-        public static TResult OnNetworkAccess<T, TResult>(T arg, Func<T, TResult> func) {
+
+        public static TResult OnNetworkAccess<TArg, TResult>(Func<TArg, TResult> func, TArg arg) {
             if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
             {
                 Debug.WriteLine("---> No internet access...");
                 return default;
             }
             return func.Invoke(arg);
+        }
+
+        public static TResult OnNetworkAccess<TResult>(Func<TResult> func)
+        {
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+            {
+                Debug.WriteLine("---> No internet access...");
+                return default;
+            }
+            return func.Invoke();
         }
     }
 }

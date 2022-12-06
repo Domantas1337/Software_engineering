@@ -5,6 +5,7 @@ using Microsoft.VisualBasic;
 using PSI.FileManagers;
 using PSI.Generators;
 using PSI.Models;
+using PSI.Services;
 using PSI.Views;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -13,6 +14,9 @@ namespace PSI.ViewModels
 {
     public partial class ReportViewModel : ObservableObject
     {
+
+        // public EventHandler<ReportEventArgs> OnAddReportClicked;
+
         string[] getReport; 
         string _report;
 
@@ -24,14 +28,6 @@ namespace PSI.ViewModels
             {
 
                 _report = value;
-
-
-                string tempString = string.Empty;
-
-                getReport = _report.Split(
-                    new string[] { "\r\n", "\r", "\n" },
-                    StringSplitOptions.None
-                );
 
                 if (_report.CensorTextExtension())
                 {
@@ -46,23 +42,12 @@ namespace PSI.ViewModels
         }
         public string FileName { get; set; }
 
-        public ReportViewModel()
+        private ReportRestService _reportRestService;
+        public ReportViewModel(ReportRestService reportRestService)
         {
             Items = new ObservableCollection<ReportItem>();
 
-            List<ReportItem> reportItems = new List<ReportItem>
-            {
-                new ReportItem() { Day = 1, Month = 2, Year = 2023, ID = "avcd", Title = "Title", ImageName = null }
-            };
-
-            reportItems.Sort();
-
-            for(int i = 0; i < reportItems.Count; i++)
-            {
-                ReportItem temporaryItem = reportItems[i];
-                temporaryItem.ImageName = Constants.CurrentAssemblyPath + @"\" + temporaryItem.ImageName;
-                Items.Add(temporaryItem);
-            }
+            _reportRestService = reportRestService;
 
         }
 
@@ -84,23 +69,22 @@ namespace PSI.ViewModels
         {
             ReportItem reportItem = new()
             {
-                Day = date.Day,
-                Month = date.Month,
-                Year = date.Year,
+                Date = DateTime.UtcNow.ToString(),
                 ID = IDGenerator.GenerateID(),
                 Title = this.ReportTitle,
-                Report = getReport,
-                ImageName = this.FileName
+                Report = _report
             };
 
             Items.Add(reportItem);
 
-            await JSONManager<ReportItem>.WriteAsync(Constants.ReportsFilePath, reportItem);
+            // OnAddReportClicked();
+            await _reportRestService.AddLocationItemAsync(reportItem);
 
             Report = string.Empty;
             ReportTitle = string.Empty;
 
             SortItems();
+
 
             await Shell.Current.GoToAsync("..");
         }

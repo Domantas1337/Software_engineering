@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Microsoft.Maui.Devices.Sensors;
+using Microsoft.Maui.Maps;
 using PSI.FileManagers;
 using PSI.Models;
 
@@ -43,7 +45,7 @@ namespace PSI.Services
         {
             try
             {
-                string jsonLocationItem = JSONManager<LocationItem>.SerializeToJSONString(locationItem);
+                string jsonLocationItem = JSONManager.SerializeToJSONString<LocationItem>(locationItem);
                 StringContent content = new (jsonLocationItem, Encoding.UTF8, _mediaType);
 
                 HttpResponseMessage response = await _httpClient.PostAsync($"{_url}/{_endpoint}", content).ConfigureAwait(false);
@@ -72,6 +74,7 @@ namespace PSI.Services
 
         public async Task<List<LocationItem>> GetAllLocationItemsAsync()
         {
+
             List<LocationItem> locationItems = new();
             try
             {
@@ -81,7 +84,17 @@ namespace PSI.Services
                 {
                     string content = await response.Content.ReadAsStringAsync();
 
-                    locationItems = JSONManager<LocationItem>.DeserializeFromJSONString(content);
+                    locationItems = JSONManager.DeserializeFromJSONString<LocationItem>(content);
+                    foreach(LocationItem item in locationItems)
+                    {
+                        if (CurrentLocation.GetCurrentLocation.CalculateDistance(currentLocation, DistanceUnits.Kilometers) < distance)
+                        {
+                            distance = location.CalculateDistance(currentLocation, DistanceUnits.Kilometers);
+                            Debug.WriteLine(distance);
+                            nearestLocation = item;
+                        }
+                        item.Position = new Location(item.Latitude, item.Longitude);
+                    }
                 }
                 else
                 {
@@ -99,7 +112,7 @@ namespace PSI.Services
         {
             try
             {
-                string jsonLocationItem = JSONManager<LocationItem>.SerializeToJSONString(locationItem);
+                string jsonLocationItem = JSONManager.SerializeToJSONString<LocationItem>(locationItem);
                 StringContent content = new (jsonLocationItem, Encoding.UTF8, _mediaType);
                 HttpResponseMessage response = await _httpClient.PutAsync($"{_url}/{_endpoint}/{locationItem.ID}", content);
                 InnerOnResponseOutcome(response, "updated");

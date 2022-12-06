@@ -6,15 +6,15 @@ using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace PSI.FileManagers
 {
-    internal static class JSONManager<T>
+    internal static class JSONManager
     {
-        public static List<T> DeserializeFromJSONString(string json)
+        public static List<T> DeserializeFromJSONString<T>(string json)
         {
             var items = JsonConvert.DeserializeObject<List<T>>(json)
                 ?? new();
             return items;
         }
-        public static string SerializeToJSONString(T obj)
+        public static string SerializeToJSONString<T>(T obj)
         {
             var jsonSerializerOptions = new JsonSerializerOptions
             {
@@ -23,7 +23,7 @@ namespace PSI.FileManagers
             string jsonString = JsonSerializer.Serialize<T>(obj, jsonSerializerOptions);
             return jsonString;
         }
-        public static async Task<List<T>> ReadAsync(string filePath)
+        public static List<T> Read<T>(string filePath)
         {
             
             List<T> items;
@@ -33,19 +33,20 @@ namespace PSI.FileManagers
                 File.Create(filePath);
             }
             StreamReader readStream = new(filePath);
-            string json = await readStream.ReadToEndAsync();
-            Debug.WriteLine($"Read from {filePath}");
-            readStream.Close();
-
-            items = DeserializeFromJSONString(json);
-
+            lock(readStream)
+            {
+                string json = readStream.ReadToEnd();
+                Debug.WriteLine($"Read from {filePath}");
+                readStream.Close();
+                items = DeserializeFromJSONString<T>(json);
+            }
             return items;
         }
-        public static async Task WriteAsync(string filePath, T item = default, List<T> items = null)
+        public static async Task WriteAsync<T>(string filePath, T item = default, List<T> items = null)
         {
             if (items == null)
             {
-                items = await ReadAsync(filePath);
+                items = Read<T>(filePath);
                 items.Add(item);
             }
 

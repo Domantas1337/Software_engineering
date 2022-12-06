@@ -1,5 +1,6 @@
 ﻿using PSI.UserAuthentication;
 using PSI.Views;
+using PSI.Views.ManageLocation;
 
 namespace PSI;
 
@@ -11,6 +12,7 @@ public partial class AppShell : Shell
 		InitializeComponent();
 
         Routing.RegisterRoute(nameof(AddLocationView), typeof(AddLocationView));
+        Routing.RegisterRoute(nameof(DeleteLocationView), typeof(DeleteLocationView));
         Routing.RegisterRoute(nameof(ReportView), typeof(ReportView));
         Routing.RegisterRoute(nameof(SignInPage), typeof(SignInPage));
         Routing.RegisterRoute(nameof(SignUpPage), typeof(SignUpPage));

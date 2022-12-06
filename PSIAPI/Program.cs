@@ -11,6 +11,8 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
 });
 builder.Services.AddScoped<ILocationItemRepository, LocationItemRepository>();
 builder.Services.AddScoped<ILogItemRepository, LogItemRepository>();
+builder.Services.AddScoped<IReportItemRepository, ReportItemRepository>();
+
 builder.Services.AddControllers();
 
 

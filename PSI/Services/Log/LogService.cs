@@ -43,7 +43,7 @@ namespace PSI.Services
         {
             try
             {
-                string jsonString = JSONManager<LogItem>.SerializeToJSONString(item);
+                string jsonString = JSONManager.SerializeToJSONString<LogItem>(item);
                 StringContent content = new(jsonString, Encoding.UTF8, _mediaType);
 
                 HttpResponseMessage response = await _httpClient.PostAsync($"{_url}/{_endpoint}", content).ConfigureAwait(false);
@@ -81,7 +81,7 @@ namespace PSI.Services
                 {
                     string content = await response.Content.ReadAsStringAsync();
 
-                    items = JSONManager<LogItem>.DeserializeFromJSONString(content);
+                    items = JSONManager.DeserializeFromJSONString<LogItem>(content);
                 }
                 else
                 {

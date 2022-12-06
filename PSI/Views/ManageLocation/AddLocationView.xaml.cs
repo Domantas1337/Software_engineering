@@ -3,7 +3,7 @@ using PSI.Models;
 using PSI.Services;
 using PSI.States;
 
-namespace PSI.Views;
+namespace PSI.Views.ManageLocation;
 
 [QueryProperty(nameof(LocationItem), "Item")]
 public partial class AddLocationView : ContentPage
@@ -132,7 +132,7 @@ public partial class AddLocationView : ContentPage
         {
             LocationItem locationItem = new()
             {
-                ID = new Guid().ToString(),
+                ID = Generators.IDGenerator.GenerateID(),
                 State = this.State,
                 Street = this.Street,
                 City = this.City,
@@ -140,6 +140,8 @@ public partial class AddLocationView : ContentPage
                 Latitude = Latitude
                 
             };
+
+            Debug.WriteLine(locationItem.ID);
             await _dataService.AddLocationItemAsync(locationItem);
 
             await Shell.Current.GoToAsync("..");
@@ -148,21 +150,8 @@ public partial class AddLocationView : ContentPage
 
     async void OnDeleteButtonClicked(object sender, EventArgs e)
     {
-        List<LocationItem> list = await JSONManager<LocationItem>.ReadAsync(Constants.LocationsFilePath);
-
-        /*var newList = list.Where(l => l.Longitude != _longitude)
-                          .Select(l => l);*/
-
-        var newList = from item in list
-                      where item.Longitude != Longitude
-                            || item.Latitude != Longitude
-                      select item;
-
-        await JSONManager<LocationItem>.WriteAsync(
-                                    filePath: Constants.LocationsFilePath,
-                                    items: newList.ToList()
-                                    );
-        await Shell.Current.GoToAsync("..");
+        
+        await Shell.Current.GoToAsync(nameof(DeleteLocationView));
     }
 
     async void OnCancelButtonClicked(object sender, EventArgs e)

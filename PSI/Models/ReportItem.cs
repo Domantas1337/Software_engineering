@@ -10,13 +10,10 @@ namespace PSI.Models
 {
     public class ReportItem : IComparable<ReportItem>
     {
-        public int Year { get; set; }
-        public int Month { get; set; }
-        public int Day { get; set; }
+        public string Date { get; set; }
         public string ID { get; set; }
         public string Title { get; set; }
-        public string[] Report { get; set; }
-        public string ImageName { get; set;  }
+        public string Report { get; set; }
 
         public int CompareTo(ReportItem other)
         {

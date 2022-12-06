@@ -55,7 +55,7 @@ public partial class SignUpPage : ContentPage
                 Password = this.Password
             };
 
-            await JSONManager<UserDataItem>.WriteAsync(
+            await JSONManager.WriteAsync<UserDataItem>(
                                         item: userData,
                                         filePath: Constants.UsersFilePath
                                         );

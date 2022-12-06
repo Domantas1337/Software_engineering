@@ -8,6 +8,8 @@ using PSI.UserAuthentication;
 using PSI.ViewModels;
 using System.Collections.ObjectModel;
 using System.Data;
+using PSI.Views.ManageLocation;
+using PSI.Verification;
 
 namespace PSI.Views;
 
@@ -25,18 +27,29 @@ public partial class MainView : ContentPage
         _logService = logService;
         _locationService = locationService;
 
-        locations = new Lazy<Task<ObservableCollection<LocationItem>>>(() =>
-        Task.Run(
-            async () => {
-                List<LocationItem> locationList = await _locationService.GetAllLocationItemsAsync();
-                return locationList.ToObservableCollection();
-            })
-        );
+        _locationService.LocationsExist += OnLocationExists;
     }
 
     protected override void OnAppearing()
     {
         base.OnAppearing();
+
+        locations = new Lazy<Task<ObservableCollection<LocationItem>>>(() =>
+        Task.Run(
+         async () => {
+            List<LocationItem> locationList = await Verifier.OnNetworkAccess(_locationService.GetAllLocationItemsAsync);
+            //List<LocationItem> locationList = await _locationService.GetAllLocationItemsAsync();
+            return locationList.ToObservableCollection();
+            })
+        );
+
+        foreach(LocationItem locationItem in locations.Value.Result)
+        {
+            Debug.WriteLine(locationItem.Street);
+        }
+
+
+
     }
 
     public void OnLocationExists(object sender, LocationEventArgs e)
