@@ -20,8 +20,8 @@ builder.Services.AddScoped<IReportItemRepository, ReportItemRepository>();
 
 builder.Services.AddControllers();
 
-
 var app = builder.Build();
+
 app.MapControllers();
 app.UseSwagger();
 app.UseSwaggerUI(c =>
@@ -29,5 +29,7 @@ app.UseSwaggerUI(c =>
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "PSIAPI");
     c.RoutePrefix = string.Empty;
 });
+
+app.UseLogRequests();
 
 app.Run();

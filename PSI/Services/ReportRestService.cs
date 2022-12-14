@@ -39,19 +39,14 @@ namespace PSI.Services
 
         public async Task AddLocationItemAsync(ReportItem reportItem)
         {
-            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
-            {
-                Debug.WriteLine("---> No internet access...");
-                return;
-            }
-
             try
             {
                 string jsonLocationItem = JsonSerializer.Serialize<ReportItem>(reportItem, _jsonSerializerOptions);
                 StringContent content = new(jsonLocationItem, Encoding.UTF8, "application/json");
 
-                HttpResponseMessage response = await _httpClient.PostAsync($"{_url}/report", content).ConfigureAwait(false); ;
+                Debug.WriteLine("pradzia");
 
+                HttpResponseMessage response = await _httpClient.PostAsync($"{_url}/report", content).ConfigureAwait(false); ;
 
 
                 if (response.IsSuccessStatusCode)
@@ -68,6 +63,8 @@ namespace PSI.Services
             {
                 Debug.WriteLine($"Whoops exception: {ex.Message}");
             }
+
+            Debug.WriteLine("pabaiga");
 
             return;
 
@@ -186,15 +183,9 @@ namespace PSI.Services
         {
             List<ReportItem> reportItems = new();
 
-            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
-            {
-                Debug.WriteLine("---> No internet access...");
-                return reportItems;
-            }
-
             try
             {
-                HttpResponseMessage response = await _httpClient.GetAsync($"{_url}/location");
+                HttpResponseMessage response = await _httpClient.GetAsync($"{_url}/report");
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -224,11 +215,6 @@ namespace PSI.Services
 
         public async Task UpdateLocationItemAsync(ReportItem reportItem)
         {
-            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
-            {
-                Debug.WriteLine("---> No internet access...");
-                return;
-            }
 
             try
             {
