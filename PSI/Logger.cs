@@ -28,7 +28,6 @@ namespace PSI
                 Trace = ex.StackTrace
             };
 
-            OnLogAdded(this, logItem);
             await JSONManager.WriteAsync<LogItem>(_filePath, logItem);
         }
 

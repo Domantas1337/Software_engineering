@@ -43,6 +43,25 @@ namespace PSIAPI.Migrations
                     b.ToTable("LocationItems");
                 });
 
+            modelBuilder.Entity("PSIAPI.Models.ReportItem", b =>
+            {
+                b.Property<string>("ID")
+                    .HasColumnType("TEXT");
+
+                b.Property<string>("Date")
+                    .HasColumnType("TEXT");
+
+                b.Property<string>("Title")
+                    .HasColumnType("TEXT");
+
+                b.Property<string>("Report")
+                    .HasColumnType("TEXT");
+
+                b.HasKey("ID");
+
+                b.ToTable("ReportItems");
+            });
+
             modelBuilder.Entity("PSIAPI.Models.LogItem", b =>
                 {
                     b.Property<string>("ID")

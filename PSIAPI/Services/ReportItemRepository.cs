@@ -43,5 +43,13 @@ namespace PSIAPI.Services
             var items = await _context.ReportItems.ToListAsync();
             return items;
         }
+
+        public async Task UpdateAsync(ReportItem existingItem, ReportItem item)
+        {
+            existingItem.Date = item.Date;
+            existingItem.Report = item.Report;
+            existingItem.Title = item.Title;
+            await _context.SaveChangesAsync();
+        }
     }
 }

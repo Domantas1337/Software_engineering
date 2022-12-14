@@ -86,13 +86,7 @@ namespace PSI.Services
 
                     locationItems = JSONManager.DeserializeFromJSONString<LocationItem>(content);
                     foreach(LocationItem item in locationItems)
-                    {
-                        if (CurrentLocation.GetCurrentLocation.CalculateDistance(currentLocation, DistanceUnits.Kilometers) < distance)
-                        {
-                            distance = location.CalculateDistance(currentLocation, DistanceUnits.Kilometers);
-                            Debug.WriteLine(distance);
-                            nearestLocation = item;
-                        }
+                    { 
                         item.Position = new Location(item.Latitude, item.Longitude);
                     }
                 }
