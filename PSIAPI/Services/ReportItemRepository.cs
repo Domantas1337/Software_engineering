@@ -44,7 +44,7 @@ namespace PSIAPI.Services
             return items;
         }
 
-        public async Task UpdateAsync(ReportItem existingItem, ReportItem item)
+        public async Task UpdateAsync(ReportItemDto existingItem, ReportItemDto item)
         {
             existingItem.Date = item.Date;
             existingItem.Report = item.Report;
