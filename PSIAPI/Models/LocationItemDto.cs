@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace PSIAPI.Models
 {
 
-    public class LocationItem
+    public class LocationItemDto
     {
         [Key]
         public string ID { get; set; }

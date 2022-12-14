@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace PSIAPI.Models
 {
 
-    public class LogItem {
+    public class LogItemDto {
         [Key]
         public string ID { get; set; }
         public string Date { get; set; }

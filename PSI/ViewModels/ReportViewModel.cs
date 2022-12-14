@@ -86,6 +86,7 @@ namespace PSI.ViewModels
             SortItems();
 
 
+
             await Shell.Current.GoToAsync("..");
         }
 

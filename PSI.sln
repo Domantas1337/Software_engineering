@@ -7,7 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PSI", "PSI\PSI.csproj", "{B
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PSIAPI", "PSIAPI\PSIAPI.csproj", "{44B8678B-FE1E-4868-8CBF-19304A7D1650}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XUnitTests", "XUnitTests\XUnitTests.csproj", "{C6AED75D-EF91-4642-B114-74FF4D04A6EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XUnitTests", "XUnitTests\XUnitTests.csproj", "{C6AED75D-EF91-4642-B114-74FF4D04A6EA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{44B8678B-FE1E-4868-8CBF-19304A7D1650} = {44B8678B-FE1E-4868-8CBF-19304A7D1650}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

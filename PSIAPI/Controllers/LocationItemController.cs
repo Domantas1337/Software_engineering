@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using PSIAPI.Interfaces;
 using PSIAPI.Models;
 
-namespace TodoAPI.Controllers
+namespace PSIAPI.Controllers
 {
 
     [ApiController]
@@ -18,6 +18,24 @@ namespace TodoAPI.Controllers
             _repo = repo;
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetByIdAsync(string id)
+        {
+            try
+            {
+                var item = await _repo.GetByIdAsync(id);
+                if (item == null || !ModelState.IsValid)
+                {
+                    return BadRequest("Item with ID doesn't exist");
+                }
+                return Ok(item);
+            }
+            catch (Exception)
+            {
+                return BadRequest("Couldn't find item");
+            }
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
@@ -26,7 +44,7 @@ namespace TodoAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostAsync([FromBody] LocationItem item)
+        public async Task<IActionResult> PostAsync([FromBody] LocationItemDto item)
         {
             try
             {
@@ -49,7 +67,7 @@ namespace TodoAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAsync(string id, [FromBody] LocationItem item)
+        public async Task<IActionResult> PutAsync(string id, [FromBody] LocationItemDto item)
         {
             try
             {
@@ -57,7 +75,7 @@ namespace TodoAPI.Controllers
                 {
                     return BadRequest("Invalid item");
                 }
-                LocationItem? existingItem = await _repo.FindAsync(id);
+                LocationItemDto? existingItem = await _repo.FindAsync(id);
                 if (existingItem == null)
                 {
                     return NotFound("Item with ID doesn't exist");

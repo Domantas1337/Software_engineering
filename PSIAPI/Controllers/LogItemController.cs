@@ -2,7 +2,7 @@
 using PSIAPI.Interfaces;
 using PSIAPI.Models;
 
-namespace TodoAPI.Controllers
+namespace PSIAPI.Controllers
 {
 
     [ApiController]
@@ -25,7 +25,7 @@ namespace TodoAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostAsync([FromBody] LogItem item)
+        public async Task<IActionResult> PostAsync([FromBody] LogItemDto item)
         {
             try
             {

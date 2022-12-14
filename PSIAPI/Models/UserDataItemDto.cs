@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PSIAPI.Models
 {
-    public struct UserDataItem
+    public struct UserDataItemDto
     {
         [Key]
         public string Id { get; set; }

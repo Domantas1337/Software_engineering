@@ -1,19 +1,45 @@
-using PSI.Services;
+using PSIAPI.Services;
+using PSIAPI.Models;
 using PSI.Models;
 using PSI.States;
-using System.Diagnostics;
+using PSIAPI.States;
 using Xunit.Abstractions;
-using Xunit.Sdk;
+using Moq;
+using PSI.Services;
+using PSIAPI.Interfaces;
+using PSIAPI.Controllers;
+using Microsoft.AspNetCore.Mvc;
 
 namespace XUnitTests
 {
     public class SerivceTest
     {
         private readonly ITestOutputHelper _testOutputHelper;
+        private readonly LocationItemController _service;
+        private readonly Mock<ILocationItemRepository> _locationItemRepoMock = new ();
         public SerivceTest(ITestOutputHelper testOutputHelper)
         {
             _testOutputHelper = testOutputHelper;
+            _service = new LocationItemController(_locationItemRepoMock.Object);
         }
+
+/*        [Fact]
+        public async void GetByIdAsync_NotExists_ReturnsBadRequest()
+        {
+            var id = Guid.NewGuid().ToString();
+            var item = new LocationItemDto
+            {
+                ID = id,
+                City = "New York",
+                Street = "Wall Street",
+                Latitude = 100,
+                Longitude = 100,
+                State = PSIAPI.States.UtilityState.Taromat
+            };
+            _locationItemRepoMock.Setup(x => x.GetByIdAsync(It.IsAny<string>())).ReturnsAsync(item);
+            var response = await _service.GetByIdAsync(id);
+            Assert.Equals(item);
+        }*/
 
         [Fact]
         public async void TestRemoveItem()
@@ -24,7 +50,7 @@ namespace XUnitTests
                 ID = "42",
                 Street = "Wall Street",
                 City = "New York",
-                State = (PSI.UtilityState)UtilityState.Taromat,
+                State = PSI.UtilityState.Taromat,
                 Longitude = 11,
                 Latitude = 12,
             };
@@ -47,17 +73,16 @@ namespace XUnitTests
                 ID = "abcdef54321",
                 Street = "Wall Street",
                 City = "New York",
-                State = (PSI.UtilityState)UtilityState.Taromat,
+                State = PSI.UtilityState.Taromat,
                 Longitude = 11,
-                Latitude = 12,
-                Position = new Location(12, 11)
+                Latitude = 12
             };
             LocationItem locationItemUpdated = new()
             {
                 ID = "abcdef54321",
                 Street = "Wall",
                 City = "York",
-                State = (PSI.UtilityState)UtilityState.Litter,
+                State = PSI.UtilityState.Litter,
                 Longitude = 14,
                 Latitude = 19
             };

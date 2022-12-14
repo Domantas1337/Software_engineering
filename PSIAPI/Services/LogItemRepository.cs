@@ -20,25 +20,25 @@ namespace PSIAPI.Services
             return exists;
         }
 
-        public async Task<LogItem?> FindAsync(string id)
+        public async Task<LogItemDto?> FindAsync(string id)
         {
             var locationItemModel = await _context.LogItems.FirstOrDefaultAsync(t => t.ID.Equals(id));
             return locationItemModel;
         }
 
-        public async Task DeleteAsync(LogItem item)
+        public async Task DeleteAsync(LogItemDto item)
         {
             _context.Remove(item);
             await _context.SaveChangesAsync();
         }
 
-        public async Task AddAsync(LogItem item)
+        public async Task AddAsync(LogItemDto item)
         {
             await _context.LogItems.AddAsync(item);
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<LogItem>> GetAllAsync()
+        public async Task<List<LogItemDto>> GetAllAsync()
         {
             var items = await _context.LogItems.ToListAsync();
             return items;

@@ -9,7 +9,7 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace PSIAPI.Models
 {
-    public class ReportItem
+    public class ReportItemDto
     {
         [Key]
         public string? ID { get; set; }

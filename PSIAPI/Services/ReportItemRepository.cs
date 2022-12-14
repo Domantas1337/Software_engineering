@@ -20,25 +20,25 @@ namespace PSIAPI.Services
             return exists;
         }
 
-        public async Task<ReportItem?> FindAsync(string id)
+        public async Task<ReportItemDto?> FindAsync(string id)
         {
             var reportItemModel = await _context.ReportItems.FirstOrDefaultAsync(t => t.ID.Equals(id));
             return reportItemModel;
         }
 
-        public async Task DeleteAsync(ReportItem item)
+        public async Task DeleteAsync(ReportItemDto item)
         {
             _context.Remove(item);
             await _context.SaveChangesAsync();
         }
 
-        public async Task AddAsync(ReportItem item)
+        public async Task AddAsync(ReportItemDto item)
         {
             await _context.ReportItems.AddAsync(item);
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<ReportItem>> GetAllAsync()
+        public async Task<List<ReportItemDto>> GetAllAsync()
         {
             var items = await _context.ReportItems.ToListAsync();
             return items;
