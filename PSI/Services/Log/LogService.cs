@@ -18,7 +18,6 @@ namespace PSI.Services
         private const string _mediaType = "application/json";
         private const string _endpoint = "log";
 
-
         public LogService(HttpClient httpClient)
         {
             _httpClient = httpClient;

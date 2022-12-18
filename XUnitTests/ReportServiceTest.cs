@@ -90,7 +90,12 @@ namespace XUnitTests
             var items2 = await reportRestService.GetAllLocationItemsAsync();
             var itemsList2 = items2.FindAll(x => x.ID.Equals("521")).ToList();
 
+            _testOutputHelper.WriteLine(itemsList1.First().Report);
+            _testOutputHelper.WriteLine(itemsList2.First().Report);
+            _testOutputHelper.WriteLine(itemsList1.First().ID);
+            _testOutputHelper.WriteLine(itemsList2.First().ID);
             Assert.True(!itemsList1.First().Report.Equals(itemsList2.First().Report));
+            await reportRestService.DeleteLocationItemAsync("521");
         }
 
 

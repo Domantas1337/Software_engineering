@@ -19,6 +19,29 @@ namespace PSIAPI.Controllers
             _repo = repo;
         }
 
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutAsync(string id, [FromBody] ReportItemDto item)
+        {
+            try
+            {
+                if (item == null || !ModelState.IsValid)
+                {
+                    return BadRequest("Invalid item");
+                }
+                ReportItemDto? existingItem = await _repo.FindAsync(id);
+                if (existingItem == null)
+                {
+                    return NotFound("Item with ID doesn't exist");
+                }
+                await _repo.UpdateAsync(existingItem, item);
+            }
+            catch (Exception)
+            {
+                return BadRequest("Couldn't update item");
+            }
+            return NoContent();
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {

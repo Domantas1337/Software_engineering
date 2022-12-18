@@ -9,5 +9,6 @@ namespace PSIAPI.Interfaces
         public Task DeleteAsync(ReportItemDto item);
         public Task AddAsync(ReportItemDto item);
         public Task<List<ReportItemDto>> GetAllAsync();
+        public Task UpdateAsync(ReportItemDto existingItem, ReportItemDto item);
     }
 }

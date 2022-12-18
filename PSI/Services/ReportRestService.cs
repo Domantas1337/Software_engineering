@@ -70,58 +70,7 @@ namespace PSI.Services
 
         }
 
-        public async Task PureAddLocationItemAsync(ReportItem reportItem)
-        {
-            try
-            {
-                string jsonLocationItem = JsonSerializer.Serialize<ReportItem>(reportItem, _jsonSerializerOptions);
-                StringContent content = new(jsonLocationItem, Encoding.UTF8, "application/json");
-
-                HttpResponseMessage response = await _httpClient.PostAsync($"{_url}/report", content).ConfigureAwait(false); ;
-
-
-
-                if (response.IsSuccessStatusCode)
-                {
-                    Debug.WriteLine("Successfully created locationItem");
-                }
-                else
-                {
-                    Debug.WriteLine("---> Non Http 2xx2x2xxx response");
-                    Debug.WriteLine("---> Non Http 2xx response");
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Whoops exception: {ex.Message}");
-            }
-
-            return;
-
-        }
-
-
-        public async Task PureDeleteLocationItemAsync(string id)
-        {
-            try
-            {
-                HttpResponseMessage response = await _httpClient.DeleteAsync($"{_url}/report/{id}");
-                if (response.IsSuccessStatusCode)
-                {
-                    Debug.WriteLine("Successfully created locationItem");
-                }
-                else
-                {
-                    Debug.WriteLine("---> Non Http 2xx response");
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Whoops exception: {ex.Message}");
-            }
-
-            return;
-        }
+       
 
         public async Task DeleteLocationItemAsync(string id)
         {
@@ -147,37 +96,6 @@ namespace PSI.Services
             return;
         }
 
-        public async Task<List<ReportItem>> PureGetAllLocationItemsAsync()
-        {
-            List<ReportItem> reportItems = new();
-
-            try
-            {
-                HttpResponseMessage response = await _httpClient.GetAsync($"{_url}/report");
-
-                if (response.IsSuccessStatusCode)
-                {
-                    string content = await response.Content.ReadAsStringAsync();
-                    var something = Newtonsoft.Json.JsonConvert.DeserializeObject<List<ReportItem>>(content)
-                        ?? new();
-
-                    foreach (ReportItem i in something)
-                    {
-                        reportItems.Add(i);
-                    }
-                }
-                else
-                {
-                    Debug.WriteLine("---> Non Http 2xx response");
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Whoops exception: {ex.Message}");
-            }
-
-            return reportItems;
-        }
 
         public async Task<List<ReportItem>> GetAllLocationItemsAsync()
         {

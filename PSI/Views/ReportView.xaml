@@ -43,7 +43,7 @@
                     Command="{Binding PickCommand}"
                     HorizontalOptions="Center" />
             <Button Text="Add" 
-                    Command="{Binding AddCommand}" />
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ReportViewModel}}, Path=Add}" />
             <Button Text="Cancel" 
                     Clicked="OnCancelButtonClicked" />
         </HorizontalStackLayout>

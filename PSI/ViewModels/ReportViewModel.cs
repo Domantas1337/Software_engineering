@@ -4,9 +4,11 @@ using CommunityToolkit.Mvvm.Input;
 using Microsoft.VisualBasic;
 using PSI.FileManagers;
 using PSI.Generators;
+using PSI.Helpers;
 using PSI.Models;
 using PSI.Services;
 using PSI.Views;
+using PSI.Views.ManageLocation;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -64,8 +66,7 @@ namespace PSI.ViewModels
         [ObservableProperty]
         string invalidInput;
 
-        [RelayCommand]
-        async void Add()
+        public async void Add()
         {
             ReportItem reportItem = new()
             {
@@ -85,9 +86,7 @@ namespace PSI.ViewModels
 
             SortItems();
 
-
-
-            await Shell.Current.GoToAsync("..");
+            Verification.PlatformVerification.IsPlatformUnknown(NavigateToPreviousPage.NavigateBack);
         }
 
         [RelayCommand]

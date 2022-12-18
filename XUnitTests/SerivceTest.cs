@@ -58,13 +58,17 @@ namespace XUnitTests
             await restService.AddLocationItemAsync(locationItem);
             var items = await restService.GetAllLocationItemsAsync();
             var itemsList = items.FindAll(x => x.ID.Equals("42")).ToList();
+            await restService.DeleteLocationItemAsync("42");
+            var items2 = await restService.GetAllLocationItemsAsync();
+            var itemsList2 = items2.FindAll(x => x.ID.Equals("42")).ToList();
 
-            Assert.True(itemsList.Count == 1);
+
+            Assert.True(itemsList.Count() == 1 && itemsList2.Count() == 0);
         }
 
 
         [Fact]
-        public async void TestAddItem()
+        public async void UpdateItem()
         {
             // ARRANGE
             LocationService restService = new(new HttpClient());
@@ -89,21 +93,37 @@ namespace XUnitTests
 
             // ACT
             await restService.AddLocationItemAsync(locationItem);
-            var itemsAfterAdd = await restService.GetAllLocationItemsAsync();
-            var itemsListAfterAdd = itemsAfterAdd.FindAll(x => x.ID.Equals("abcdef54321")).ToList();
             await restService.UpdateLocationItemAsync(locationItemUpdated);
             var itemsAfterUpdate = await restService.GetAllLocationItemsAsync();
             var itemsListAfterUpdate = itemsAfterUpdate.FindAll(x => x.ID.Equals("abcdef54321")).ToList();
-            await restService.DeleteLocationItemAsync("abcdef54321");
-            var itemsAfterDelete = await restService.GetAllLocationItemsAsync();
-            var itemsListAfterDelete = itemsAfterDelete.FindAll(x => x.ID.Equals("abcdef54321")).ToList();
 
-            // ASSERT
-            _testOutputHelper.WriteLine(itemsListAfterAdd.Count.ToString());
-            Assert.True(itemsListAfterAdd.Count == 1);
-            Assert.True(itemsListAfterAdd.First().CompareTo(locationItem) == 1);
             Assert.True(itemsListAfterUpdate.First().CompareTo(locationItemUpdated) == 1);
-            Assert.True(itemsListAfterDelete.Count == 0);
+            await restService.DeleteLocationItemAsync("abcdef54321");
+
+        }
+        [Fact]
+        public async void AddItem()
+        {
+            // ARRANGE
+            LocationService restService = new(new HttpClient());
+            LocationItem locationItem = new()
+            {
+                ID = "abcdef543212",
+                Street = "Wall Street",
+                City = "New York",
+                State = PSI.UtilityState.Taromat,
+                Longitude = 11,
+                Latitude = 12
+            };
+
+            // ACT
+            await restService.AddLocationItemAsync(locationItem);
+            var itemsAfterAdd = await restService.GetAllLocationItemsAsync();
+            var itemsListAfterAdd = itemsAfterAdd.FindAll(x => x.ID.Equals("abcdef543212")).ToList();
+
+            Assert.True(itemsListAfterAdd.Count() == 1);
+            await restService.DeleteLocationItemAsync("abcdef543212");
+
         }
     }
 }
