@@ -66,6 +66,7 @@ namespace PSI.ViewModels
         [ObservableProperty]
         string invalidInput;
 
+        [RelayCommand]
         public async void Add()
         {
             ReportItem reportItem = new()

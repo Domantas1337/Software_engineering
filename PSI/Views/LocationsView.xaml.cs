@@ -1,16 +1,12 @@
-using CommunityToolkit.Mvvm.ComponentModel;
 using PSI.Models;
-using PSI.States;
-using PSI.ViewModels;
 using System.Collections.ObjectModel;
-using System.Runtime.CompilerServices;
 
 namespace PSI.Views;
 
 [QueryProperty(nameof(Locations), "Locations")]
 public partial class LocationsView : ContentPage
 {
-	public ObservableCollection<LocationItem> locations;
+    public ObservableCollection<LocationItem> locations;
     private CancellationTokenSource _cancelTokenSource;
     private bool _isCheckingLocation;
     private Location location;
@@ -63,38 +59,43 @@ public partial class LocationsView : ContentPage
     public ObservableCollection<LocationItem> RequestedLocations { get; set; }
 
     public LocationsView()
-	{
-		InitializeComponent();
+    {
 
-		BindingContext = this;
+        if (DeviceInfo.Platform != DevicePlatform.Unknown)
+        {
+            InitializeComponent();
+        }
 
-		Locations ??= new ObservableCollection<LocationItem>();
-		
-		RequestedLocations = new ObservableCollection<LocationItem>();
-		if (Locations != null)
-		{
-			foreach(LocationItem i in Locations)
-			{
-				if(i.State == 0)
-				{
-					RequestedLocations.Add(i);
-				}
-			}
-		}
+        BindingContext = this;
+
+        Locations ??= new ObservableCollection<LocationItem>();
+
+        RequestedLocations = new ObservableCollection<LocationItem>();
+        if (Locations != null)
+        {
+            foreach (LocationItem i in Locations)
+            {
+                if (i.State == 0)
+                {
+                    RequestedLocations.Add(i);
+                }
+            }
+        }
 
         GetCurrentLocation();
-	}
+    }
 
-	public void OnSelectedChanged (object sender, EventArgs e){
-  
-		var picker = (Picker)sender;
-		int selectedIndex = picker.SelectedIndex;
+    public void OnSelectedChanged(object sender, EventArgs e)
+    {
 
-		RequestedLocations.Clear();
+        var picker = (Picker)sender;
+        int selectedIndex = picker.SelectedIndex;
+
+        RequestedLocations.Clear();
 
         foreach (LocationItem i in Locations)
         {
-            if (i.State == (UtilityState) selectedIndex)
+            if (i.State == (UtilityState)selectedIndex)
             {
                 RequestedLocations.Add(i);
             }

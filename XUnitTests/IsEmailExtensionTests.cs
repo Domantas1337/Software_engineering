@@ -5,6 +5,8 @@ using Xunit.Sdk;
 
 namespace XUnitTests
 {
+    [Collection("Our Test Collection #2")]
+
     public class RegexTest
     {
         private readonly ITestOutputHelper _testOutputHelper;

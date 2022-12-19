@@ -15,14 +15,17 @@ namespace PSI.Views;
 
 public partial class MainView : ContentPage
 {
-    Lazy<Task<ObservableCollection<LocationItem>>> locations;
+    protected Lazy<Task<ObservableCollection<LocationItem>>> locations;
     private readonly ILocationService _locationService;
     private readonly ILogService _logService;
 
     public MainView(ReportViewModel vm, ILocationService locationService, ILogService logService)
     {
-        InitializeComponent();
-        BindingContext = vm;
+        if (DeviceInfo.Platform != DevicePlatform.Unknown)
+        {
+            InitializeComponent();
+            BindingContext = vm;
+        }
 
         _logService = logService;
         _locationService = locationService;
@@ -35,25 +38,16 @@ public partial class MainView : ContentPage
         locations = new Lazy<Task<ObservableCollection<LocationItem>>>(() =>
         Task.Run(
          async () => {
-            List<LocationItem> locationList = await Verifier.OnNetworkAccess(_locationService.GetAllLocationItemsAsync);
+             List<LocationItem> locationList = await _locationService.GetAllLocationItemsAsync();
             //List<LocationItem> locationList = await _locationService.GetAllLocationItemsAsync();
             return locationList.ToObservableCollection();
             })
         );
 
-        foreach(LocationItem locationItem in locations.Value.Result)
-        {
-            Debug.WriteLine(locationItem.Street);
-        }
-
-
-
     }
 
     public void OnLocationExists(object sender, LocationEventArgs e)
     {
-
-        Debug.WriteLine("Answer: " + e.Message);
 
     }
     public async void GenerateReportPage(object sender, SelectedItemChangedEventArgs args)
@@ -67,13 +61,19 @@ public partial class MainView : ContentPage
                                                                 }
         );
     }
-    async void MapButtonClicked(object sender, EventArgs e) => await Shell.Current.GoToAsync(nameof(LocationsView), new Dictionary<string, object>
+    public async void MapButtonClicked(object sender, EventArgs e) => await Shell.Current.GoToAsync(nameof(LocationsView), new Dictionary<string, object>
                                                                 {
                                                                     {
                                                                         "Locations", locations.Value.Result
                                                                     }
                                                                 });
-    async void OnAddItemClicked(object sender, EventArgs e) => await Shell.Current.GoToAsync(nameof(AddLocationView));
-    async void OnAuthenticationClicked(object sender, EventArgs e) => await Shell.Current.GoToAsync(nameof(SignInPage));
+    async void OnAddItemClicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync(nameof(AddLocationView));
+    }
+        async void OnAuthenticationClicked(object sender, EventArgs e) => await Shell.Current.GoToAsync(nameof(SignInPage));
     async void OnReportButtonClicked(object sender, EventArgs e) => await Shell.Current.GoToAsync(nameof(ReportView));
+    
+
+
 }

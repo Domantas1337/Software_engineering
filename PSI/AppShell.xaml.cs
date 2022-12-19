@@ -1,4 +1,5 @@
 ﻿using PSI.UserAuthentication;
+using PSI.Verification;
 using PSI.Views;
 using PSI.Views.ManageLocation;
 
@@ -18,6 +19,7 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(nameof(SignUpPage), typeof(SignUpPage));
         Routing.RegisterRoute(nameof(ReportDetailPage), typeof(ReportDetailPage));
         Routing.RegisterRoute(nameof(LocationsView), typeof(LocationsView));
+        Routing.RegisterRoute(nameof(PlatformVerification), typeof(PlatformVerification));
 
     }
 }

@@ -11,7 +11,7 @@ namespace PSI.Helpers
     {
         public static async void NavigateBack()
         {
-            await Shell.Current.GoToAsync(nameof(MainView));
+            await Shell.Current.GoToAsync("..");
         }
     }
 }

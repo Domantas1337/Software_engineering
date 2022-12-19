@@ -9,6 +9,8 @@ using Xunit.Abstractions;
 
 namespace XUnitTests
 {
+    [Collection("Our Test Collection #5")]
+
     public class ReportViewModelTests
     {
         private readonly ITestOutputHelper _testOutputHelper;

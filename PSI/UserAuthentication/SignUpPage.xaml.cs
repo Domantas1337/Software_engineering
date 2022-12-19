@@ -18,8 +18,11 @@ public partial class SignUpPage : ContentPage
 
     public SignUpPage()
     {
-        InitializeComponent();
-        BindingContext = this;
+        if (DeviceInfo.Platform != DevicePlatform.Unknown)
+        { 
+            InitializeComponent();
+            BindingContext = this;
+        }
     }
 
     private async void TapGestureRecognizer_Tapped_For_SignIn(object sender, EventArgs e)
@@ -42,8 +45,11 @@ public partial class SignUpPage : ContentPage
         }
         if (errored)
         {
-            signUpNotice.Text = ErrorBody;
-            ErrorBody = "Invalid:";
+            if (DeviceInfo.Platform != DevicePlatform.Unknown)
+            {
+                signUpNotice.Text = ErrorBody;
+                ErrorBody = "Invalid:";
+            }
         }
         else
         {
@@ -55,10 +61,12 @@ public partial class SignUpPage : ContentPage
                 Password = this.Password
             };
 
+
             await JSONManager.WriteAsync<UserDataItem>(
                                         item: userData,
                                         filePath: Constants.UsersFilePath
                                         );
+            
             await Shell.Current.GoToAsync("..");
         }
     }

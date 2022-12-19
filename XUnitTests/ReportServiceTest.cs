@@ -7,6 +7,8 @@ using Xunit.Sdk;
 
 namespace XUnitTests
 {
+    [Collection("Our Test Collection #4")]
+
     public class ReportSerivceTest
     {
         private readonly ITestOutputHelper _testOutputHelper;

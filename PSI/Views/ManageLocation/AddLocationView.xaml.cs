@@ -1,4 +1,5 @@
 using PSI.FileManagers;
+using PSI.Helpers;
 using PSI.Models;
 using PSI.Services;
 using PSI.States;
@@ -27,13 +28,17 @@ public partial class AddLocationView : ContentPage
 
     public AddLocationView(ILocationService dataService)
     {
-        InitializeComponent();
+        if (DeviceInfo.Platform != DevicePlatform.Unknown)
+        {
+            InitializeComponent();
+            organicButton.Clicked += OnButtonClicked;
+            organicButton.Clicked += (obj, args) => selectedBin = BinSelectionState.Organic;
+            plasticButton.Clicked += OnButtonClicked;
+            plasticButton.Clicked += (obj, args) => selectedBin = BinSelectionState.Plastic;
+            BindingContext = this;
+        }
         _dataService = dataService;
-        BindingContext = this;
-        organicButton.Clicked += OnButtonClicked;
-        organicButton.Clicked += (obj, args) => selectedBin = BinSelectionState.Organic;
-        plasticButton.Clicked += OnButtonClicked;
-        plasticButton.Clicked += (obj, args) => selectedBin = BinSelectionState.Plastic;
+  
     }
 
     void OnButtonClicked(object sender, EventArgs e)
@@ -72,7 +77,7 @@ public partial class AddLocationView : ContentPage
             details.IsVisible = true;
         }
     }
-    async void OnSaveButtonClicked(object sender, EventArgs e)
+    public async void OnSaveButtonClicked(object sender, EventArgs e)
     {
 
 
@@ -125,8 +130,12 @@ public partial class AddLocationView : ContentPage
         }
         if (errored)
         {
-            errorMsg.Text = ErrorBody;
-            ErrorBody = "Invalid:\n";
+            if (DeviceInfo.Platform != DevicePlatform.Unknown)
+            {
+                errorMsg.Text = ErrorBody;
+                ErrorBody = "Invalid:\n";
+
+            }
         }
         else
         {
@@ -141,16 +150,16 @@ public partial class AddLocationView : ContentPage
                 
             };
 
-            Debug.WriteLine(locationItem.ID);
             await _dataService.AddLocationItemAsync(locationItem);
 
-            await Shell.Current.GoToAsync("..");
+            Verification.PlatformVerification.IsPlatformUnknown(NavigateToPreviousPage.NavigateBack);
+
         }
     }
 
+    
     async void OnDeleteButtonClicked(object sender, EventArgs e)
     {
-        
         await Shell.Current.GoToAsync(nameof(DeleteLocationView));
     }
 

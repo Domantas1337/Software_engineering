@@ -12,6 +12,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace XUnitTests
 {
+    [Collection("Our Test Collection #6")]
+
     public class SerivceTest
     {
         private readonly ITestOutputHelper _testOutputHelper;
@@ -58,7 +60,7 @@ namespace XUnitTests
             await restService.AddLocationItemAsync(locationItem);
             var items = await restService.GetAllLocationItemsAsync();
             var itemsList = items.FindAll(x => x.ID.Equals("42")).ToList();
-            await restService.DeleteLocationItemAsync("42");
+            await restService.DeleteLocationItemAsync(itemsList.First().ID);
             var items2 = await restService.GetAllLocationItemsAsync();
             var itemsList2 = items2.FindAll(x => x.ID.Equals("42")).ToList();
 
