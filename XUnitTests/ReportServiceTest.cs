@@ -4,6 +4,8 @@ using PSI.States;
 using System.Diagnostics;
 using Xunit.Abstractions;
 using Xunit.Sdk;
+using PSIAPI.Controllers;
+using PSIAPI.Models;
 
 namespace XUnitTests
 {
@@ -16,6 +18,7 @@ namespace XUnitTests
         {
             _testOutputHelper = testOutputHelper;
         }
+
 
         [Fact]
         public async void TestAddItem()
