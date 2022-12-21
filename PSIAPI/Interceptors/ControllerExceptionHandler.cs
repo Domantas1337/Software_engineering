@@ -8,7 +8,7 @@ namespace PSIAPI.Interceptors
         {
             try
             {
-
+                invocation.Proceed();
             }
             catch (Exception ex)
             {

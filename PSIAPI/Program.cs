@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.OpenApi.Models;
 using Microsoft.OpenApi.Writers;
+using PSIAPI.Controllers;
 using PSIAPI.Data;
 using PSIAPI.Interceptors;
 using PSIAPI.Interfaces;
@@ -24,9 +25,10 @@ builder.Services.AddScoped<ILogItemRepository, LogItemRepository>();
 builder.Services.AddScoped<IReportItemRepository, ReportItemRepository>();
 
 var containerBuilder = new ContainerBuilder();
-containerBuilder.RegisterType<ControllerExceptionHandler>();
-containerBuilder.Register(c => new NullLogger());
+containerBuilder.RegisterType<ILocationItemRepository>();
+containerBuilder.Register(c => new ControllerExceptionHandler());
 var container = containerBuilder.Build();
+var willBeIntercepted = container.Resolve<ILocationItemRepository>();
 
 builder.Services.AddControllers();
 

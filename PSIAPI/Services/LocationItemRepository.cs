@@ -16,6 +16,8 @@ namespace PSIAPI.Services
 
         public async Task<LocationItemDto?> GetByIdAsync(string id)
         {
+            int a = 0;
+            int b = 1 / a;
             var item = await _context.LocationItems.FindAsync(id);
             return item;
         }

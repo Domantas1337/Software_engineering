@@ -7,7 +7,6 @@ using Autofac.Extras.DynamicProxy;
 
 namespace PSIAPI.Controllers
 {
-    [Intercept(typeof(ControllerExceptionHandler))]
     [ApiController]
     [Route($"api/{_endpoint}")]
     public class LocationItemController : ControllerBase
@@ -41,8 +40,6 @@ namespace PSIAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
-            int k = 0;
-            int x = 2 / k;
             var items = await _repo.GetAllAsync();
             return Ok(items);
         }
