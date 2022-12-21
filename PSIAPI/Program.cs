@@ -1,9 +1,14 @@
+using Autofac;
+using Castle.Core.Logging;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi.Writers;
 using PSIAPI.Data;
+using PSIAPI.Interceptors;
 using PSIAPI.Interfaces;
 using PSIAPI.Services;
-
+using NullLogger = Castle.Core.Logging.NullLogger;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSwaggerGen(c =>
@@ -17,6 +22,11 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
 builder.Services.AddScoped<ILocationItemRepository, LocationItemRepository>();
 builder.Services.AddScoped<ILogItemRepository, LogItemRepository>();
 builder.Services.AddScoped<IReportItemRepository, ReportItemRepository>();
+
+var containerBuilder = new ContainerBuilder();
+containerBuilder.RegisterType<ControllerExceptionHandler>();
+containerBuilder.Register(c => new NullLogger());
+var container = containerBuilder.Build();
 
 builder.Services.AddControllers();
 
