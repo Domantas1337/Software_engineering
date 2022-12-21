@@ -6,8 +6,12 @@ using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace PSI.FileManagers
 {
-    internal static class JSONManager
+    public static class JSONManager
     {
+        private static JsonSerializerOptions _jsonSerializerOptions = new() {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            };
+
         public static List<T> DeserializeFromJSONString<T>(string json)
         {
             var items = JsonConvert.DeserializeObject<List<T>>(json)
@@ -16,11 +20,7 @@ namespace PSI.FileManagers
         }
         public static string SerializeToJSONString<T>(T obj)
         {
-            var jsonSerializerOptions = new JsonSerializerOptions
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-            };
-            string jsonString = JsonSerializer.Serialize<T>(obj, jsonSerializerOptions);
+            string jsonString = JsonSerializer.Serialize<T>(obj, _jsonSerializerOptions);
             return jsonString;
         }
         public static List<T> Read<T>(string filePath)
@@ -30,9 +30,10 @@ namespace PSI.FileManagers
             
             if (File.Exists(filePath) == false)
             {
-                File.Create(filePath);
+                using FileStream createStream = File.Create(filePath);
+                createStream.Dispose();
             }
-            StreamReader readStream = new(filePath);
+            StreamReader readStream = new (filePath);
             lock(readStream)
             {
                 string json = readStream.ReadToEnd();
@@ -50,8 +51,9 @@ namespace PSI.FileManagers
                 items.Add(item);
             }
 
-            await using FileStream createStream = File.Create(filePath);
+            using FileStream createStream = File.Create(filePath);
             await JsonSerializer.SerializeAsync(createStream, items);
+            await createStream.DisposeAsync();
         }
     }
 }

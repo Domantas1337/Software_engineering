@@ -38,7 +38,7 @@ namespace XUnitTests
         }
 
         [Fact]
-        public void SignUp_IncorrcrEmail()
+        public void SignUp_IncorrectEmail()
         {
             SignUpPage signUpPage = new();
             signUpPage.Email = "an.emailgmail.com";
@@ -55,7 +55,7 @@ namespace XUnitTests
         }
 
         [Fact]
-        public void SignUp_IncorrcrEmailAndPasswordsDontMatch()
+        public void SignUp_IncorrectEmailAndPasswordsDontMatch()
         {
             SignUpPage signUpPage = new();
             signUpPage.Email = "an.emailgmail.com";

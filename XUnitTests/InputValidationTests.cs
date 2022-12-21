@@ -7,10 +7,10 @@ namespace XUnitTests
 {
     [Collection("Our Test Collection #2")]
 
-    public class RegexTest
+    public class InputValidationTests
     {
         private readonly ITestOutputHelper _testOutputHelper;
-        public RegexTest(ITestOutputHelper testOutputHelper)
+        public InputValidationTests(ITestOutputHelper testOutputHelper)
         {
             _testOutputHelper = testOutputHelper;
         }
@@ -89,5 +89,41 @@ namespace XUnitTests
             Assert.True(correctEmail.IsEmailExtension() == true);
         }
 
+        [Theory]
+        [InlineData("shit")]
+        [InlineData("what is this shit")]
+        [InlineData("fuck")]
+        [InlineData("fucking awesome")]
+        [InlineData("fuc")]
+        public void CensorTextExtension_HasKnownCensorString_ReturnsTrue(string badStr)
+        {
+            Assert.True(badStr.CensorTextExtension() == true);
+        }
+
+        [Theory]
+        [InlineData("this is the sHit")]
+        [InlineData("Shit")]
+        [InlineData("SHIT")]
+        [InlineData("fUcK")]
+        [InlineData("the fUcK is this mate?")]
+        [InlineData("FUCK")]
+        [InlineData("fuC")]
+        [InlineData("FUC")]
+        [InlineData("holy fUc")]
+        [InlineData("holy fUc#")]
+        public void CensorTextExtension_HasKnownCensorStringCaseInsensitive_ReturnsTrue(string badStr)
+        {
+            Assert.True(badStr.CensorTextExtension() == true);
+        }
+
+        [Theory]
+        [InlineData("love")]
+        [InlineData("lorem ipsum")]
+        [InlineData("this is a normal sentence")]
+        [InlineData("a cock is singing in the morning")]
+        public void CensorTextExtension_DoesntHaveKnownCensorString_ReturnsFalse(string goodStr)
+        {
+            Assert.True(goodStr.CensorTextExtension() == false);
+        }
     }
 }

@@ -8,7 +8,7 @@ using PSI.Generators;
 using PSI.Models;
 using PSI.Services;
 
-namespace PSI
+namespace PSI.Logging
 {
 
     public static class Logger
@@ -16,10 +16,10 @@ namespace PSI
 
         static private readonly string _fileName = "logs.json";
         static private readonly string _filePath = $"{Constants.CurrentAssemblyPath}\\{_fileName}";
-        
-        static public async Task LogAsync(Exception ex, string extraMsg = null)
+
+        static public async Task LogAsync(Exception ex, string extraMsg = null, string diffPath = null)
         {
-            Debug.WriteLine(_filePath);
+            Debug.WriteLine(diffPath ?? _filePath);
             LogItem logItem = new()
             {
                 ID = IDGenerator.GenerateID(),
@@ -28,12 +28,12 @@ namespace PSI
                 Trace = ex.StackTrace
             };
 
-            await JSONManager.WriteAsync<LogItem>(_filePath, logItem);
+            await JSONManager.WriteAsync(diffPath ?? _filePath, logItem);
         }
 
-        static public void SendLogs(ILogService logService)
+        static public void SendLogs(ILogService logService, string diffFromPath = null)
         {
-            List<LogItem> logItems = JSONManager.Read<LogItem>(_filePath);
+            List<LogItem> logItems = JSONManager.Read<LogItem>(diffFromPath ?? _filePath);
             logItems.ForEach(async logItem =>
             {
                 await logService.AddLogItemAsync(logItem);

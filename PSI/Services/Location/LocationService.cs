@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.Maui.Devices.Sensors;
 using Microsoft.Maui.Maps;
 using PSI.FileManagers;
+using PSI.Logging;
 using PSI.Models;
 
 namespace PSI.Services
