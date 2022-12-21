@@ -77,7 +77,7 @@ namespace XUnitTests
         }
 
         [Fact]
-        public void ReadWrite_WriteToTempReadFromTemp_SameObjectsReturned()
+        public void Integration_ReadWrite_WriteAndReadFromTemp_SameObjectsReturned()
         {
             string path = Path.GetTempFileName();
             List<LocationItemDto> locationItemDtos = new()

@@ -18,7 +18,7 @@ namespace XUnitTests
         }
 
         [Fact]
-        public async void TestAddItem()
+        public async void AddLogItemAsync_AddingLogItem_LogItemWasAdded()
         {
             LogService logService = new(new HttpClient());
             LogItem logItem = new()
@@ -37,7 +37,7 @@ namespace XUnitTests
         }
 
         [Fact]
-        public async void TestDeleteItem()
+        public async void DeleteLogItemAsync_DeletingLogItem_LogItemWasDeleted()
         {
             LogService logService = new(new HttpClient());
             LogItem logItem = new()

@@ -19,13 +19,13 @@ namespace XUnitTests
 {
     [Collection("Our Test Collection 1")]
 
-    public class LogItemControllerTest
+    public class LogItemControllerTests
     {
         private readonly ITestOutputHelper _testOutputHelper;
         private DbContextOptions<AppDbContext> options;
         private AppDbContext appDbContext;
         private ILogItemRepository logItemRepository;
-        public LogItemControllerTest(ITestOutputHelper testOutputHelper)
+        public LogItemControllerTests(ITestOutputHelper testOutputHelper)
         {
             _testOutputHelper = testOutputHelper;
 
@@ -40,7 +40,7 @@ namespace XUnitTests
 
 
         [Fact]
-        public async void PostItem()
+        public async void PostAsync_AddedItem_CreatedResultReturned()
         {
 
             string itemID = Guid.NewGuid().ToString("N");
@@ -60,7 +60,7 @@ namespace XUnitTests
         }
 
         [Fact]
-        public async void DeleteItem()
+        public async void DeleteAsync_ItemDeleted_NoContentResultReturned()
         {
             string itemID = Guid.NewGuid().ToString("N");
 
@@ -81,7 +81,7 @@ namespace XUnitTests
         }
 
         [Fact]
-        public async void GetAll()
+        public async void GetAllAsync_PostedTwoItems_SameTwoItemsReceived()
         {
             string itemID = Guid.NewGuid().ToString("N");
             string itemID2 = Guid.NewGuid().ToString("N");
@@ -104,14 +104,15 @@ namespace XUnitTests
             await controller.PostAsync(logItemDto);
             await controller.PostAsync(logItemDto2);
             var result = controller.GetAllAsync();
-            var result3 = (OkObjectResult)result.Result; // <-- Cast is before using it.
+            var result3 = (OkObjectResult)result.Result;
             var result4 = result3.Value as List<LogItemDto>;
 
+            _testOutputHelper.WriteLine(result4.Count().ToString());
             Assert.True(result4.Count() == 2);
         }
 
         [Fact]
-        public async void DeleteItemIncorrectId()
+        public async void DeleteAsync_DeletingNonExistingItem_GotNotFoundObjectResult()
         {
             string itemID = Guid.NewGuid().ToString("N");
             var controller = new LogItemController(logItemRepository);

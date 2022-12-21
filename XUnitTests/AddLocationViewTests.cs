@@ -11,17 +11,17 @@ using Xunit.Abstractions;
 namespace XUnitTests
 {
     [Collection("Our Test Collection #1")]
-    public class AddLocationTests
+    public class AddLocationViewTests
     {
 
         private readonly ITestOutputHelper _testOutputHelper;
-        public AddLocationTests(ITestOutputHelper testOutputHelper)
+        public AddLocationViewTests(ITestOutputHelper testOutputHelper)
         {
             _testOutputHelper = testOutputHelper;
         }
 
         [Fact]
-        public async void TestAddItem()
+        public async void Integration_AddedCorrectItem_SameItemReceived()
         {
             LocationService locationService = new(new HttpClient());
             AddLocationView locationViewModel = new(locationService);
@@ -52,12 +52,10 @@ namespace XUnitTests
         }
 
         [Fact]
-        public async void TestNoLatitude()
+        public async void Integration_NoLatitudeProvided_NoItemReceived()
         {
             LocationService locationService = new(new HttpClient());
             AddLocationView locationViewModel = new(locationService);
-
-
 
             locationViewModel.Title = "title";
             locationViewModel.LongitudeText = "12";
@@ -83,7 +81,7 @@ namespace XUnitTests
         }
 
         [Fact]
-        public async void TestNoCity()
+        public void Integration_NoCityProvided_NoItemReceived()
         {
             LocationService locationService = new(new HttpClient());
             AddLocationView locationViewModel = new(locationService);
@@ -100,7 +98,7 @@ namespace XUnitTests
         }
 
         [Fact]
-        public async void TestNoStreet()
+        public void Integration_NoStreetProvided_NoItemReceived()
         {
             LocationService locationService = new(new HttpClient());
             AddLocationView locationViewModel = new(locationService);
@@ -119,7 +117,7 @@ namespace XUnitTests
         }
 
         [Fact]
-        public async void TestIncorrectLatitude_AdditionalChars()
+        public void Integration_InvalidLatitudeProvided_NoItemReceived()
         {
             LocationService locationService = new(new HttpClient());
             AddLocationView locationViewModel = new(locationService);
@@ -138,7 +136,7 @@ namespace XUnitTests
         }
 
         [Fact]
-        public async void TestIncorrectLongitude_AdditionalChars()
+        public void Integration_InvalidLongitudeProvided_NoItemReceived()
         {
             LocationService locationService = new(new HttpClient());
             AddLocationView locationViewModel = new(locationService);
@@ -157,7 +155,7 @@ namespace XUnitTests
         }
 
         [Fact]
-        public async void TestNoLongitude()
+        public async void Integration_NoLongitudeProvided_NoItemReceived()
         {
             LocationService locationService = new(new HttpClient());
             AddLocationView locationViewModel = new(locationService);

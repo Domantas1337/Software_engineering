@@ -18,13 +18,13 @@ namespace XUnitTests
 {
     [Collection("Our Test Collection 2")]
 
-    public class LocationControllerTest
+    public class LocationControllerTests
     {
         private readonly ITestOutputHelper _testOutputHelper;
         private DbContextOptions<AppDbContext> options;
         private AppDbContext appDbContext;
         private ILocationItemRepository locationItemRepo;
-        public LocationControllerTest(ITestOutputHelper testOutputHelper)
+        public LocationControllerTests(ITestOutputHelper testOutputHelper)
         {
             _testOutputHelper = testOutputHelper;
 
@@ -38,7 +38,7 @@ namespace XUnitTests
         }
 
         [Fact]
-        public async void GetAll()
+        public async void PostAsync_TwoItemsPosted_TwoItemsWereAdded()
         {
             string itemID = Guid.NewGuid().ToString("N");
             string itemID2 = Guid.NewGuid().ToString("N");
@@ -62,8 +62,8 @@ namespace XUnitTests
 
             await controller.PostAsync(locationItemDto);
             await controller.PostAsync(locationItemDto2);
-            var result = controller.GetAllAsync();
-            var result3 = (OkObjectResult)result.Result; // <-- Cast is before using it.
+            var result = await controller.GetAllAsync();
+            var result3 = (OkObjectResult) result;
             var result4 = result3.Value as List<LocationItemDto>;
 
             _testOutputHelper.WriteLine(result4.Count().ToString());
@@ -71,7 +71,7 @@ namespace XUnitTests
         }
 
         [Fact]
-        public async void PostItem()
+        public async void PostAsync_ItemPosted_ItemWasAdded()
         {
             var controller = new LocationItemController(locationItemRepo);
 
@@ -94,7 +94,7 @@ namespace XUnitTests
         }
 
         [Fact]
-        public async void DeleteItem()
+        public async void DeleteAsync_ItemPosted_ItemWasDeleted()
         {
             string itemID = Guid.NewGuid().ToString("N");
 
@@ -115,7 +115,7 @@ namespace XUnitTests
         }
 
         [Fact]
-        public async void DeleteItemIncorrectId()
+        public async void DeleteAsync_DeletingNonExistingItem_GotNotFoundObjectResult()
         {
             string itemID = Guid.NewGuid().ToString("N");
 
@@ -139,7 +139,7 @@ namespace XUnitTests
 
 
         [Fact]
-        public async void UpdateItem()
+        public async void PutAsync_ModifyingPostedItem_ItemWasModified()
         {
             string itemID = Guid.NewGuid().ToString("N");
 
@@ -173,7 +173,7 @@ namespace XUnitTests
         }
 
         [Fact]
-        public async void UpdateItem_DoesNotExist()
+        public async void PutAsync_UpdatingNonExistingItem_GotNotFoundObjectResult()
         {
             string itemID = Guid.NewGuid().ToString("N");
 
@@ -203,7 +203,7 @@ namespace XUnitTests
         }
 
         [Fact]
-        public async void GetItem()
+        public async void PostAsync_AddingNonExistingItem_ItemWasAdded()
         {
             string itemID = Guid.NewGuid().ToString("N");
 
@@ -219,7 +219,7 @@ namespace XUnitTests
                         
             await controller.PostAsync(locationItemDto);
             var result = controller.GetByIdAsync(itemID);
-            var result3 = (OkObjectResult)result.Result; // <-- Cast is before using it.
+            var result3 = (OkObjectResult)result.Result;
             var result4 = result3.Value as LocationItemDto;
 
             _testOutputHelper.WriteLine(result4.ID);
@@ -230,7 +230,7 @@ namespace XUnitTests
         }
 
         [Fact]
-        public async void GetItem_IncorrectID()
+        public async void GetItemByIdAsync_ItemByIdNonExistant_BadRequestObjectResult()
         {
             string itemID = Guid.NewGuid().ToString("N");
 

@@ -19,13 +19,13 @@ namespace XUnitTests
 {
     [Collection("Our Test Collection 3")]
 
-    public class ReportItemControllerTest
+    public class ReportItemControllerTests
     {
         private readonly ITestOutputHelper _testOutputHelper;
         private DbContextOptions<AppDbContext> options;
         private AppDbContext appDbContext;
         private IReportItemRepository reportItemRepository;
-        public ReportItemControllerTest(ITestOutputHelper testOutputHelper)
+        public ReportItemControllerTests(ITestOutputHelper testOutputHelper)
         {
             _testOutputHelper = testOutputHelper;
 
@@ -39,7 +39,7 @@ namespace XUnitTests
         }
 
         [Fact]
-        public async void UpdateItem_DoesNotExist()
+        public async void PutAsync_UpdatedItemDoesntExist_GotNotFoundObjectResult()
         {
             string itemID = Guid.NewGuid().ToString("N");
 
@@ -68,7 +68,7 @@ namespace XUnitTests
         }
 
         [Fact]
-        public async void UpdateItem()
+        public async void PostAsync_UpdatingAddedItem_GotNoContentResult()
         {
             string itemID = Guid.NewGuid().ToString("N");
 
@@ -98,7 +98,7 @@ namespace XUnitTests
         }
 
         [Fact]
-        public async void GetAll()
+        public async void PostAsync_AddingTwoItems_TwoItemsWereAdded()
         {
             string itemID = Guid.NewGuid().ToString("N");
             string itemID2 = Guid.NewGuid().ToString("N");
@@ -120,14 +120,14 @@ namespace XUnitTests
             await controller.PostAsync(reportItemDto);
             await controller.PostAsync(reportItemDto2);
             var result = controller.GetAllAsync();
-            var result3 = (OkObjectResult)result.Result; // <-- Cast is before using it.
+            var result3 = (OkObjectResult)result.Result;
             var result4 = result3.Value as List<ReportItemDto>;
 
             Assert.True(result4.Count() == 2);
         }
 
         [Fact]
-        public async void PostItem()
+        public async void PostAsync_AddingItem_ItemSuccessfullyAdded()
         {
             string itemID = Guid.NewGuid().ToString("N");
 
@@ -149,7 +149,7 @@ namespace XUnitTests
         }
 
         [Fact]
-        public async void DeleteItem()
+        public async void DeleteAsync_DeletingAddedItem_NoContentResult()
         {
             string itemID = Guid.NewGuid().ToString("N");
 
@@ -170,7 +170,7 @@ namespace XUnitTests
         }
 
         [Fact]
-        public async void DeleteItemIncorrectId()
+        public async void DeleteAsync_DeletingItemNonExistingIdItem_GotNotFoundObjectResult()
         {
             string itemID = Guid.NewGuid().ToString("N");
 

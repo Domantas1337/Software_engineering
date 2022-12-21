@@ -21,7 +21,7 @@ namespace XUnitTests
 
 
         [Fact]
-        public async void TestAddItem()
+        public async void AddLocationItemAsync_AddingCorrectItem_ItemWasAdded()
         {
             ReportRestService reportService = new(new HttpClient());
             ReportItem reportItem = new()
@@ -43,7 +43,7 @@ namespace XUnitTests
         }
 
         [Fact]
-        public async void TestDeleteItem()
+        public async void Integration_DeletingAddedLocation_ItemWasDeleted()
         {
             ReportRestService reportRestService = new(new HttpClient());
             ReportItem reportItem = new()
@@ -69,7 +69,7 @@ namespace XUnitTests
         }
 
         [Fact]
-        public async void TestUpdateItem()
+        public async void Integration_UpdatingAddedItem_ItemWasUpdated()
         {
             ReportRestService reportRestService = new(new HttpClient());
             ReportItem reportItem = new()

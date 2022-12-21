@@ -14,37 +14,19 @@ namespace XUnitTests
 {
     [Collection("Our Test Collection #6")]
 
-    public class SerivceTest
+    public class SerivceTests
     {
         private readonly ITestOutputHelper _testOutputHelper;
         private readonly LocationItemController _service;
         private readonly Mock<ILocationItemRepository> _locationItemRepoMock = new ();
-        public SerivceTest(ITestOutputHelper testOutputHelper)
+        public SerivceTests(ITestOutputHelper testOutputHelper)
         {
             _testOutputHelper = testOutputHelper;
             _service = new LocationItemController(_locationItemRepoMock.Object);
         }
 
-/*        [Fact]
-        public async void GetByIdAsync_NotExists_ReturnsBadRequest()
-        {
-            var id = Guid.NewGuid().ToString();
-            var item = new LocationItemDto
-            {
-                ID = id,
-                City = "New York",
-                Street = "Wall Street",
-                Latitude = 100,
-                Longitude = 100,
-                State = PSIAPI.States.UtilityState.Taromat
-            };
-            _locationItemRepoMock.Setup(x => x.GetByIdAsync(It.IsAny<string>())).ReturnsAsync(item);
-            var response = await _service.GetByIdAsync(id);
-            Assert.Equals(item);
-        }*/
-
         [Fact]
-        public async void TestRemoveItem()
+        public async void Integration_AddDeleteCorrectItem_ItemWasAddedAndDeleted()
         {
             LocationService restService = new(new HttpClient());
             LocationItem locationItem = new()
@@ -70,7 +52,7 @@ namespace XUnitTests
 
 
         [Fact]
-        public async void UpdateItem()
+        public async void Integration_AddAndUpdateItem_ItemWasAddedAndUpdated()
         {
             // ARRANGE
             LocationService restService = new(new HttpClient());
@@ -104,7 +86,7 @@ namespace XUnitTests
 
         }
         [Fact]
-        public async void AddItem()
+        public async void Integration_AddAndDeleteItem_ItemWAsAddedAndDeleted()
         {
             // ARRANGE
             LocationService restService = new(new HttpClient());

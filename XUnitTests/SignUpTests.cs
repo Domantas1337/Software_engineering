@@ -20,7 +20,7 @@ namespace XUnitTests
         }
 
         [Fact]
-        public void SignUp_PasswordsDontMatch_SecondPassword()
+        public void SignUp_TwoPasswordsDontMatch_PrintsOutError()
         {
             SignUpPage signUpPage= new();
             signUpPage.Email = "an.email@gmail.com";
@@ -38,7 +38,7 @@ namespace XUnitTests
         }
 
         [Fact]
-        public void SignUp_IncorrectEmail()
+        public void SignUp_IncorrectEmailProvided_PrintsOutError()
         {
             SignUpPage signUpPage = new();
             signUpPage.Email = "an.emailgmail.com";
@@ -55,7 +55,7 @@ namespace XUnitTests
         }
 
         [Fact]
-        public void SignUp_IncorrectEmailAndPasswordsDontMatch()
+        public void SignUp_IncorrectEmailAndPasswordsDontMatch_PrintsOutError()
         {
             SignUpPage signUpPage = new();
             signUpPage.Email = "an.emailgmail.com";

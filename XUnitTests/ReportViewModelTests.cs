@@ -20,7 +20,7 @@ namespace XUnitTests
         }
 
         [Fact]
-        public async void TestAddItem()
+        public async void FillingCorrectReportItem_ItemSuccessfullySent()
         {
             ReportRestService reportService = new(new HttpClient());
             ReportViewModel reportViewModel = new ReportViewModel(reportService);

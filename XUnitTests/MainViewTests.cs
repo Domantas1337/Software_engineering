@@ -13,10 +13,10 @@ using Xunit.Sdk;
 
 namespace XUnitTests
 {
-    public class MainViewTest : MainView
+    public class MainViewTests : MainView
     {
         ITestOutputHelper _testOutputHelper;
-        public MainViewTest(ITestOutputHelper testOutputHelper) : base(new ReportViewModel(new ReportRestService(new HttpClient())),
+        public MainViewTests(ITestOutputHelper testOutputHelper) : base(new ReportViewModel(new ReportRestService(new HttpClient())),
                                      new LocationService(new HttpClient()),
                                      new LogService(new HttpClient()))
         {
@@ -24,7 +24,7 @@ namespace XUnitTests
         }
 
         [Fact]
-        public void OnAppearingTest()
+        public void LazyInitialization_OnAppearingCalled_LazyObjectInitialized()
         {
             OnAppearing();
 
