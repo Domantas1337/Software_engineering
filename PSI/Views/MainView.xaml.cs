@@ -46,10 +46,6 @@ public partial class MainView : ContentPage
 
     }
 
-    public void OnLocationExists(object sender, LocationEventArgs e)
-    {
-
-    }
     public async void GenerateReportPage(object sender, SelectedItemChangedEventArgs args)
     {
         ReportItem item = (ReportItem)args.SelectedItem;
